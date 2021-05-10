@@ -1,6 +1,0 @@
-[Golang doc](https://golang.org/doc/effective_go)
-[Golang reference](https://www.codecademy.com/learn/learn-go)
-[Golang reference](https://www.golang-book.com/books/intro)
-[Golang reference](https://www.golangprograms.com)
-[Golang reference](https://www.educative.io/blog/become-golang-developer)
-[Golang reference](https://github.com/quii/learn-go-with-tests)
