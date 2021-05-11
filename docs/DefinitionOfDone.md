@@ -8,8 +8,8 @@ It is applied consistently and serves as an official gate separating things from
 ## Crietria:
 
 1. Create a Card - if it is Not There 
-1. Pick the Card. Move to In Preogress and concert to Issue
-1. Complete the Issue - Each Issue shoudl be Done in 4 Hours 
+1. Pick the Card. Move to In Progress and convert to Issue
+1. Complete the Issue - Each Issue should be Done in 4 Hours 
 1. Divide the Issue into smaller Cards (Repeat 1 to 4)
 1. Learn Pair Programming - Basics
 1. Do Pair Programming 
