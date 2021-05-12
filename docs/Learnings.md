@@ -16,7 +16,14 @@
 
 ## 11th May (Team)
 
-- Missed
+1.kanban Planning
+1.Markdown Headers Format for Fundamental Study Guide
+1.Updated Fundamental Study Guide Documentation
+1.Added Context in Project Charter
+1.Added image for Roadmap Study Guide
+1.Git Commands
+1.Milestone and Capacity Planning
+1.Reviewed and closed Issues
 
 ## 12th May (Team)
 
