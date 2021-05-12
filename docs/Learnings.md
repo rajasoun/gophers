@@ -14,5 +14,8 @@
 1. Organising as Team and Project Manaement in GitHub ✅
 1. Capacity Planning ✅
 
+## 11th May (Team) 
+- Missed
 
+## 12th May (Team) 
 
