@@ -1,7 +1,6 @@
-# Fundamental Study Guide Project Charter 
+# Fundamental Study Guide Project Charter
 
 ![Roadmap](GoRoadMap.png)
-
 
 ## Purpose of Prepraing the Study Guide - Why ?
 
@@ -15,18 +14,18 @@
 
 - ToDo
 
-## Acceptance Criteria 
+## Acceptance Criteria
 
 - Prepare Study Materials for KT
 
-# Overview about Project Charter 
+# Overview about Project Charter
 
 ## About
 
 Project charter is a statement of objectives in a project.It is a short document that explains the project in clear, concise wording for high level management. Project charters outline the entirety of projects to help teams quickly understand the goals,tasks, timelines, and stakeholders.
 Note: A Concise flow may be added if required.
 
-## Why 
+## Why
 
 By understanding the scope of the Stakeholders / Customers and the final project deliverable that satisfies the customers requirement.
 A project may be an application/software required specifically to carry set of activites.
@@ -41,4 +40,3 @@ A project may be an application/software required specifically to carry set of a
 ## Identify Stakeholders / Customers - Mapping
 
 While reviewing the scope of work ,it is important to intract with the stakeholder or customers in real time to understand the exact requirement and the inputs so that the project is inline with customer requirement.
-
