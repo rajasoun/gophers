@@ -3,6 +3,7 @@
 ## Go Fundamentals
 
   ### Total Planned Time for Go Fundamentals: 200 hours
+  ### [Guide](https://quii.gitbook.io/learn-go-with-tests/)
 
 | S.No | Topics                        | Planned Time | Actual Time |
 | ---- | ----------------------------- | ------------ | ----------- |
