@@ -12,6 +12,10 @@
 
 - ToDo
 
+## Acceptance Criteria 
+
+- Prepare Study Materials for KT
+
 # Overview about Project Charter 
 
 ## About
