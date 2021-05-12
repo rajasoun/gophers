@@ -19,3 +19,6 @@
 
 ## 12th May (Team) 
 
+1. Adding image to Markdown Example
+1. Planning Poker
+
