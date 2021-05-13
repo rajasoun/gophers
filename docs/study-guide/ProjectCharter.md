@@ -3,7 +3,6 @@
 ![Roadmap](images/GoRoadMap.png)
 
 ## Purpose of Prepraing the Study Guide - Why ?
-
 1. We have prepared this study guide, So that we can follow the learning / project  cycle using Go language.
 1. Go language is expected to be used for creating a dedicated console to gather required data, automate  through a framework and push it to another interface.
 1. Github can be used as a repository for the code.
@@ -15,9 +14,14 @@
 1. The study material and TDD to be reviewed by the customer.
 1. The KPI's(Key Performance Indicators) needs to meet the requirement.
 
-## Identify Stakeholders / Customers - Mapping.
+## Identify Stakeholders / Customers - Mapping
+1. Raja and / or Maneesh
+1. Stakeholders analysis the process of accessing and the potential changes should be relavent to the stakeholders.
+1. Assess the intrest of the stakeholders to be addressed inline with the project plan, scope and the policy.
 
 ## Acceptance Criteria
+1. Prepare Study Materials for KT(Knowledge Transfer)
+1. Prepare the demo for the reviewer to accept it.
 
 # Overview about Project Charter
 
