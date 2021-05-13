@@ -29,3 +29,15 @@
 
 1. Adding image to Markdown Example
 1. Planning Poker
+
+## 13th May(Team)
+
+1. Revised Project charter
+1. Brainstormed with the team
+1. Trying to prepare and document it with the help of team
+1. Learning about TDD(Test Driven Development)
+1. Wrote some sample tests for Hello world using Go.
+
+
+
+
