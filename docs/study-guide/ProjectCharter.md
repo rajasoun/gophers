@@ -4,19 +4,21 @@
 
 ## Purpose of Prepraing the Study Guide - Why ?
 
-- ToDo
+
 
 ## Success Criteria - What ?
 
-- ToDo
+
 
 ## Identify Stakeholders / Customers - Mapping
-
-- ToDo
+1. Raja and / or Maneesh
+1. Stakeholders analysis the process of accessing and the potential changes should be relavent to the stakeholders.
+1. Assess the intrest of the stakeholders to be addressed inline with the project plan, scope and the policy.
 
 ## Acceptance Criteria
+1. Prepare Study Materials for KT(Knowledge Transfer)
+1. Prepare the demo for the reviewer to accept it.
 
-- Prepare Study Materials for KT
 
 # Overview about Project Charter
 
