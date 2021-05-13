@@ -4,19 +4,20 @@
 
 ## Purpose of Prepraing the Study Guide - Why ?
 
-- ToDo
+1. We have prepared this study guide, So that we can follow the learning / project  cycle using Go language.
+1. Go language is expected to be used for creating a dedicated console to gather required data, automate  through a framework and push it to another interface.
+1. Github can be used as a repository for the code.
 
 ## Success Criteria - What ?
 
-- ToDo
+1. Complete the given study cycle on the specific subject of Go and Github.
+1. Carry unit tests and TDD.
+1. The study material and TDD to be reviewed by the customer.
+1. The KPI's(Key Performance Indicators) needs to meet the requirement.
 
-## Identify Stakeholders / Customers - Mapping
-
-- ToDo
+## Identify Stakeholders / Customers - Mapping.
 
 ## Acceptance Criteria
-
-- Prepare Study Materials for KT
 
 # Overview about Project Charter
 
