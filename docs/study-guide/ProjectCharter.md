@@ -1,6 +1,6 @@
 # Fundamental Study Guide Project Charter
 
-![Roadmap](GoRoadMap.png)
+![Roadmap](images/GoRoadMap.png)
 
 ## Purpose of Prepraing the Study Guide - Why ?
 
