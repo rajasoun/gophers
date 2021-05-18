@@ -38,6 +38,20 @@
 1. Learning about TDD(Test Driven Development)
 1. Wrote some sample tests for Hello world using Go.
 
+## 17th & 18th May(Team)
+
+1. Learned about TDD using Hello world, Integers.
+1. Wrote unit test cases(Hello world, Integers)
+1. Refactored the code.
+1. Made documentation on unit test(Hello world) 
+1. Learned making flow using draw.io
+1. Push the documentation to Git(with unit test flow image)
+1. Kept on revising few parts of the past documents.
+1. Installed docker in VS code editor.
+
+
+
+
 
 
 
