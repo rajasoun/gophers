@@ -5,4 +5,4 @@
 1. You are not allowed to write any more of a unit test than is sufficient to fail; and compilation failures are failures.
 1. You are not allowed to write any more production code than is sufficient to pass the one failing unit test.
 
-- [Uncle Bob](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
+[Uncle Bob](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
