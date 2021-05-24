@@ -49,9 +49,24 @@
 1. Kept on revising few parts of the past documents.
 1. Installed docker in VS code editor.
 
+## 19th May(Team)
+1. Learned about Go modules
+1. Made documentation(Go modules) and pushed to github
+1. Also learned about go doc
 
+## 20th May(Team
+1. Practised TDD with Arrays in Golang
 
+## 21st May(Team)
+1. Learned about structs and methods with TDD
+1. Gave demo to Raja on TDD
+1. Worked on hackerrank problem
 
+## 24th May(Team)
+1. Learning TDD with interfaces and pointers.
+1. Wrote unit test cases (with TDD) on hackerrank problem and pushed to hackerrank branch.
+1. Installed docker
+1. Learned advanced Git commands(Attended session on Git Fundamentals & Linux)
 
 
 
