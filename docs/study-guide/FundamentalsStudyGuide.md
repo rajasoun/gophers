@@ -26,6 +26,13 @@
 | 16   | Intro to property based tests | 48 hours     |             |
 | 17   | Maths                         | 5 hours      |             |
 
+> Week 3 Pivot Applying Book based Learning to real Project 
+1. Replan above Study plan along with Actuals on Item you have BOTH completed (Remember as a Team and Not as Individuals)
+2. Restart Capturing [Learnings](./Learnings.md) and Review them Daily for atleast 45 mins. Else you might forget.
+3. Revist [Project Charter](ProjectCharter.md) for every Replan
+4. Connect your Learnings to the [Tips Project](https://github.com/rajasoun/tips) - moving forward while you share Go or TDD Concepts (instead of examples from book) - share how you have applied your learnings to the Tips Project 
+5. Have Fun 
+
 ## Managing Projects in GitHub-Fundamentals
 
 ### Total Planned Time for Managing Projects in GitHub: 10 hours
