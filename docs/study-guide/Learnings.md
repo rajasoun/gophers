@@ -63,10 +63,32 @@
 1. Worked on hackerrank problem
 
 ## 24th May(Team)
-1. Learning TDD with interfaces and pointers.
+1. Learning TDD with interfaces.
 1. Wrote unit test cases (with TDD) on hackerrank problem and pushed to hackerrank branch.
 1. Installed docker
 1. Learned advanced Git commands(Attended session on Git Fundamentals & Linux)
 
+## 25th May(Team)
+1. Created Kanban board and converted issues for Git-Tips project
+1. Prepared Documentation on Git-Tips Project 
+1. Wrote first hardcoded unit test(GetTips) for Git-Tips.
 
+## 26th May(Team)
+1. Reading about Pointers,errors with TDD
+1. Wrote second unit test for Git-Tips project(LoadJsonData)
+
+## 27th May(Team)
+1. Wrote UserInput and DisplayOutput unit tests for Git-Tips project.
+1. Refactor the code for Git-Tips project
+1. Learning few test cases on Maps topic using TDD 
+
+## 28th May(Team)
+1. Completed learning Maps with TDD
+1. Updated Documentation and refactored the code in Git-tips project(As Raja told)
+1. Learned about types of testing.
+1. Learned few things about Mocking for unit-tests(Avoid using third party packages)
+
+## 31st May(Team)
+1. Learning dependency Injection with TDD
+1. Refactored the Mocking code(MockReadJsonData) for unit test in Git-Tips project  
 
