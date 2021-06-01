@@ -2,7 +2,7 @@
 
 ## Go Fundamentals
 
-### Total Planned Time for Go Fundamentals: 200 hours
+### Total Planned Time for Go Fundamentals: 69 hours
 
 ### [Guide](https://quii.gitbook.io/learn-go-with-tests/)
 
@@ -24,7 +24,7 @@
 
 Real World Project: tips
 
-### Total Planned Time for Go Intermediate: 200 hours
+### Total Planned Time for Go Intermediate: 153 hours
 
 | S.No | Topics                        | Planned Time | Actual Time(hrs)|  Remarks   |
 | ---- | ----------------------------- | ------------ | ----------------| -----------|
@@ -42,7 +42,7 @@ Real World Project: tips
 
 #### Legends: T-Theory in Hours , UT-UnitTest in Hours
 
-#### Note: Hours above are independent of the other learnings(HackerRank,Docker,Revisions on TDD,Git-Tips Project)
+#### Note: Hours above are independent of the other  learnings(HackerRank,Docker,Revisions on TDD,Git-Tips Project)
 
 
 ## Managing Projects in GitHub-Fundamentals
