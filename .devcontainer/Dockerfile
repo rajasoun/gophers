@@ -15,7 +15,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
        vim jq curl git-flow
 
 # [Optional] Uncomment the next line to use go get to install anything else you need
-# RUN go get -x <your-dependency-or-tool>
+RUN go get -x github.com/uudashr/gopkgs/v2/cmd/gopkgs
+RUN go get -x github.com/cweill/gotests/gotests
+RUN go get -x github.com/josharian/impl
+RUN go get -x honnef.co/go/tools/cmd/staticcheck
+RUN go get -x golang.org/x/tools/gopls
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1

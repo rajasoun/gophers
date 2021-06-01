@@ -34,6 +34,7 @@ Simple example, a command line utility called tips, that can be used as quick re
 1. Initialize Go Modules : Most important step as the rest of our setup hinges on this setup. 
 
     ```
+    cd tips
     go mod init github.com/gophers/tips
     ```
 
@@ -114,9 +115,43 @@ Simple example, a command line utility called tips, that can be used as quick re
         ```
     1. Run the Test `go test tips/cli/*` and notice like before test fails.
     1. Fix Failed test by creating cli.go inside cli directory
+        ```Go
+        package cli
+
+        func GetTopic() string {
+            // pass:1 - Make test pass
+            // hardcoded
+            //:ToDo: Get User Input - Mock GetInput in Test
+            return "git status"
+        }        
         ```
-        
+1. Bringing It All Together
+    1. Create our main package and main.go file in the root of our directory. 
+        > This file should live next to the go.mod file we created earlier by running go mod init. 
+        ```Go
+        package main
+
+        import (
+            "fmt"
+
+            "github.com/gophers/tips/model"
+            "github.com/gophers/tips/cli"
+        )
+
+        func main() {
+            fmt.Println("Main package - main file")
+            string topic := cli.GetTopic()
+            string tip := model.GetTip(topic)
+            fmt.Printf("Tip for %q is $q ", topic, tip)
+        }
         ```
+1. `go run main.go` to run main file
+
+### Important Tips
+
+1. We are importing entire drectories and not individual files. 
+1. Any function in any file in those directories that begins with a capital letter will be exported and publicly available and imported in for use in the above file
+1. It is hard to test the main function in Go, cause it doesn’t take any parameters nor returns any values. But if you have the urge to test your main logic anyways, it is a great approach to make the main function as trivial as possible and just call another function
 
 ## References
 
