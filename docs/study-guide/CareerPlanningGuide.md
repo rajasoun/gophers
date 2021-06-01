@@ -19,7 +19,7 @@ Choose the path from the below options
 
 > Prepare Short Term (~ 6 months) and Long Term Plan (~ 3 Years) 
 
-## Short Term Plan (~ 6 months)
+## Long Term Plan (~ 3 Years)
 
 1. **More rounded developer :** Gain One or two areas of expertise and broad knowledge in other areas from above possible options
 1. **Be Helpful everywhere in a Remote Team Context and get self organised :** You are self groomed to  contribute to every part of a project. Be it quickly creating a project plan, tracking your own work, communicating the progress and most importantly asking for help when required. Use the tool that best fits the context (GitHub, Slack, Kanban Board etc)
@@ -27,7 +27,7 @@ Choose the path from the below options
 1. **Empathy :** In order to speed up the learning of each team member, you need to create a safe and collaborative environment where knowledge can flow. Understand that other people are outside their comfort zone and have patience.
 1. **Adopt Infinite Mindset and Be Continuous Learner :** A developer who doesn’t fear to learn anything new is a valuable asset to any team.
 
-## Short Term Plan (~ 3 Years)
+## Short Term Plan (~ 6 Months)
 
 1. Gain deep understanding of Go Concepts and Foundations
 1. Gain Insights in applying theoritical learning to Real world Projects
