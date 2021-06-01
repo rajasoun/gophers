@@ -18,13 +18,25 @@
 | 8    | Maps                          | 7 hours      |    12           |  3T + 9UT  |
 | 9    | Dependency Injection          | 9 hours      |    13           |  3T + -UT  |
 | 10   | Mocking                       | 12 hours     |    1            |  1T + -UT  |
-| 11   | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
-| 12   | Select                        | 1 hours      |                 |            |
-| 13   | Reflection                    | 5 hours      |                 |            |
-| 14   | Sync                          | 24 hours     |                 |            |
-| 15   | Channel                       | 24 hours     |                 |            |
-| 16   | Intro to property based tests | 48 hours     |                 |            |
-| 17   | Maths                         | 5 hours      |                 |            |
+| 11   | Packaging & Deploymment       | 5  hours     |    1            |  1T + -UT  |
+| 12   | CI & CD - GitHub Actions      | 5  hours     |    1            |  1T + -UT  |
+
+*CI - Continous Intgeration
+*CD - Continous Delivery
+
+Real World Project: tips
+
+### Total Planned Time for Go Intermediate: 200 hours
+
+| S.No | Topics                        | Planned Time | Actual Time(hrs)|  Remarks   |
+| ---- | ----------------------------- | ------------ | ----------------| -----------|
+| 1    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
+| 2    | Select                        | 1 hours      |                 |            |
+| 3    | Reflection                    | 5 hours      |                 |            |
+| 4    | Sync                          | 24 hours     |                 |            |
+| 5    | Channel                       | 24 hours     |                 |            |
+| 6    | Intro to property based tests | 48 hours     |                 |            |
+| 7    | Maths                         | 5 hours      |                 |            |
 
 #### Legends: T-Theory in Hours , UT-UnitTest in Hours
 
