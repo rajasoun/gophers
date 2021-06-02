@@ -2,7 +2,7 @@
 
 ## Go Fundamentals
 
-### Total Planned Time for Go Fundamentals: 200 hours
+### Total Planned Time for Go Fundamentals: 69 hours
 
 ### [Guide](https://quii.gitbook.io/learn-go-with-tests/)
 
@@ -17,30 +17,32 @@
 | 7    | Pointers & errors             | 9 hours      |    9            |  1T + 8UT  |
 | 8    | Maps                          | 7 hours      |    12           |  3T + 9UT  |
 | 9    | Dependency Injection          | 9 hours      |    13           |  3T + -UT  |
-| 10   | Mocking                       | 12 hours     |    1            |  1T + -UT  |
-| 11   | Packaging & Deploymment       | 5  hours     |    1            |  1T + -UT  |
-| 12   | CI & CD - GitHub Actions      | 5  hours     |    1            |  1T + -UT  |
+| 10   | tips Project                  | 12 hours     |    1            |  1T + -UT  |
 
 *CI - Continous Intgeration
 *CD - Continous Delivery
 
 Real World Project: tips
 
-### Total Planned Time for Go Intermediate: 200 hours
+### Total Planned Time for Go Intermediate: 153 hours
 
 | S.No | Topics                        | Planned Time | Actual Time(hrs)|  Remarks   |
 | ---- | ----------------------------- | ------------ | ----------------| -----------|
-| 1    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
-| 2    | Select                        | 1 hours      |                 |            |
-| 3    | Reflection                    | 5 hours      |                 |            |
-| 4    | Sync                          | 24 hours     |                 |            |
-| 5    | Channel                       | 24 hours     |                 |            |
-| 6    | Intro to property based tests | 48 hours     |                 |            |
-| 7    | Maths                         | 5 hours      |                 |            |
+| 1    | Mocking                       | 12 hours     |    1            |  1T + -UT  |
+| 2    | Packaging & Deploymment       | 5  hours     |    1            |  1T + -UT  |
+| 3    | CI & CD - GitHub Actions      | 5  hours     |    1            |  1T + -UT  |
+| 4    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
+| 5    | Select                        | 1 hours      |                 |            |
+| 6    | Reflection                    | 5 hours      |                 |            |
+| 7    | Sync                          | 24 hours     |                 |            |
+| 8    | Channel                       | 24 hours     |                 |            |
+| 9    | Intro to property based tests | 48 hours     |                 |            |
+| 10   | Maths                         | 5 hours      |                 |            |
+
 
 #### Legends: T-Theory in Hours , UT-UnitTest in Hours
 
-#### Note: Hours above are independent of the other learnings(HackerRank,Docker,Revisions on TDD,Git-Tips Project)
+#### Note: Hours above are independent of the other  learnings(HackerRank,Docker,Revisions on TDD,Git-Tips Project)
 
 
 ## Managing Projects in GitHub-Fundamentals
