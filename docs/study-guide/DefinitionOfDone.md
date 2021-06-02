@@ -13,6 +13,7 @@ It is applied consistently and serves as an official gate separating things from
 1. Divide the Issue into smaller Cards (Repeat 1 to 4)
 1. Learn Pair Programming - Basics
 1. Do Pair Programming
+1. Ensure 100% Unit Test Coverage. Mock or Use Dependency Injection in Unit Test
 1. Do Check In to Git
 1. Conduct Review
 1. Move to Done
