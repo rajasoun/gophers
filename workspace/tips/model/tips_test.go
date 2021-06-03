@@ -5,6 +5,7 @@ import (
 )
 
 func TestGetTip(t *testing.T) {
+	//tips := Tips{}
 	assertEquals := func(t testing.TB, got, want string) {
 		t.Helper()
 		if got != want {
@@ -19,6 +20,11 @@ func TestGetTip(t *testing.T) {
 	t.Run("Get Tip for invalid Topic", func(t *testing.T) {
 		got := GetTip("dummy")
 		want := "Tips Not Available for Topic"
+		assertEquals(t, got, want)
+	})
+	t.Run("Get Tip for valid Topic", func(t *testing.T) {
+		got := GetTip("Delete remote branch")
+		want := "git push origin --delete <remote_branchname>"
 		assertEquals(t, got, want)
 	})
 

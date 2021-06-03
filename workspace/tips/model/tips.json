@@ -1,0 +1,1 @@
+[{"title":"git status","tip":"git status -s"},{"title": "Everyday Git in twenty commands or so","tip": "git help everyday"},{"title": "Git helpful guides ","tip": "git help -g"},{"title": "Delete remote branch","tip": "git push origin --delete <remote_branchname>"},{"title": "Saving current state of tracked files without commiting","tip": "git stash"}]

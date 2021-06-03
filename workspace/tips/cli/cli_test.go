@@ -12,8 +12,20 @@ func TestGetTopicFromConsole(t *testing.T) {
 		}
 	}
 	t.Run("Get Topic String From Console", func(t *testing.T) {
+
+		got := GetTopic()
+		want := "git status"
+		assertEquals(t, got, want)
+	})
+	t.Run("Get Empty String From Console", func(t *testing.T) {
+
 		got := GetTopic()
 		want := "git status"
 		assertEquals(t, got, want)
 	})
 }
+
+// func mockTestUserInput() string {
+//todo add statements for main or our test cases
+// 	return "git status"
+// }
