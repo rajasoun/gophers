@@ -6,6 +6,7 @@ import (
 )
 
 func TestGetTipForTopic(t *testing.T) {
+	sn := ScannerImpl{}
 	assertEquals := func(t testing.TB, got, want string) {
 		t.Helper()
 		if got != want {
@@ -14,7 +15,7 @@ func TestGetTipForTopic(t *testing.T) {
 	}
 	t.Run("git delete", func(t *testing.T) {
 		buffer := bytes.Buffer{}
-		GetTipForTopic(&buffer)
+		GetTipForTopic(&buffer, sn)
 
 		got := buffer.String()
 		want := "Tip for \"\" is \"Tips Not Available for Topic\" \n"
@@ -23,7 +24,7 @@ func TestGetTipForTopic(t *testing.T) {
 
 	t.Run("empty string", func(t *testing.T) {
 		buffer := bytes.Buffer{}
-		GetTipForTopic(&buffer)
+		GetTipForTopic(&buffer, sn)
 
 		got := buffer.String()
 		want := "Tip for \"\" is \"Tips Not Available for Topic\" \n"

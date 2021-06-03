@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-
-	controller.GetTipForTopic(os.Stdout)
+	sn := controller.ScannerImpl{}
+	controller.GetTipForTopic(os.Stdout, sn)
 }

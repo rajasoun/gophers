@@ -11,21 +11,34 @@ import (
 	"github/gophers/tips/model"
 )
 
-func GetTipForTopic(writer io.Writer) {
-	topic := cli.GetTopic(scanTitleFromConsole)
+type Scanner interface {
+	scanTitleFromConsole() string
+}
+
+type ScannerImpl struct {
+}
+
+func GetTipForTopic(writer io.Writer, c Scanner) {
+	topic := cli.GetTopic(c.scanTitleFromConsole)
 	tip := model.GetTip(topic)
 	fmt.Fprintf(writer, "Tip for %q is %q \n", topic, tip)
 }
 
-func scanTitleFromConsole() string {
-	topics := model.LoadTipsFromJson()
-	for index, _ := range topics {
-		fmt.Println(topics[index].Title)
+func (c ScannerImpl) scanTitleFromConsole() string {
+
+	allTopics := model.LoadTipsFromJson()
+
+	for index, _ := range allTopics {
+		fmt.Println(allTopics[index].Title)
 	}
-	fmt.Print("Enter any title from above to get a tip: ")
+
+	fmt.Println("Enter a title from above to get a tip:")
 
 	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n')
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("An error occured while reading input. Please try again", err)
+	}
 	input = strings.TrimSuffix(input, "\n")
 
 	return input
