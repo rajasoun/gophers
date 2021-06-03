@@ -1,15 +1,32 @@
 package controller
 
 import (
+	"bufio"
 	"fmt"
 	"io"
+	"os"
+	"strings"
 
 	"github.com/gophers/tips/cli"
 	"github.com/gophers/tips/model"
 )
 
 func GetTipForTopic(writer io.Writer) {
-	var topic = cli.GetTopic()
-	var tip = model.GetTip(topic)
+	topic := cli.GetTopic(scanTitleFromConsole)
+	tip := model.GetTip(topic)
 	fmt.Fprintf(writer, "Tip for %q is %q \n", topic, tip)
+}
+
+func scanTitleFromConsole() string {
+	topics := model.LoadTipsFromJson()
+	for index, _ := range topics {
+		fmt.Println(topics[index].Title)
+	}
+	fmt.Print("Enter any title from above to get a tip: ")
+
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSuffix(input, "\n")
+
+	return input
 }

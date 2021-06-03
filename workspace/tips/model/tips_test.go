@@ -23,7 +23,7 @@ func TestGetTip(t *testing.T) {
 		assertEquals(t, got, want)
 	})
 	t.Run("Get Tip for valid Topic", func(t *testing.T) {
-		got := GetTip("Delete remote branch")
+		got := GetTip("git delete remote branch")
 		want := "git push origin --delete <remote_branchname>"
 		assertEquals(t, got, want)
 	})

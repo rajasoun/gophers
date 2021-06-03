@@ -7,5 +7,6 @@ import (
 )
 
 func main() {
+
 	controller.GetTipForTopic(os.Stdout)
 }
