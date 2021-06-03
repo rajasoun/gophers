@@ -1,5 +1,6 @@
 package cli
 
+// :ToDo: Copy Paste Issue
 type InputGetter func() string
 
 func GetTopic(inputGetter InputGetter) string {
@@ -8,7 +9,6 @@ func GetTopic(inputGetter InputGetter) string {
 	//:ToDo: Get User Input - Mock GetInput in Test
 
 	title := inputGetter() //title
-	//fmt.Print(title)
 	return title
 
 }
