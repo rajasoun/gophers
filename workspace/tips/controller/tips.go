@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gophers/tips/cli"
-	"github.com/gophers/tips/model"
+	"github/gophers/tips/cli"
+	"github/gophers/tips/model"
 )
 
 func GetTipForTopic(writer io.Writer) {

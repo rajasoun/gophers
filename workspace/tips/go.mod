@@ -1,3 +1,3 @@
-module github.com/gophers/tips
+module github/gophers/tips
 
 go 1.16
