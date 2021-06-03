@@ -14,8 +14,8 @@ func GetTip(title string) string {
 	// pass:1 - Make test pass
 	// hardcoded
 	//:ToDo: Reafactor To Load Tips from JSON
-	data := loadTipsFromJson()
-	for index, _ := range data {
+	data := LoadTipsFromJson()
+	for index := range data {
 		//if strings.Compare(title, data[index].Title) == 0 {
 		if title == data[index].Title {
 			return data[index].Tip
@@ -24,8 +24,19 @@ func GetTip(title string) string {
 	return "Tips Not Available for Topic"
 }
 
-func loadTipsFromJson() []Tips {
-	data := `[{"title":"git status","tip":"git status -s"},{"title": "Everyday Git in twenty commands or so","tip": "git help everyday"},{"title": "Show helpful guides that come with Git","tip": "git help -g"},{"title": "Delete remote branch","tip": "git push origin --delete <remote_branchname>"},{"title": "Saving current state of tracked files without commiting","tip": "git stash"}]`
+var data = `[{"title":"Initialize git repo","tip":"git init"},{"title":"git clone","tip":"git clone <repo-dir>"},{"title":"git config","tip":"git config --global user.email<email.id>"},{"title":"git status","tip":"git status -s"},{"title":"add code to github","tip":"git add ."},{"title":"git commit","tip":"git commit -m <commit message>"},{"title":"git push remote branch","tip":"git push -u origin <branch name>"},{"title":"pull code from remote","tip":"git pull --rebase"},{"title":"git checkout","tip":"git checkout <name of repo branch>"},{"title":"git merge","tip":" git merge <query>"},{"title":"git reset","tip":"git reset --hard"},{"title": "git help","tip": "git help -g"},{"title": "git delete remote branch","tip": "git push origin --delete <remote_branchname>"},{"title": "Saving current state of tracked files without commiting","tip": "git stash"},{"title": "Stash changes before rebasing","tip": "git rebase --autostash"},{"title": "Show both staged and unstaged changes","tip": "git diff HEAD"}]`
+
+// func ReadJsonFile() ([]byte, error) {
+
+// 	jsonData, err := ioutil.ReadFile("tipsData.json")
+// 	if err != nil {
+// 		return []byte{}, errors.New("file issue")
+// 	}
+// 	return jsonData, nil
+// }
+
+func LoadTipsFromJson() []Tips {
+
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result
