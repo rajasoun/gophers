@@ -2,9 +2,10 @@
 
 # [Choice] Go version: 1, 1.16, 1.15
 ARG VARIANT="1.16"
-FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT} 
+FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT} as base
 
 # Install Node.js
+FROM base as node-builder
 ARG INSTALL_NODE="true"
 ARG NODE_VERSION="lts/*"
 
@@ -13,6 +14,7 @@ RUN set -x \
     && if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "$CMD"; fi
 
 # OS packages
+FROM node-builder as os-builder
 RUN set -x \
     && apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
@@ -24,6 +26,7 @@ RUN set -x \
     && rm -r /var/cache/* /var/lib/apt/lists/*
 
 # go get to install packages
+FROM os-builder as go-builder
 RUN set -x \
     && go get -v golang.org/x/tools/gopls 2>&1 \
     && go get -v github.com/uudashr/gopkgs/v2/cmd/gopkgs 2>&1 \
@@ -32,18 +35,25 @@ RUN set -x \
     && go get -v honnef.co/go/tools/cmd/staticcheck 2>&1 \
     && rm -rf $GOPATH/pkg/* $GOPATH/src/* $HOME/.cache/go-build 
 
-# RUN set -ex \
-#     && curl -sL https://raw.githubusercontent.com/taskctl/taskctl/master/install.sh | sh -s -- -b /tmp \
-#     && mv /tmp/taskctl $HOME/.local/bin 
-
-RUN set -ex \
-    && curl -fsSL https://git.io/shellspec | sh -s -- --yes 
-ENV PATH="$HOME/.local/bin:$PATH"
-
 # Install global node packages.
-# RUN set -x \
-#     && su vscode -c "source /usr/local/share/nvm/nvm.sh"
-#     && su vscode -c "npm install -g <your-package-here>" 2>&1
+FROM go-builder as toolz-builder
+RUN set -x \
+    && su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g husky" 2>&1
+
+
+ENV TASKCTL_URL=https://raw.githubusercontent.com/taskctl/taskctl/master/install.sh
+RUN set -x \
+    && mkdir /tools \
+    && curl -fsSL $TASKCTL_URL  | sh -s -- -b /tools
+
+# shellspec
+FROM shellspec/shellspec-debian:kcov as shellspec-kcov
+
+# main dev-container
+FROM toolz-builder
+COPY --from=shellspec-kcov /opt/shellspec  /opt/shellspec
+ENV PATH="/opt/shellspec:/tools:$PATH"
+
 
 
 
