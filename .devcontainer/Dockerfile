@@ -45,7 +45,9 @@ RUN set -x \
     && mkdir /tools \
     && curl -fsSL $TASKCTL_URL  | sh -s -- -b /tools
 #github cli
-ENV GH_CLI=https://github.com/cli/cli/releases/download/v1.10.3/gh_1.10.3_linux_amd64.tar.gz
+ENV GH_VER=1.11.0
+
+ENV GH_CLI=https://github.com/cli/cli/releases/download/v${GH_VER}/gh_${GH_VER}_linux_amd64.tar.gz
 RUN set -ex \
     && wget -q $GH_CLI -O - | tar xz -C ./ --strip-components 1
 
