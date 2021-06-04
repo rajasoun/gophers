@@ -20,7 +20,7 @@ RUN set -x \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends bash bash-completion \
        vim git netcat jq curl git-flow wget g++ zsh-autosuggestions \
-       zsh-syntax-highlighting \
+       zsh-syntax-highlighting binutils libcurl4 zlib1g libdw1 \
     && apt-get autoremove -y  \
     && apt-get clean -y \
     && rm -r /var/cache/* /var/lib/apt/lists/*
@@ -46,12 +46,14 @@ RUN set -x \
     && mkdir /tools \
     && curl -fsSL $TASKCTL_URL  | sh -s -- -b /tools
 
-# shellspec and kcov
-FROM shellspec/shellspec-debian as shellspec-kov
+# shellspec, kcov and gh
+FROM shellspec/shellspec-debian:kcov as shellspec-kov
 
 # dev-container
 FROM toolz-builder
 COPY --from=shellspec-kov   /opt/shellspec              /opt/shellspec
+COPY --from=shellspec-kov   /usr/local/bin/kcov*        /usr/local/bin/
+COPY --from=shellspec-kov   /usr/local/share/doc/kcov   /usr/local/share/doc/kcov
 
 ENV PATH="/opt/shellspec:/tools:$PATH"
 
