@@ -1,14 +1,14 @@
 package cli
 
+//function(Anonymous func can accept inputs and return outputs) type which returning string
+
 // :ToDo: Copy Paste Issue
-type InputGetter func() string
+type userInput func() string
 
-func GetTopic(inputGetter InputGetter) string {
-	// pass:1 - Make test pass
-	// hardcoded
+//returning Title
+func GetTopic(userInput userInput) string {
 	//:ToDo: Get User Input - Mock GetInput in Test
-
-	title := inputGetter() //title
+	title := userInput() //title
 	return title
 
 }

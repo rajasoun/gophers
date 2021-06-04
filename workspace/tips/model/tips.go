@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/json"
+	"io/ioutil"
 )
 
 type Tips struct {
@@ -9,12 +10,9 @@ type Tips struct {
 	Tip   string `json:"tip"`
 }
 
-//return tip
+//GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	// pass:1 - Make test pass
-	// hardcoded
-	//:ToDo: Reafactor To Load Tips from JSON
-	data := LoadTipsFromJson()
+	data, _ := LoadTipsFromJson()
 	for index := range data {
 		//if strings.Compare(title, data[index].Title) == 0 {
 		if title == data[index].Title {
@@ -24,13 +22,21 @@ func GetTip(title string) string {
 	return "Tips Not Available for Topic"
 }
 
-// ToDo: Load Tips from json File
-// Relate path
-var data = `[{"title":"Initialize git repo","tip":"git init"},{"title":"git clone","tip":"git clone <repo-dir>"},{"title":"git config","tip":"git config --global user.email<email.id>"},{"title":"git status","tip":"git status -s"},{"title":"add code to github","tip":"git add ."},{"title":"git commit","tip":"git commit -m <commit message>"},{"title":"git push remote branch","tip":"git push -u origin <branch name>"},{"title":"pull code from remote","tip":"git pull --rebase"},{"title":"git checkout","tip":"git checkout <name of repo branch>"},{"title":"git merge","tip":" git merge <query>"},{"title":"git reset","tip":"git reset --hard"},{"title": "git help","tip": "git help -g"},{"title": "git delete remote branch","tip": "git push origin --delete <remote_branchname>"},{"title": "Saving current state of tracked files without commiting","tip": "git stash"},{"title": "Stash changes before rebasing","tip": "git rebase --autostash"},{"title": "Show both staged and unstaged changes","tip": "git diff HEAD"}]`
+//reading json data from file
+func readJsonFile() ([]byte, error) {
 
-func LoadTipsFromJson() []Tips {
+	// todo --from absolute path
+	jsonData, _ := ioutil.ReadFile("/workspaces/gophers/workspace/tips/data/tips.json")
 
+	//Relative Path
+	//jsonData, _ := ioutil.ReadFile("../workspace/tips/data/tips.json")
+	return jsonData, nil
+}
+
+//loading json data into Tips struct
+func LoadTipsFromJson() ([]Tips, string) {
+	data, _ := readJsonFile()
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
-	return result
+	return result, string(data)
 }
