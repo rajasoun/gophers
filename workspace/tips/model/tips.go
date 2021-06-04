@@ -24,12 +24,7 @@ func GetTip(title string) string {
 
 //reading json data from file
 func readJsonFile() ([]byte, error) {
-
-	// todo --from absolute path
-	jsonData, _ := ioutil.ReadFile("/workspaces/gophers/workspace/tips/data/tips.json")
-
-	//Relative Path
-	//jsonData, _ := ioutil.ReadFile("../workspace/tips/data/tips.json")
+	jsonData, _ := ioutil.ReadFile("data/tips.json")
 	return jsonData, nil
 }
 
