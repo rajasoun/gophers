@@ -46,12 +46,13 @@ RUN set -x \
     && mkdir /tools \
     && curl -fsSL $TASKCTL_URL  | sh -s -- -b /tools
 
-# shellspec
-FROM shellspec/shellspec-debian:kcov as shellspec-kcov
+# shellspec and kcov
+FROM shellspec/shellspec-debian as shellspec-kov
 
-# main dev-container
+# dev-container
 FROM toolz-builder
-COPY --from=shellspec-kcov /opt/shellspec  /opt/shellspec
+COPY --from=shellspec-kov   /opt/shellspec              /opt/shellspec
+
 ENV PATH="/opt/shellspec:/tools:$PATH"
 
 
