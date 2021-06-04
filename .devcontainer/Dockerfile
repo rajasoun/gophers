@@ -20,7 +20,7 @@ RUN set -x \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends bash bash-completion \
        vim git netcat jq curl git-flow wget g++ zsh-autosuggestions \
-       zsh-syntax-highlighting binutils libcurl4 zlib1g libdw1 \
+       zsh-syntax-highlighting binutils libcurl4 zlib1g libdw1 shellcheck\
     && apt-get autoremove -y  \
     && apt-get clean -y \
     && rm -r /var/cache/* /var/lib/apt/lists/*
@@ -38,7 +38,7 @@ RUN set -x \
 # Install global node packages.
 FROM go-builder as toolz-builder
 RUN set -x \
-    && su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g husky" 2>&1
+    && su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g husky commitizen commitlint" 2>&1
 # taskctl
 ENV TASKCTL_URL=https://raw.githubusercontent.com/taskctl/taskctl/master/install.sh
 RUN set -x \

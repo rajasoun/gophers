@@ -55,6 +55,12 @@ Describe "Unit Test : validators.sh"
         The output should include "Testing"
         The error should include "Failed!"
     End 
+    It "_common_packages function with valid package"
+        PACKAGE_LIST="git less"
+        When call _common_packages "common-os-packages" ${PACKAGE_LIST}
+        The status should be success
+        The output should include "Passed!"
+    End 
     It "check function with dummy should fail"
         When call check dummy
         The status should be failure
