@@ -19,7 +19,7 @@ func GetTipForTopic(writer io.Writer) {
 
 func scanTitleFromConsole() string {
 	topics := model.LoadTipsFromJson()
-	for index, _ := range topics {
+	for index := range topics {
 		fmt.Println(topics[index].Title)
 	}
 	fmt.Print("Enter any title from above to get a tip: ")

@@ -2,24 +2,48 @@
 
 # [Choice] Go version: 1, 1.16, 1.15
 ARG VARIANT="1.16"
-FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT}
+FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT} 
 
-# [Option] Install Node.js
+# Install Node.js
 ARG INSTALL_NODE="true"
 ARG NODE_VERSION="lts/*"
-RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-# [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+RUN set -x \
+    && CMD="umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1" \
+    && if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "$CMD"; fi
+
+# OS packages
+RUN set -x \
+    && apt-get update \
+    && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends bash bash-completion \
-       vim jq curl git-flow
+       vim git netcat jq curl git-flow wget g++ zsh-autosuggestions \
+       zsh-syntax-highlighting \
+    && apt-get autoremove -y  \
+    && apt-get clean -y \
+    && rm -r /var/cache/* /var/lib/apt/lists/*
 
-# [Optional] Uncomment the next line to use go get to install anything else you need
-RUN go get -x github.com/uudashr/gopkgs/v2/cmd/gopkgs
-RUN go get -x github.com/cweill/gotests/gotests
-RUN go get -x github.com/josharian/impl
-RUN go get -x honnef.co/go/tools/cmd/staticcheck
-RUN go get -x golang.org/x/tools/gopls
+# go get to install packages
+RUN set -x \
+    && go get -v golang.org/x/tools/gopls 2>&1 \
+    && go get -v github.com/uudashr/gopkgs/v2/cmd/gopkgs 2>&1 \
+    && go get -v github.com/cweill/gotests/gotests 2>&1 \
+    && go get -v github.com/josharian/impl 2>&1 \
+    && go get -v honnef.co/go/tools/cmd/staticcheck 2>&1 \
+    && rm -rf $GOPATH/pkg/* $GOPATH/src/* $HOME/.cache/go-build 
 
-# [Optional] Uncomment this line to install global node packages.
-# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+# RUN set -ex \
+#     && curl -sL https://raw.githubusercontent.com/taskctl/taskctl/master/install.sh | sh -s -- -b /tmp \
+#     && mv /tmp/taskctl $HOME/.local/bin 
+
+RUN set -ex \
+    && curl -fsSL https://git.io/shellspec | sh -s -- --yes 
+ENV PATH="$HOME/.local/bin:$PATH"
+
+# Install global node packages.
+# RUN set -x \
+#     && su vscode -c "source /usr/local/share/nvm/nvm.sh"
+#     && su vscode -c "npm install -g <your-package-here>" 2>&1
+
+
+
