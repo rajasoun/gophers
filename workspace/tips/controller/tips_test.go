@@ -13,14 +13,14 @@ func TestGetTipForTopic(t *testing.T) {
 			t.Errorf("got %q want %q", got, want)
 		}
 	}
-	t.Run("git delete", func(t *testing.T) {
-		buffer := bytes.Buffer{}
-		GetTipForTopic(&buffer, sn)
+	// t.Run("git delete", func(t *testing.T) {
+	// 	buffer := bytes.Buffer{}
+	// 	GetTipForTopic(&buffer, sn)
 
-		got := buffer.String()
-		want := "Tip for \"\" is \"Tips Not Available for Topic\" \n"
-		assertEquals(t, got, want)
-	})
+	// 	got := buffer.String()
+	// 	want := "Tip for \"\" is \"Tips Not Available for Topic\" \n"
+	// 	assertEquals(t, got, want)
+	// })
 
 	t.Run("empty string", func(t *testing.T) {
 		buffer := bytes.Buffer{}

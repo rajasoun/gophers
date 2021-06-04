@@ -25,6 +25,8 @@ func GetTip(title string) string {
 //reading json data from file
 func readJsonFile() ([]byte, error) {
 	jsonData, _ := ioutil.ReadFile("data/tips.json")
+
+	//jsonData, _ := ioutil.ReadFile("data/tips.json")
 	return jsonData, nil
 }
 

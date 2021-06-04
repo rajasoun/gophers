@@ -28,12 +28,12 @@ func GetTipForTopic(writer io.Writer, scan scanner) {
 
 //Implemention of interface methods with ScannerImpl struct type/class
 func (scan ScannerImpl) scanTitleFromConsole() string {
-	scanMessage := ScannerImpl{message: "->>> Enter Any Title From Above To Get a Tip:"}
-	allTopics, _ := model.LoadTipsFromJson()
+	scanMessage := ScannerImpl{message: "->>> Enter Any Title  To Get a Tip:"}
+	//allTopics, _ := model.LoadTipsFromJson()
 
-	for index, _ := range allTopics {
-		fmt.Println(allTopics[index].Title)
-	}
+	// for index, _ := range allTopics {
+	// 	//fmt.Println(allTopics[index].Title)
+	// }
 
 	fmt.Println(scanMessage.message)
 
