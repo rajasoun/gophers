@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-function echo_std_err(){
-    echo -e "$@" 1>&2
-}
-
- function _check_installed() {
+# End to End Validation test for container
+function _check_installed() {
      command=$1
     # { type curl || type wget; } >/dev/null
     { type "$command"; }  >/dev/null
   }
 
-
+# Returns true (0) if this the given command/app is installed and on the PATH or false (1) otherwise.
 function check() {
     LABEL=$1
     shift
@@ -23,6 +20,7 @@ function check() {
     fi
 }
 
+# Returns true (0) if this the given command/app is installed and on the PATH or false (1) otherwise.
 function check_detail() {
     LABEL=$1
     shift

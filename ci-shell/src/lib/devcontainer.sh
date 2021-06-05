@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-function _is_valid_file(){
-    FILE=$1
-    if ! [ -e "$FILE" ]; then
-        debug "FILE: $FILE"
-        echo "$FILE Does Not Exists"
-        exit
-    fi
-}
-
 function _populate_dev_container_env(){
     prompt "${GREEN} Using workspace ${WORKSPACE} ${NC}"
 
@@ -23,7 +14,7 @@ function _populate_dev_container_env(){
         DOCKER_FILE_NAME=$($CONFIG_JSON | jq -r .build.dockerfile)
     fi
     DOCKER_FILE="$CONFIG_DIR/$DOCKER_FILE_NAME"
-    _is_valid_file "$CONFIG_DIR/$DOCKER_FILE_NAME"
+    _file_exist "$CONFIG_DIR/$DOCKER_FILE_NAME" || raise_error "$DOCKER_FILE_NAME Not Found"
     debug "DOCKER_FILE: ${DOCKER_FILE}"
 
     ## Get Remote User Name from CONFIG_JSON
@@ -59,14 +50,14 @@ function _populate_dev_container_env(){
 }
 
 function build_container(){
-    prompt "${GREEN} Building container ${NC}"
+    echo "${GREEN} Building container ${NC}"
     start=$(date +%s)
     DOCKER_CMD="docker build -f $DOCKER_FILE -t $DOCKER_IMAGE $ARGS ."
     debug "Docker Build Command : $DOCKER_CMD"
     $DOCKER_CMD
     end=$(date +%s)
     runtime=$((end-start))
-    prompt "Container Local Build Success ✅ : $(_display_time $runtime)"
+    echo "Container Local Build Success ✅ : $(_display_time $runtime)"
 }
 
 function shell_2_container(){

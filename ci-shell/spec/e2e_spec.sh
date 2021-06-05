@@ -1,6 +1,6 @@
 #shellcheck shell=bash
 
-Describe "System Test : "
+Describe "e2e System Test : "
     Include src/load.sh
     Context "ci-shell - check packages : "
         It "check_common_packages"
@@ -28,7 +28,7 @@ Describe "System Test : "
     End
 End
 
-Describe "Unit Test : validators.sh"
+Describe "Unit Test : e2e.sh"
     Include src/load.sh
     It "echo_std_err function"
         When call echo_std_err "Failure"

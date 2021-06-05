@@ -16,7 +16,7 @@ debug "DOCKER_IMAGE : $DOCKER_IMAGE"
 
 
 check jq
-_is_valid_file "$CONFIG_DIR/$CONFIG_FILE"
+_file_exist "$CONFIG_DIR/$CONFIG_FILE" 
 # option -d parameter for debug
 _debug_option "$2"
 
