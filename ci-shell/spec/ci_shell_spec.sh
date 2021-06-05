@@ -1,7 +1,7 @@
 #shellcheck shell=bash
 
 Describe "System Test : "
-    Include lib/validators.sh
+    Include src/load.sh
     Context "ci-shell - check packages : "
         It "check_common_packages"
             When call check_common_packages 
@@ -29,7 +29,7 @@ Describe "System Test : "
 End
 
 Describe "Unit Test : validators.sh"
-    Include lib/validators.sh
+    Include src/load.sh
     It "echo_std_err function"
         When call echo_std_err "Failure"
         The error should include "Failure"
