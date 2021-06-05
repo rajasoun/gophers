@@ -25,7 +25,9 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"golang.Go"
+		"golang.Go",
+		"timonwong.shellcheck",
+		"mads-hartmann.bash-ide-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

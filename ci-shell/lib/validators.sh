@@ -120,7 +120,9 @@ function check_common_packages(){
         zlib1g \
         locales \
         sudo"
+
     echo -e "\n🧪 Testing ${PACKAGE_LIST}"
+    # shellcheck disable=SC2086
     _common_packages "common-os-packages" ${PACKAGE_LIST}
 }
 

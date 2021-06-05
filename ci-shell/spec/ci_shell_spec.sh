@@ -38,7 +38,7 @@ Describe "Unit Test : validators.sh"
         When call check uname
         The output should include "Passed!"
     End
-    It "check_deatil function with "zsh" zsh --version"
+    It "check_deatil function with \"zsh\" zsh --version"
         When call check_detail "zsh" zsh --version
         The output should include "Passed!"
     End
@@ -57,6 +57,7 @@ Describe "Unit Test : validators.sh"
     End 
     It "_common_packages function with valid package"
         PACKAGE_LIST="git less"
+        # shellcheck disable=SC2086
         When call _common_packages "common-os-packages" ${PACKAGE_LIST}
         The status should be success
         The output should include "Passed!"
