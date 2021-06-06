@@ -1,5 +1,5 @@
 # base
-FROM docker:latest AS base
+FROM docker:19.03.15-dind AS base
 ARG USER=ci-shell
 ENV HOME /home/$USER
 
