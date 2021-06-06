@@ -51,7 +51,7 @@ function build_container_and_time_it(){
 function shell_2_container(){
     echo "${GREEN} Starting container ${NC}"
     DOCKER_RUN_OPTS="$REMOTE_USER $PORTS $ENVS $MOUNT -w $WORK_DIR $DOCKER_IMAGE $SHELL"
-    DOCKER_CMD="_docker run --sig-proxy=false -a STDOUT -a STDERR  --rm -it $DOCKER_RUN_OPTS"
+    DOCKER_CMD="$_docker run --sig-proxy=false -a STDOUT -a STDERR  --rm -it $DOCKER_RUN_OPTS"
     debug "Docker Run Command : $DOCKER_CMD"
     $DOCKER_CMD
 }
