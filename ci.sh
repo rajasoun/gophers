@@ -82,8 +82,7 @@ function build(){
 function shell(){
   app_name=$(basename "$(git remote get-url origin)")
   _docker run --rm -it --name $APP_NAME --hostname $APP_NAME \
-          --workdir="/workspaces/$app_name" \
-          -v "${PWD}:/workspaces/$app_name" \
+          -v $(pwd):$(pwd) -w $(pwd) \
           -v /var/run/docker.sock:/var/run/docker.sock  \
           $CONTAINER
   return 0
