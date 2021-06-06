@@ -35,7 +35,7 @@ function check_detail() {
 }
 
 function check_system_details() {
-    check_detail "non-root-user" id "${USER}"
+    #check_detail "non-root-user" id "${USER}"
     check_detail "locale" [ "$(locale -a | grep en_US.utf8)" ]
     check_detail "sudo" sudo echo "sudo works."
     check_detail "zsh" zsh --version

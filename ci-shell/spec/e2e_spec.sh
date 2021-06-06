@@ -28,7 +28,7 @@ Describe "e2e System Test : " iaac
         End 
     End
     Context "e2e - user-management : "
-        It "user ci-shell exists"
+        It "user vscode exists"
             When call whoami
             The output should equal "vscode"
         End

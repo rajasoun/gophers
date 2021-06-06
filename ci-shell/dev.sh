@@ -46,9 +46,10 @@ case ${choice} in
 cat <<-EOF
 Commands:
 ---------
-  e2e         -> Build Dev Container and Run End to End IaaC Test Scripts
-  teardown    -> Teardown Dev Container
+  build       -> Build Container
   shell       -> Shell into the Dev Container
+  teardown    -> Teardown Dev Container
+  e2e         -> Build Dev Container,Run End to End IaaC Test Scripts and Teardown
 EOF
     ;;
 esac
