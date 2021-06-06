@@ -21,6 +21,7 @@ function help(){
     echo "   build           Build Container"
     echo "   shell           Run Container"
     echo "   clean           Stop and Remove Container"
+    echo "   test            Build, Run Test and Clean"
     echo
     return 1
 }
@@ -99,6 +100,12 @@ case $choice in
     shell)
       echo "Run  Container"
       shell || echo "Docker Run Failed"
+      ;;
+    test)
+      echo "Test  Container"
+      build # Build ci-shell
+      ci-shell/dev.sh e2e # e2e Test devcontainer within ci-shell
+      docker rmi "$CONTAINER" || echo "Docker Image Remove Failed"
       ;;
     clean)
       echo  "Clean Container"
