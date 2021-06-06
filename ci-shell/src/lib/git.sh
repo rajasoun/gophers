@@ -12,7 +12,7 @@ function _is_git_repo(){
     fi
 }
 
-# Returns current directory git workspace (0) or false (1) otherwise.
+# Returns current directory git workspace (0) or specify error (1) otherwise.
 function _get_git_workspace(){
     if [ "$(_is_git_repo)" ]; then
         GIT_WORKSPACE="$(git rev-parse --show-toplevel)" || return 1
@@ -22,4 +22,18 @@ function _get_git_workspace(){
         echo_std_err "Not a Valid Git Repo! ❌" 
         return 1
     fi
+}
+
+# Returns application name for a valid git repository (0) or errors out (1)
+function _get_app_name_from_git_workspace(){
+    GIT_WORKSPACE=$(_get_git_workspace) 
+    APP_NAME=$(basename "$GIT_WORKSPACE")
+    if [ -n "$APP_NAME" ];then
+        echo "$APP_NAME"
+        return 0
+    else 
+        echo_std_err "App Name is Empty! ❌" 
+        return 1      
+    fi
+
 }

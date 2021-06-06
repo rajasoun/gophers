@@ -1,5 +1,52 @@
 #!/usr/bin/env bash
 
+function _query_json(){
+    JSON_STRING=$1
+    QUERY_STRING=$2
+    [ -n "$JSON_STRING" ]  || raise_error "Parameter JSON_STRING is Empty! "
+    [ -n "$QUERY_STRING" ] || raise_error "Parameter QUERY_STRING is Empty! "
+    QUERY_RESULT=$(echo "$JSON_STRING" | jq -r "$QUERY_STRING")
+    echo "$QUERY_RESULT"
+    return 0
+}
+
+# Returns formatted devcontainer.json (0) or errors out  (1) otherwise.
+function _get_devcontainer_json(){
+    DEV_CONTAINER_JSON_PATH="$(_get_git_workspace)/.devcontainer/devcontainer.json"
+    _file_exist "$DEV_CONTAINER_JSON_PATH" || raise_error "devcontainer.json Not Found"
+    ## Load devcontainer.json to CONFIG_JSON
+    _JSON="$(< "$DEV_CONTAINER_JSON_PATH"  grep -v // )"
+    FORMATTED_JSON=$(_query_json "$_JSON" ".")
+    debug "JSON :\n $FORMATTED_JSON"
+    echo "$FORMATTED_JSON"
+    return 0
+}
+
+# Returns dokcer file path (0) or errors out  (1) otherwise.
+function _get_docker_file_path(){
+    CONFIG_JSON=$1
+    # Throw Error if the $CONFIG_JSON is empty
+    [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
+    ## Get Dockerfile name and derive Location Name from CONFIG_JSON
+    DOCKER_FILE_NAME=$(echo "$CONFIG_JSON" | jq -r .dockerFile )
+    if [ "$DOCKER_FILE_NAME" == "null" ]; then
+        DOCKER_FILE_NAME=$($CONFIG_JSON | jq -r .build.dockerfile)
+    fi
+    DOCKER_FILE_PATH="$(_get_git_workspace)/.devcontainer/$DOCKER_FILE_NAME"
+    _file_exist "$DOCKER_FILE_PATH" || raise_error "$DOCKER_FILE_PATH Not Found"
+    echo "$DOCKER_FILE_PATH"
+    return 0
+}
+
+# Returns formatted devcontainer.json (0) or errors out  (1) otherwise.
+function _get_configs(){
+    CONFIG_JSON="$(_get_devcontainer_json)"
+    dockerfile_path=$(_get_docker_file_path "$CONFIG_JSON")
+    echo "$dockerfile_path"
+    return 0
+}
+
+
 function _populate_dev_container_env(){
     prompt "${GREEN} Using workspace ${WORKSPACE} ${NC}"
 

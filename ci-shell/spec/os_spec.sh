@@ -28,7 +28,7 @@ Describe "Unit Test : "
             When call _display_time 400000
             The output should equal "4 days 15 hours 6 minutes and 40 seconds"
         End 
-    End
+  End
 End
 
 Describe "Integration Test : "
@@ -48,17 +48,6 @@ Describe "Integration Test : "
             When call  _file_exist LICENSE
             The status should be failure
             The error should include "Not Found!"
-        End
-        It "_is_git_repo should pass"
-            When call  _is_git_repo 
-            The status should be success
-            The output should include "true"
-        End
-        It "_is_git_repo should fail for /tmp"
-            cd /tmp || return 1
-            When call  _is_git_repo 
-            The status should be failure
-            The error should include "false"
         End
     End
 End
