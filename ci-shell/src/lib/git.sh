@@ -30,6 +30,7 @@ function _get_app_name_from_git_workspace(){
     APP_NAME=$(basename "$GIT_WORKSPACE")
     if [ -n "$APP_NAME" ];then
         echo "$APP_NAME"
+        export APP_NAME
         return 0
     else 
         echo_std_err "App Name is Empty! ❌" 

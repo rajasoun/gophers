@@ -1,6 +1,6 @@
 #shellcheck shell=bash
 
-Describe "Unit Test : "
+Describe "Unit Test : " unit
     Include src/load.sh
     Context "os.sh"
         It "_debug_option -d functions to set VERBOSE=1"
@@ -31,7 +31,7 @@ Describe "Unit Test : "
   End
 End
 
-Describe "Integration Test : "
+Describe "Integration Test : " integration
     Include src/load.sh
     Context "os.sh"
         It "raise_error should prompt and exit"

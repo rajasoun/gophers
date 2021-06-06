@@ -24,11 +24,13 @@ opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case ${choice} in
     "e2e")
-        _populate_dev_container_env
         export DOCKER_BUILDKIT=1
         build_container
         e2e_tests
         tear_down
+    ;;
+    "build")
+        build_container
     ;;
     "shell")
         _populate_dev_container_env
@@ -37,7 +39,6 @@ case ${choice} in
         shell_2_container
     ;;
     "teardown")
-        _populate_dev_container_env
         tear_down
     ;;
     *)

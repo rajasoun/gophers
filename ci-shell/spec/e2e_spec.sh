@@ -1,8 +1,8 @@
 #shellcheck shell=bash
 
-Describe "e2e System Test : "
+Describe "e2e System Test : " iaac
     Include src/load.sh
-    Context "ci-shell - check packages : "
+    Context "e2e - check packages : "
         It "check_common_packages"
             When call check_common_packages 
             The output should include "All Passed!"
@@ -19,8 +19,15 @@ Describe "e2e System Test : "
             When call check_system_details 
             The output should include "Passed!"
         End
+        It "_common_packages function with valid package"
+            PACKAGE_LIST="git less"
+            # shellcheck disable=SC2086
+            When call _common_packages "common-os-packages" ${PACKAGE_LIST}
+            The status should be success
+            The output should include "Passed!"
+        End 
     End
-    Context "ci-shell - user-management : "
+    Context "e2e - user-management : "
         It "user ci-shell exists"
             When call whoami
             The output should equal "vscode"
@@ -28,7 +35,7 @@ Describe "e2e System Test : "
     End
 End
 
-Describe "Unit Test : e2e.sh"
+Describe "Unit Test : e2e.sh" unit
     Include src/load.sh
     It "echo_std_err function"
         When call echo_std_err "Failure"
@@ -54,13 +61,6 @@ Describe "Unit Test : e2e.sh"
         The status should be failure
         The output should include "Testing"
         The error should include "Failed!"
-    End 
-    It "_common_packages function with valid package"
-        PACKAGE_LIST="git less"
-        # shellcheck disable=SC2086
-        When call _common_packages "common-os-packages" ${PACKAGE_LIST}
-        The status should be success
-        The output should include "Passed!"
     End 
     It "check function with dummy should fail"
         When call check dummy

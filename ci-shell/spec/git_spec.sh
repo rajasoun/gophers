@@ -1,8 +1,8 @@
 #shellcheck shell=bash
 
-Describe "Integration Test : "
+Describe "Integration Test : " integration
     Include src/load.sh
-    Context "os.sh"
+    Context "git.sh"
         It "_is_git_repo should pass"
             When call  _is_git_repo 
             The status should be success
@@ -27,7 +27,7 @@ Describe "Integration Test : "
         End 
         It "_get_app_name_from_git_workspace equals git project name"
             When call _get_app_name_from_git_workspace
-            GIT_CMD=$(git remote get-url origin | xargs basename -s .git)
+            GIT_CMD=$(git remote get-url origin | xargs basename)
             The status should be success
             The output should equal  "$GIT_CMD"
         End

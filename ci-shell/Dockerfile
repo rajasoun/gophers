@@ -63,6 +63,6 @@ COPY --from=kcov /usr/local/share/doc/kcov /usr/local/share/doc/kcovub
 COPY --from=gh-cli /root/bin/gh /usr/local/bin/
 COPY --from=gh-cli /root/share  /usr/local/share/
 
-WORKDIR /workspace
+WORKDIR /workspaces
 ENTRYPOINT /bin/zsh
 CMD /bin/zsh "$@"

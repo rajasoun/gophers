@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## IMPORTANT: ToDo: Touching this file with debug and echo - will break functionality 
+## as we are returning the values from this function 
+## Figure other alternatives
 function _query_json(){
     JSON_STRING=$1
     QUERY_STRING=$2
@@ -16,7 +19,6 @@ function _get_devcontainer_json(){
     ## Load devcontainer.json to CONFIG_JSON
     _JSON="$(< "$DEV_CONTAINER_JSON_PATH"  grep -v // )"
     FORMATTED_JSON=$(_query_json "$_JSON" ".")
-    debug "JSON :\n $FORMATTED_JSON"
     echo  "$FORMATTED_JSON"
     return 0
 }
@@ -35,8 +37,10 @@ function _get_docker_file_path(){
     ## Get Dockerfile name and derive Location Name from CONFIG_JSON
     DOCKER_FILE_NAME=$(_query_json "$CONFIG_JSON" ".build.dockerfile")
     DOCKER_FILE_PATH="$(_get_git_workspace)/.devcontainer/$DOCKER_FILE_NAME"
+
     _file_exist "$DOCKER_FILE_PATH" || raise_error "$DOCKER_FILE_PATH Not Found"
     echo "$DOCKER_FILE_PATH"
+    export DOCKER_FILE_PATH
     return 0
 }
 
@@ -50,7 +54,6 @@ function _get_remote_user(){
     if ! [ "$REMOTE_USER" == "null" ]; then
         REMOTE_USER="-u ${REMOTE_USER}"
     fi
-    debug "REMOTE_USER: ${REMOTE_USER}"
     echo "${REMOTE_USER}"
     return 0
 }
@@ -63,7 +66,6 @@ function _get_build_args(){
     ## Get Build Args from CONFIG_JSON
     ARGS=$(_query_json "$CONFIG_JSON" '.build.args | to_entries? | map("--build-arg \(.key)=\"\(.value)\"")? | join(" ")')
     ARGS=$(echo "$ARGS" | tr -d '"')
-    debug "ARGS: ${ARGS}"
     echo "$ARGS"
     return 0
 }
@@ -75,7 +77,6 @@ function _get_shell(){
     [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
     ## Get Build Args from CONFIG_JSON
     SHELL=$(_query_json "$CONFIG_JSON" '.settings."terminal.integrated.shell.linux"')
-    debug "SHELL: ${SHELL}"
     echo "$SHELL"
     return 0
 }
@@ -87,7 +88,6 @@ function _get_port(){
     [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
     ## Get Build Args from CONFIG_JSON
     PORTS=$(_query_json "$CONFIG_JSON" '.forwardPorts | map("-p \(.):\(.)")? | join(" ")')
-    debug "PORTS: ${PORTS}"
     echo "$PORTS"
     return 0
 }
@@ -99,7 +99,6 @@ function _get_envs(){
     [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
     ## Get Build Args from CONFIG_JSON
     ENVS=$(_query_json "$CONFIG_JSON" '.remoteEnv | to_entries? | map("-e \(.key)=\(.value)")? | join(" ")')
-    debug "ENVS: ${ENVS}"
     echo "$ENVS"
     return 0
 }
@@ -112,7 +111,6 @@ function _get_mount_points(){
     ## Get Build mount points 
     WORK_DIR="/workspaces"
     MOUNT="--mount type=bind,source=${WORKSPACE},target=${WORK_DIR}"
-    debug "MOUNT: ${MOUNT}"
     echo "$MOUNT"
     return 0
 }
