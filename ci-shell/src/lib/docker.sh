@@ -24,7 +24,7 @@ function load_env_variables(){
     ENVS=$(_get_envs "$CONFIG_JSON")
     MOUNT=$(_get_mount_points "$CONFIG_JSON")
     APP_NAME=$(_get_app_name_from_git_workspace)
-    WORK_DIR="/workspaces"
+    WORK_DIR="${PWD}"
     echo "true"
     export CONFIG_JSON DOCKER_FILE_PATH BUILD_CONTEXT BUILD_ARGS DOCKER_IMAGE
     export REMOTE_USER PORTS ENVS MOUNT APP_NAME SHELL WORK_DIR
@@ -50,6 +50,7 @@ function build_container_and_time_it(){
 
 function shell_2_container(){
     echo "${GREEN} Starting container ${NC}"
+    MOUNT="$MOUNT -v $(pwd):$(pwd)"
     DOCKER_RUN_OPTS="$REMOTE_USER $PORTS $ENVS $MOUNT -w $WORK_DIR $DOCKER_IMAGE $SHELL"
     DOCKER_CMD="$_docker run --sig-proxy=false -a STDOUT -a STDERR  --rm -it $DOCKER_RUN_OPTS"
     debug "Docker Run Command : $DOCKER_CMD"
@@ -59,6 +60,7 @@ function shell_2_container(){
 function e2e_tests(){
     load_env_variables
     echo "${GREEN} Starting container ${NC}"
+    MOUNT="$MOUNT -v $(pwd):$(pwd)"
     DOCKER_RUN_OPTS="$REMOTE_USER $PORTS $ENVS $MOUNT -w $WORK_DIR $DOCKER_IMAGE $SHELL"
     DOCKER_CMD="$_docker run --sig-proxy=false -a STDOUT -a STDERR  --rm -it $DOCKER_RUN_OPTS"
     debug "Docker Run Command : $DOCKER_CMD -c shellspec -c ci-shell/spec --tag unit,integration,iaac --kcov"
