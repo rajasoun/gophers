@@ -7,5 +7,7 @@ source "$SCRIPT_DIR/lib/e2e.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib/devcontainer.sh"
 # shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib/git.sh"
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib/os.sh"
 
