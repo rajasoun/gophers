@@ -5,167 +5,40 @@ import (
 )
 
 func TestGetTopicFromConsole(t *testing.T) {
-	assertEquals := func(t testing.TB, got, want string) {
+	assertEquals := func(t testing.TB, mockTestUserInput func() string, want string) {
 		t.Helper()
-		if got != want {
+		got := GetTopic(mockTestUserInput)
+		expected := want
+		if got != expected {
 			t.Errorf("got %q want %q", got, want)
 		}
 	}
-	t.Run("Get Status Topic String From Console", func(t *testing.T) {
+	mockTests := []struct {
+		name string
+		mock func() string
+		want string
+	}{
+		{name: "Get Status Topic String From Console", mock: func() string { return "git status" }, want: "git status"},
+		{name: "Get Empty String From Console", mock: func() string { return "" }, want: ""},
+		{name: "Get Help Topic String From Console", mock: func() string { return "git help" }, want: "git help"},
+		{name: "Get Delete Topic String From Console", mock: func() string { return "git delete remote branch" }, want: "git delete remote branch"},
+		{name: "Get Init Topic String From Console", mock: func() string { return "Initialize git repo" }, want: "Initialize git repo"},
+		{name: "Get Clone Topic String From Console", mock: func() string { return "git clone" }, want: "git clone"},
+		{name: "Get Add Topic String From Console", mock: func() string { return "add code to github" }, want: "add code to github"},
+		{name: "Get Commit Topic String From Console", mock: func() string { return "git commit" }, want: "git commit"},
+		{name: "Get Push Topic String From Console", mock: func() string { return "git push remote branch" }, want: "git push remote branch"},
+		{name: "Get Pull Topic String From Console", mock: func() string { return "pull code from remote" }, want: "pull code from remote"},
+		{name: "Get Checkout Topic String From Console", mock: func() string { return "git checkout" }, want: "git checkout"},
+		{name: "Get Merge Topic String From Console", mock: func() string { return "git merge" }, want: "git merge"},
+		{name: "Get Reset Topic String From Console", mock: func() string { return "git reset --hard" }, want: "git reset --hard"},
+		{name: "Get Stash Topic String From Console", mock: func() string { return "Saving current state of tracked files without commiting" }, want: "Saving current state of tracked files without commiting"},
+		{name: "Get Rebase Topic String From Console", mock: func() string { return "Stash changes before rebasing" }, want: "Stash changes before rebasing"},
+		{name: "Get Diff Topic String From Console", mock: func() string { return "Show both staged and unstaged changes" }, want: "Show both staged and unstaged changes"},
+	}
+	for _, tt := range mockTests {
+		t.Run(tt.name, func(t *testing.T) {
+			assertEquals(t, tt.mock, tt.want)
+		})
+	}
 
-		got := GetTopic(mockTestUserInput)
-		want := "git status"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Empty String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputEmpty)
-		want := ""
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Delete Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputDelete)
-		want := "git delete remote branch"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Help Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputHelp)
-		want := "git help"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Init Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputInit)
-		want := "Initialize git repo"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Clone Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputClone)
-		want := "git clone"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Config Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputConfig)
-		want := "git config"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Add Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputAdd)
-		want := "add code to github"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Commit Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputCommit)
-		want := "git commit"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Push Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputPush)
-		want := "git push remote branch"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Pull Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputPull)
-		want := "pull code from remote"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Checkout Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputCheckout)
-		want := "git checkout"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Merge Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputMerge)
-		want := "git merge"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Reset Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputReset)
-		want := "git reset --hard"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Stash Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputStash)
-		want := "Saving current state of tracked files without commiting"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Rebase Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputRebase)
-		want := "Stash changes before rebasing"
-		assertEquals(t, got, want)
-	})
-	t.Run("Get Diff Topic String From Console", func(t *testing.T) {
-
-		got := GetTopic(mockTestUserInputDiff)
-		want := "Show both staged and unstaged changes"
-		assertEquals(t, got, want)
-	})
-
-}
-
-func mockTestUserInput() string {
-	return "git status"
-}
-func mockTestUserInputEmpty() string {
-	return ""
-}
-func mockTestUserInputDelete() string {
-	return "git delete remote branch"
-}
-
-func mockTestUserInputInit() string {
-	return "Initialize git repo"
-}
-func mockTestUserInputClone() string {
-	return "git clone"
-}
-func mockTestUserInputConfig() string {
-	return "git config"
-}
-func mockTestUserInputAdd() string {
-	return "add code to github"
-}
-func mockTestUserInputCommit() string {
-	return "git commit"
-}
-func mockTestUserInputPush() string {
-	return "git push remote branch"
-}
-func mockTestUserInputPull() string {
-	return "pull code from remote"
-}
-func mockTestUserInputCheckout() string {
-	return "git checkout"
-}
-func mockTestUserInputMerge() string {
-	return "git merge"
-}
-func mockTestUserInputHelp() string {
-	return "git help"
-}
-func mockTestUserInputReset() string {
-	return "git reset --hard"
-}
-func mockTestUserInputStash() string {
-	return "Saving current state of tracked files without commiting"
-}
-func mockTestUserInputRebase() string {
-	return "Stash changes before rebasing"
-}
-
-func mockTestUserInputDiff() string {
-	return "Show both staged and unstaged changes"
 }

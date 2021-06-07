@@ -43,6 +43,7 @@ func (scan ScannerImpl) scanTitleFromConsole() string {
 	// 	log.Fatal("An error occured while reading input.Please try again")
 	// }
 	input = strings.TrimSuffix(input, "\n")
+	input = strings.TrimSuffix(input, "\r")
 
 	return input
 }
