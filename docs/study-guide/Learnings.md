@@ -92,3 +92,23 @@
 1. Learning dependency Injection with TDD
 1. Refactored the Mocking code(MockReadJsonData) for unit test in Git-Tips project  
 
+## 1st June(Team)
+1. Learned Dependency injection in Go with TDD
+1. Learned MVC architecture
+1. Learned to implement real world project structure with Git branching flow.
+
+## 2nd June(Team)
+1. Worked on Git-Tips project(Implemented model package)
+1. Wrote unit test cases in tips project with TDD flow. 
+
+## 3rd June(Team)
+1. Created documentation on Tips-project
+1. Read user input from command line in git-tips project.
+
+## 4th June(Team)
+1. Refactored the code in tips project with interface and structs
+
+## 7th June(Team)
+1. Add table driven tests in git-tips project
+2. Made a plan for 2 weeks to work on Go with TDD
+
