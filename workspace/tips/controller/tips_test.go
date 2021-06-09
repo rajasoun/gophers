@@ -22,12 +22,22 @@ func TestGetTipForTopic(t *testing.T) {
 	// 	assertEquals(t, got, want)
 	// })
 
+	// t.Run("git tip", func(t *testing.T) {
+	// 	buffer := bytes.Buffer{}
+	// 	GetTipForTopic(&buffer, sn)
+
+	// 	got := buffer.String()
+	// 	want := "Tip for stash is git stash list "
+	// 	assertEquals(t, got, want)
+	// })
+
 	t.Run("empty string", func(t *testing.T) {
 		buffer := bytes.Buffer{}
 		GetTipForTopic(&buffer, sn)
 
 		got := buffer.String()
-		want := "Tip for \"\" is \"Tips Not Available for Topic\" \n"
+		//want := "Default tip: \n \"Saving current state of tracked files //without commiting\" \n \"git stash\" \n"
+		want := "Tip for  is Tips Not Available for Topic \n"
 		assertEquals(t, got, want)
 	})
 

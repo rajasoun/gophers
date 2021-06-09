@@ -22,13 +22,27 @@ type ScannerImpl struct {
 //returning Tips in console according to user-input
 func GetTipForTopic(writer io.Writer, scan scanner) {
 	topic := cli.GetTopic(scan.scanTitleFromConsole)
+	// if topic == "git-tip --all" {
+	// 	data, _ := model.LoadTipsFromJson()
+	// 	for index := range data {
+
+	// 		title := data[index].Title
+	// 		tip := data[index].Tip
+	// 		fmt.Fprintf(writer, " %q \n %q \n\n", title, tip)
+	// 	}
+	// } else if topic == "" {
+	// 	topic := "Saving current state of tracked files without commiting"
+	// 	tip := "git stash"
+	// 	fmt.Fprintf(writer, "Default tip: \n %q \n %q \n", topic, tip)
+	// } else if topic != "git-tip --all" {
 	tip := model.GetTip(topic)
-	fmt.Fprintf(writer, "Tip for %q is %q \n", topic, tip)
+	fmt.Fprintf(writer, "Tip for %s is %s \n", topic, tip)
+
 }
 
 //Implemention of interface methods with ScannerImpl struct type/class
 func (scan ScannerImpl) scanTitleFromConsole() string {
-	scanMessage := ScannerImpl{message: "->>> Enter Any Title  To Get a Tip:"}
+	scanMessage := ScannerImpl{message: "->>> Enter Any command to get tip:"}
 	//allTopics, _ := model.LoadTipsFromJson()
 
 	// for index, _ := range allTopics {
