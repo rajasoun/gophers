@@ -3,12 +3,12 @@ package controller
 import (
 	"bufio"
 	"fmt"
+	"github/gophers/tips/cli"
+	"github/gophers/tips/model"
 	"io"
 	"os"
 	"strings"
-
-	"github/gophers/tips/cli"
-	"github/gophers/tips/model"
+	//"github.com/gorilla/mux"
 )
 
 type scanner interface {
@@ -38,6 +38,10 @@ func GetTipForTopic(writer io.Writer, scan scanner) {
 	tip := model.GetTip(topic)
 	fmt.Fprintf(writer, "Tip for %s is %s \n", topic, tip)
 
+	// fmt.Fprintf(writer, "Tip for %q \n", topic)
+	// for _, val := range tip {
+	// 	fmt.Fprintf(writer, "%q \n", val)
+	// }
 }
 
 //Implemention of interface methods with ScannerImpl struct type/class
@@ -58,6 +62,5 @@ func (scan ScannerImpl) scanTitleFromConsole() string {
 	// }
 	input = strings.TrimSuffix(input, "\n")
 	input = strings.TrimSuffix(input, "\r")
-
 	return input
 }

@@ -5,7 +5,6 @@ type userInput func() string
 
 //returning Title
 func GetTopic(userInput userInput) string {
-	//:ToDo: Get User Input - Mock GetInput in Test
-	title := userInput() //title
+	title := userInput()
 	return title
 }

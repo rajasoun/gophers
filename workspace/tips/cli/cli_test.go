@@ -25,15 +25,6 @@ func TestGetTopicFromConsole(t *testing.T) {
 		{name: "Get Init Topic String From Console", mock: func() string { return "Initialize git repo" }, want: "Initialize git repo"},
 		{name: "Get Clone Topic String From Console", mock: func() string { return "git clone" }, want: "git clone"},
 		{name: "Get Add Topic String From Console", mock: func() string { return "add code to github" }, want: "add code to github"},
-		{name: "Get Commit Topic String From Console", mock: func() string { return "git commit" }, want: "git commit"},
-		{name: "Get Push Topic String From Console", mock: func() string { return "git push remote branch" }, want: "git push remote branch"},
-		{name: "Get Pull Topic String From Console", mock: func() string { return "pull code from remote" }, want: "pull code from remote"},
-		{name: "Get Checkout Topic String From Console", mock: func() string { return "git checkout" }, want: "git checkout"},
-		{name: "Get Merge Topic String From Console", mock: func() string { return "git merge" }, want: "git merge"},
-		{name: "Get Reset Topic String From Console", mock: func() string { return "git reset --hard" }, want: "git reset --hard"},
-		{name: "Get Stash Topic String From Console", mock: func() string { return "Saving current state of tracked files without commiting" }, want: "Saving current state of tracked files without commiting"},
-		{name: "Get Rebase Topic String From Console", mock: func() string { return "Stash changes before rebasing" }, want: "Stash changes before rebasing"},
-		{name: "Get Diff Topic String From Console", mock: func() string { return "Show both staged and unstaged changes" }, want: "Show both staged and unstaged changes"},
 	}
 	for _, tt := range mockTests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -42,3 +33,15 @@ func TestGetTopicFromConsole(t *testing.T) {
 	}
 
 }
+
+/*
+{name: "Get Commit Topic String From Console", mock: func() string { return "git commit" }, want: "git commit"},
+		{name: "Get Push Topic String From Console", mock: func() string { return "git push remote branch" }, want: "git push remote branch"},
+		{name: "Get Pull Topic String From Console", mock: func() string { return "pull code from remote" }, want: "pull code from remote"},
+		{name: "Get Checkout Topic String From Console", mock: func() string { return "git checkout" }, want: "git checkout"},
+		{name: "Get Merge Topic String From Console", mock: func() string { return "git merge" }, want: "git merge"},
+		{name: "Get Reset Topic String From Console", mock: func() string { return "git reset --hard" }, want: "git reset --hard"},
+		{name: "Get Stash Topic String From Console", mock: func() string { return "Saving current state of tracked files without commiting" }, want: "Saving current state of tracked files without commiting"},
+		{name: "Get Rebase Topic String From Console", mock: func() string { return "Stash changes before rebasing" }, want: "Stash changes before rebasing"},
+		{name: "Get Diff Topic String From Console", mock: func() string { return "Show both staged and unstaged changes" }, want: "Show both staged and unstaged changes"},
+*/
