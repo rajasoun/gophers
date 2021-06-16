@@ -112,3 +112,17 @@
 1. Add table driven tests in git-tips project
 2. Made a plan for 2 weeks to work on Go with TDD
 
+## 8th June(Team)
+1. Created documentation on Debugger.
+1. Worked on Mocking with TDD and Recap topic (Hello World).
+
+## 9th June(Team)
+1. Updated some tools in Debugger documentation
+1. Pushed 2 Weeks plan to github
+1. Worked on Mocking with more unit test cases and Recap Topic(Integer)
+
+## 10 June(Team)
+1. Created documentation on Integer and Iteration with TDD
+1. Worked on Mocking with Refactoring the code and Recap topic(Iteration)
+
+## 11 June()
