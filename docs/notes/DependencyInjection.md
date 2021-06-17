@@ -59,3 +59,6 @@ func main() {
     Greet(os.Stdout, "Elodie")
 }
  ```
+
+ ### Examples
+ If you have a  database connection  for instance that is used by some kind of service layer, it is likely going to be difficult to test .DI will motivate  to inject in a database dependency (via an interface) which we can ,then mock out with something and we can control in your tests.

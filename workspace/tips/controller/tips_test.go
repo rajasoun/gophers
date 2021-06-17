@@ -2,6 +2,7 @@ package controller
 
 import (
 	"bytes"
+	"github/gophers/tips/model"
 	"testing"
 )
 
@@ -42,7 +43,7 @@ func TestGetTipForTopic(t *testing.T) {
 		buffer := bytes.Buffer{}
 		GetTipForTopic(&buffer, m)
 		got := buffer.String()
-		want := S
+		want := model.HelpMockData
 		assertEquals(t, got, want)
 
 	})

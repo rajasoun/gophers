@@ -25,7 +25,6 @@ func TestGetTip(t *testing.T) {
 	})
 	t.Run("Get Tip for valid Topic", func(t *testing.T) {
 		got := GetTip("stash")
-		//want := "git stash list"
 		want := "Saving current state of tracked files without commiting : git stash"
 		assertEquals(t, got, want)
 	})
@@ -33,7 +32,7 @@ func TestGetTip(t *testing.T) {
 }
 func TestLoadTipsFromJson(t *testing.T) {
 	_, got := LoadTipsFromJson()
-	expected, _ := MockReadJsonFile()
+	expected := MockReadJsonFile()
 
 	if !reflect.DeepEqual(got, expected) {
 		t.Errorf("got %q want %q", got, expected)
@@ -41,10 +40,11 @@ func TestLoadTipsFromJson(t *testing.T) {
 }
 
 func TestReadJsonFileNegative(t *testing.T) {
-	_, err := MockReadJsonFile()
-	want := "file issue"
-
-	if reflect.DeepEqual(err, want) {
-		t.Errorf("err %q want %q", err, want)
+	path := "tips/data"
+	_, got := readJsonFile(path)
+	want := ErrInsufficient
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
 	}
+
 }
