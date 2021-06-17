@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"io/ioutil"
+	"path/filepath"
 	"strings"
 )
 
@@ -15,13 +16,8 @@ type Tips struct {
 func GetTip(title string) string {
 	data, _ := LoadTipsFromJson()
 	for index := range data {
-		//fmt.Println(data)
-		//if strings.Compare(title, data[index].Title) == 0 {
-		//if title == data[index].Title {
-		//	return data[index].Tip
-		//}
-		if strings.Contains(data[index].Title, title) {
-			return data[index].Tip
+		if strings.Contains(data[index].Tip, title) {
+			return data[index].Title + " : " + data[index].Tip
 		}
 	}
 	return "Tips Not Available for Topic"
@@ -29,9 +25,11 @@ func GetTip(title string) string {
 
 //reading json data from file
 func readJsonFile() ([]byte, error) {
-	jsonData, _ := ioutil.ReadFile("data/allJson.json")
-
-	//jsonData, _ := ioutil.ReadFile("data/tips.json")
+	absPath, _ := filepath.Abs("../data/tips.json")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	jsonData, _ := ioutil.ReadFile(absPath)
 	return jsonData, nil
 }
 
@@ -42,3 +40,5 @@ func LoadTipsFromJson() ([]Tips, string) {
 	json.Unmarshal([]byte(data), &result)
 	return result, string(data)
 }
+
+//to do add error code and test cases

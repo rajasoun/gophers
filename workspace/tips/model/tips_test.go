@@ -14,8 +14,8 @@ func TestGetTip(t *testing.T) {
 		}
 	}
 	t.Run("Get Tip for valid Topic", func(t *testing.T) {
-		got := GetTip("Everyday")
-		want := "git help everyday"
+		got := GetTip("help")
+		want := "Everyday Git in twenty commands or so : git help everyday"
 		assertEquals(t, got, want)
 	})
 	t.Run("Get Tip for invalid Topic", func(t *testing.T) {
@@ -25,7 +25,8 @@ func TestGetTip(t *testing.T) {
 	})
 	t.Run("Get Tip for valid Topic", func(t *testing.T) {
 		got := GetTip("stash")
-		want := "git stash list"
+		//want := "git stash list"
+		want := "Saving current state of tracked files without commiting : git stash"
 		assertEquals(t, got, want)
 	})
 

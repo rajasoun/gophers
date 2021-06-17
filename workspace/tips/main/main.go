@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	"github/gophers/tips/controller"
+	"os"
 )
 
 func init() {
@@ -17,4 +16,10 @@ func init() {
 func main() {
 	scan := controller.ScannerImpl{}
 	controller.GetTipForTopic(os.Stdout, scan)
+
 }
+
+//todo add 1 json file with absolute data
+//to do error and pointer with Tdd coverage
+// to do reader interfaces
+//

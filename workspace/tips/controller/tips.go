@@ -8,7 +8,6 @@ import (
 	"io"
 	"os"
 	"strings"
-	//"github.com/gorilla/mux"
 )
 
 type scanner interface {
@@ -19,48 +18,39 @@ type ScannerImpl struct {
 	message string
 }
 
+const help = "git-tip --all"
+
 //returning Tips in console according to user-input
 func GetTipForTopic(writer io.Writer, scan scanner) {
 	topic := cli.GetTopic(scan.scanTitleFromConsole)
-	// if topic == "git-tip --all" {
-	// 	data, _ := model.LoadTipsFromJson()
-	// 	for index := range data {
-
-	// 		title := data[index].Title
-	// 		tip := data[index].Tip
-	// 		fmt.Fprintf(writer, " %q \n %q \n\n", title, tip)
-	// 	}
-	// } else if topic == "" {
-	// 	topic := "Saving current state of tracked files without commiting"
-	// 	tip := "git stash"
-	// 	fmt.Fprintf(writer, "Default tip: \n %q \n %q \n", topic, tip)
-	// } else if topic != "git-tip --all" {
-	tip := model.GetTip(topic)
-	fmt.Fprintf(writer, "Tip for %s is %s \n", topic, tip)
-
-	// fmt.Fprintf(writer, "Tip for %q \n", topic)
-	// for _, val := range tip {
-	// 	fmt.Fprintf(writer, "%q \n", val)
-	// }
+	switch topic {
+	case help:
+		data, _ := model.LoadTipsFromJson()
+		for index := range data {
+			title := data[index].Title
+			tip := data[index].Tip
+			fmt.Fprintf(writer, " %q \n %q \n\n", title, tip)
+		}
+	case "":
+		topic := "Saving current state of tracked files without commiting"
+		tip := "git stash"
+		fmt.Fprintf(writer, "Default tip: \n %q \n %q \n", topic, tip)
+	default:
+		//to do retrun actual title
+		tip := model.GetTip(topic)
+		fmt.Fprintf(writer, "Tip for %s is %s \n", topic, tip)
+	}
 }
 
 //Implemention of interface methods with ScannerImpl struct type/class
 func (scan ScannerImpl) scanTitleFromConsole() string {
-	scanMessage := ScannerImpl{message: "->>> Enter Any command to get tip:"}
-	//allTopics, _ := model.LoadTipsFromJson()
-
-	// for index, _ := range allTopics {
-	// 	//fmt.Println(allTopics[index].Title)
-	// }
-
+	scanMessage := ScannerImpl{message: "->>> Enter key to get a tip or (git-tip --all)"}
 	fmt.Println(scanMessage.message)
-
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	// if err != nil {
 	// 	log.Fatal("An error occured while reading input.Please try again")
 	// }
 	input = strings.TrimSuffix(input, "\n")
-	input = strings.TrimSuffix(input, "\r")
 	return input
 }
