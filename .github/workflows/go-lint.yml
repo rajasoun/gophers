@@ -1,7 +1,9 @@
-name: Lint
+name: Go-Lint
 on:
   push:
-    branches: [ main,develop ]
+    branches: 
+      - main
+      - develop 
     paths:
       - "**.go"
       - go.mod
@@ -37,6 +39,7 @@ jobs:
           mkdir -p bin && mv golangci-lint bin/
       - name: Run checks
         run: |
+          cd workspace/tips || exit 1
           STATUS=0
           assert-nothing-changed() {
             local diff
