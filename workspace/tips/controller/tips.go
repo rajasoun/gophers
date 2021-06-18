@@ -20,6 +20,7 @@ type ScannerImpl struct {
 
 const help = "git-tip --all"
 
+//:ToDo: To Underdtand teh Logic
 //returning Tips in console according to user-input
 func GetTipForTopic(writer io.Writer, scan scanner) {
 	topic := cli.GetTopic(scan.scanTitleFromConsole)
