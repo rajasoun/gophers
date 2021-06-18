@@ -1,7 +1,7 @@
-2 Weeks Learning Program_ Go-Lang Team 	            Date: 21th of June ’21 to 2nd of July` 21
+# 2 Weeks Learning Program_ Go-Lang Team 	            Date: 21th of June ’21 to 2nd of July` 21
 
 
-# New Plan For next 2 Weeks: 
+## New Plan For next 2 Weeks: 
 
 | Date    |                       TOPICS                    |Sch. Time | Actual time | Remarks      | 
 | ------- | ----------------------------------------------- |--------- |------------ |------------  |
