@@ -1,29 +1,62 @@
 #!/usr/bin/env bash
 
-APP_NAME="ci-shell"
-CONTAINER="$APP_NAME:latest"
-
-# Injecting env variables 
-function load_config(){
-    CONFIG_FILE=$1
-    # shellcheck disable=SC2002,SC2005,SC2046
-    # export $(cat .env | sed 's/#.*//g' | xargs)
+# Load env variables 
+function load_config_from_dotenv(){
+    CONFIG_FILE=".env"
     if [ -f "$CONFIG_FILE" ]
     then
-        export $(echo $(cat "$CONFIG_FILE" | sed 's/#.*//g' | sed 's/\r//g' | xargs) | envsubst)
+        export $(echo $(cat "$CONFIG_FILE" | sed 's/#.*//g' | sed 's/\r//g' | xargs))
+        #export $(echo $(cat "$CONFIG_FILE" | sed 's/#.*//g' | sed 's/\r//g' | xargs) | envsubst)
     fi
     return 0
 }
 
-function help(){
-    echo "Usage: $0  {build|shell|clean}" >&2
-    echo
-    echo "   build           Build Container"
-    echo "   shell           Run Container"
-    echo "   clean           Stop and Remove Container"
-    echo "   e2e            Build, Run Test and Clean"
-    echo
-    return 1
+function git_config(){
+    load_config_from_dotenv
+    gh auth status --hostname $GH_HOST
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+      gh auth login --with-token <<< $GITHUB_TOKEN 
+    fi
+    if [ ! -f "$HOME/.gitconfig" ]; 
+    then
+      # printf "User EMail : " && read -r USER_EMAIL
+      # printf "User ID : " && read -r USER_ID
+      git config --global user.email "$USER_EMAIL"
+      git config --global user.name "$USER_ID"
+    fi 
+}
+
+function delete_all_releases_tags(){
+    # Delete all Release
+    list=$(gh release list | sed 's/|/ /' | awk '{print $2}')
+    for line in $list;
+    do
+      gh release delete -y "$line"; 
+    done
+    # Delete all remote tags
+    git tag -l | xargs -n 1 git push --delete origin
+    # Delete local tags
+    git tag | xargs git tag -d
+}
+
+function git_delete_latest_release_tag(){
+  git fetch --tags # checkout action does not get these
+  current_tag=$(git tag --sort=-v:refname --list  | head -n 1)
+  echo "current_tag: $current_tag"
+  git tag --list "$current_tag" | xargs -I % echo "git tag -d %; git push --delete origin %" | sh
+  gh release delete -y "$current_tag"
+}
+
+# Load configs by convention
+function load_config(){
+    load_config_from_dotenv
+    #APP_NAME=$(basename "$(git remote get-url origin)")
+    APP_NAME=$(basename $(git rev-parse --show-toplevel))
+    GIT_COMMIT=$(git log -1 --format=%h)
+    CONTAINER="$APP_NAME"
+    BUILD_CONTEXT="."
+    export APP_NAME CONTAINER BUILD_CONTEXT
 }
 
 # Replace a line of text that matches the given regular expression in a file with the given replacement.
@@ -76,45 +109,86 @@ function _docker() {
 }
 
 function build(){
-  docker build -f $APP_NAME/Dockerfile -t $CONTAINER .
+  _docker build \
+      -f "ci-shell/Dockerfile" \
+      -t "$CONTAINER" \
+      --build-arg GIT_COMMIT="$GIT_COMMIT" \
+      "$BUILD_CONTEXT" 
   return 0
 }
 
 function shell(){
-  app_name=$(basename "$(git remote get-url origin)")
-  _docker run --rm -it --name $APP_NAME --hostname $APP_NAME \
-          -v $(pwd):$(pwd) -w $(pwd) \
+  _docker run \
+          --rm -it \
+          --name "$APP_NAME" \
+          --hostname "$APP_NAME" \
+          -v "$(pwd):$(pwd)" -w "$(pwd)" \
           -v /var/run/docker.sock:/var/run/docker.sock  \
-          $CONTAINER
+          "$CONTAINER" 
   return 0
 }
 
-function clean(){
+function run_ci_shell_e2e_tests(){
+  _docker run \
+          --rm \
+          --name "$APP_NAME" \
+          --hostname "$APP_NAME" \
+          -v "$(pwd):$(pwd)" -w "$(pwd)" \
+          -v /var/run/docker.sock:/var/run/docker.sock  \
+          "$CONTAINER" sh -c "shellspec -c ci-shell/spec --tag ci-build"
+  return 0
+}
+
+function run_dev_container_e2e_tests(){
+  _docker run \
+          --rm \
+          --name $APP_NAME \
+          --hostname $APP_NAME \
+          -v $(pwd):$(pwd) -w $(pwd) \
+          -v /var/run/docker.sock:/var/run/docker.sock  \
+          $CONTAINER sh -c "ci-shell/dev.sh e2e "
+  return 0
+}
+
+function teardown(){
   echo  "Clean Container"
-  docker rmi "$CONTAINER" || echo "Docker Image Remove Failed"
+  docker rmi "$CONTAINER" 
 }
 
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
-load_config ".env"
+load_config 
 case $choice in
+    git-config)
+      git_config
+    ;;
     build)
       echo -e "\nBuild Container"
       build || echo "Docker Build Failed"
-      ;;
+    ;;
     shell)
       echo "Run  Container"
       shell || echo "Docker Run Failed"
-      ;;
+    ;;
     e2e)
       echo "Test  Container"
-      build # Build ci-shell
-      shell && shellspec -c ci-shell/spec --tag ci-build
-      ci-shell/dev.sh e2e # e2e Test devcontainer within ci-shell
-      clean
-      ;;
-    clean)
-      clean
-      ;;
-    *)  help ;;
+      build > /dev/null 2>&1 # Build ci-shell
+      run_ci_shell_e2e_tests 
+      run_dev_container_e2e_tests  # e2e Test devcontainer within ci-shell
+      teardown
+    ;;
+    teardown)
+      teardown
+    ;;
+    *)
+    echo "${RED}Usage: ci.sh  (build | shell | teardown | e2e) [-d]${NC}"
+cat <<-EOF
+Commands:
+---------
+  build       -> Build Container
+  shell       -> Shell into the Dev Container
+  teardown    -> Teardown Dev Container
+  e2e         -> Build Dev Container,Run End to End IaaC Test Scripts and Teardown
+EOF
+    ;;
 esac

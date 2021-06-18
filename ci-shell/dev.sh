@@ -25,7 +25,7 @@ choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case ${choice} in
     "e2e")
         export DOCKER_BUILDKIT=1
-        build_container
+        build_container > /dev/null 2>&1
         e2e_tests
         tear_down
     ;;

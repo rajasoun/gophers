@@ -17,7 +17,6 @@ Describe "System Test : " ci-build
             When call tear_down
             The status should be success
             The output should include "Removing Container Image"
-            The output should include "Deleted"
         End
     End 
 End
