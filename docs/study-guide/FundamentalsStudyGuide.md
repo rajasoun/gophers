@@ -31,13 +31,8 @@ Real World Project: tips
 | 1    | Mocking                       | 12 hours     |    1            |  1T + -UT  |
 | 2    | Packaging & Deploymment       | 5  hours     |    1            |  1T + -UT  |
 | 3    | CI & CD - GitHub Actions      | 5  hours     |    1            |  1T + -UT  |
-| 4    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
-| 5    | Select                        | 1 hours      |                 |            |
-| 6    | Reflection                    | 5 hours      |                 |            |
-| 7    | Sync                          | 24 hours     |                 |            |
-| 8    | Channel                       | 24 hours     |                 |            |
-| 9    | Intro to property based tests | 48 hours     |                 |            |
-| 10   | Maths                         | 5 hours      |                 |            |
+| 4    | Intro to property based tests | 48 hours     |                 |            |
+
 
 
 #### Legends: T-Theory in Hours , UT-UnitTest in Hours
@@ -59,6 +54,7 @@ Real World Project: tips
 | 6    | Milsetone Setup      | 1 hour       |     1             |
 | 7    | Kanban Board         | 1 hour       |     1             |
 | 8    | Definition of Done   | 1 hour       |     1             |
+| 9    | CI/CD Basics         | 4 hour       |     4             |
 
 ## Git Fundamentals
 
@@ -72,8 +68,18 @@ Real World Project: tips
 | 4    | Pull Requests                      | 1 hours      |     1            |
 | 5    | Trunk Based Development - Git Flow | 1 hours      |     2            |
 | 6    | Git Clone,Status,Add,Commit,Push   | 1 hours      |     2            |
+| 7    | Git Hooks                          | 4 hour       |     4            |
 
 ### NOTE: The actual time will depend on team to team. And The planned time is an approximate extimated time.
 
 
+## Backlogs
 
+| S.No | Topics                        | Planned Time | Actual Time(hrs)|  Remarks   |
+| ---- | ----------------------------- | ------------ | ----------------| -----------|
+| 1    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
+| 2    | Select                        | 1 hours      |                 |            |
+| 3    | Reflection                    | 5 hours      |                 |            |
+| 4    | Sync                          | 24 hours     |                 |            |
+| 5    | Channel                       | 24 hours     |                 |            |
+| 6    | Maths                         | 5 hours      |                 |            |
