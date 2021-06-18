@@ -1,50 +1,55 @@
 package model
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetTip(t *testing.T) {
-	//tips := Tips{}
-	assertEquals := func(t testing.TB, got, want string) {
-		t.Helper()
-		if got != want {
-			t.Errorf("got %q want %q", got, want)
-		}
-	}
-	t.Run("Get Tip for valid Topic", func(t *testing.T) {
+	t.Run("Get Tip for valid Topic - rebase", func(t *testing.T) {
+		got := GetTip("rebase")
+		want := "Rebases 'feature' to 'master' and merges it in to master"
+		assert.Contains(t, got, want)
+	})
+	t.Run("Get Tip for valid Topic - help", func(t *testing.T) {
 		got := GetTip("help")
 		want := "Everyday Git in twenty commands or so : git help everyday"
-		assertEquals(t, got, want)
+		assert.Equal(t, got, want)
 	})
-	t.Run("Get Tip for invalid Topic", func(t *testing.T) {
+	t.Run("Get Tip for invalid Topic - dummy", func(t *testing.T) {
 		got := GetTip("dummy")
 		want := "Tips Not Available for Topic"
-		assertEquals(t, got, want)
+		assert.Equal(t, got, want)
 	})
-	t.Run("Get Tip for valid Topic", func(t *testing.T) {
-		got := GetTip("stash")
-		want := "Saving current state of tracked files without commiting : git stash"
-		assertEquals(t, got, want)
+	t.Run("Get Tip for invalid Topic - dummy", func(t *testing.T) {
+		got := GetTip("dummy")
+		want := "Tips Not Available for Topic"
+		assert.Equal(t, got, want)
 	})
-
 }
+
 func TestLoadTipsFromJson(t *testing.T) {
-	_, got := LoadTipsFromJson()
-	expected := MockReadJsonFile()
-
-	if !reflect.DeepEqual(got, expected) {
-		t.Errorf("got %q want %q", got, expected)
-	}
+	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
+		got, _ := LoadTipsFromJson()
+		expected := 166
+		assert.Equal(t, len(got), expected)
+	})
 }
 
-func TestReadJsonFileNegative(t *testing.T) {
-	path := "tips/data"
-	_, got := readJsonFile(path)
-	want := ErrInsufficient
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
-
+func TestReadJsonFile(t *testing.T) {
+	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
+		got, _ := ReadJsonFile("../data/tips.json")
+		expected := "Everyday Git in twenty commands or so"
+		assert.Contains(t, string(got), expected)
+	})
+	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
+		_, got := ReadJsonFile("../data1/tips.json")
+		assert.Error(t, got)
+	})
+	t.Run("Load Json File and check if it not contains for DUMMY ", func(t *testing.T) {
+		got, _ := ReadJsonFile("../data/tips.json")
+		expected := "DUMMY"
+		assert.NotContains(t, string(got), expected)
+	})
 }

@@ -1,6 +1,6 @@
 package cli
 
-//function(Anonymous func can accept inputs and return outputs) type which returning string
+//function(Anonymous func can accept inputs and return outputs type which returning string
 type userInput func() string
 
 //returning Title
