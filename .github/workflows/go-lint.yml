@@ -33,11 +33,8 @@ jobs:
           cd workspace/tips || exit 1
           go mod verify
           go mod download
-          LINT_VERSION=1.41.0
-          curl -fsSL https://github.com/golangci/golangci-lint/releases/download/v${LINT_VERSION}/golangci-lint-${LINT_VERSION}-linux-amd64.tar.gz | \
-            tar xz --strip-components 1 --wildcards \*/golangci-lint
-          mkdir -p bin && mv golangci-lint bin/
-      - name: Run checks
+
+      - name: Format Code
         run: |
           cd workspace/tips || exit 1
           STATUS=0
@@ -52,5 +49,13 @@ jobs:
           }
           assert-nothing-changed go fmt ./...
           assert-nothing-changed go mod tidy
-          bin/golangci-lint run --out-format=github-actions --timeout=3m || STATUS=$?
-          exit $STATUS
+
+      - name: Lint Code
+        uses: golangci/golangci-lint-action@v2
+        with:
+          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
+          version: v1.41.0
+          working-directory: workspace/tips/
+          args: --out-format=github-actions --timeout=3m --issues-exit-code=0
+          # Optional: show only new issues if it's a pull request. The default value is `false`.
+          # only-new-issues: true
