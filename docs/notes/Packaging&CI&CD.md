@@ -1,6 +1,6 @@
 ## Packaging 
-[Build Go Executable](!https://www.digitalocean.com/community/tutorials/how-to-build-go-executables-for-multiple-platforms-on-ubuntu-16-04)
-[packaging in go](!https://github.com/golang/go/wiki/WindowsCrossCompiling)
+[Build Go Executable](https://www.digitalocean.com/community/tutorials/how-to-build-go-executables-for-multiple-platforms-on-ubuntu-16-04)
+[packaging in go](https://github.com/golang/go/wiki/WindowsCrossCompiling)
   
 The packaging is used to design and maintain a large number of programs by grouping related features together into single units
 1. so that they can be easy to maintain and understand and independent of the other package programs.
@@ -10,9 +10,9 @@ It is the process of bundling together all files, components, and information in
  that are required to install, start, execute, and run an application in a specific environment.
 
 ## Continuous Integration & Continuous Deployment
-[CI/CD pipeline](!https://brunopaz.dev/blog/building-a-basic-ci-cd-pipeline-for-a-golang-application-using-github-actions)
+[CI/CD pipeline](https://brunopaz.dev/blog/building-a-basic-ci-cd-pipeline-for-a-golang-application-using-github-actions)
 
-[Github actions](!https://docs.github.com/en/actions/guides/about-continuous-integration)
+[Github actions](https://docs.github.com/en/actions/guides/about-continuous-integration)
 
 Continuous integration (CI) is a software practice that requires frequently committing code to a shared repository.Frequent code updates also make it easier to merge changes from different members of a software development team. 
 When you commit code to your repository, you can continuously build and test the code to make sure that the commit doesn't introduce errors. Your tests can include code linters (which check style formatting), security checks, code coverage, functional tests, and other custom checks.
