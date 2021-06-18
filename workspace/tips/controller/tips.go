@@ -3,30 +3,54 @@ package controller
 import (
 	"bufio"
 	"fmt"
+	"github/gophers/tips/cli"
+	"github/gophers/tips/model"
 	"io"
 	"os"
 	"strings"
-
-	"github/gophers/tips/cli"
-	"github/gophers/tips/model"
 )
 
-func GetTipForTopic(writer io.Writer) {
-	topic := cli.GetTopic(scanTitleFromConsole)
-	tip := model.GetTip(topic)
-	fmt.Fprintf(writer, "Tip for %q is %q \n", topic, tip)
+type scanner interface {
+	scanTitleFromConsole() string
 }
 
-func scanTitleFromConsole() string {
-	topics := model.LoadTipsFromJson()
-	for index := range topics {
-		fmt.Println(topics[index].Title)
-	}
-	fmt.Print("Enter any title from above to get a tip: ")
+type ScannerImpl struct {
+	message string
+}
 
+const help = "git-tip --all"
+
+//returning Tips in console according to user-input
+func GetTipForTopic(writer io.Writer, scan scanner) {
+	topic := cli.GetTopic(scan.scanTitleFromConsole)
+	switch topic {
+	case help:
+		data, _ := model.LoadTipsFromJson()
+		for index := range data {
+			title := data[index].Title
+			tip := data[index].Tip
+			fmt.Fprintf(writer, " %q \n %q \n\n", title, tip)
+		}
+	case "":
+		topic := "Saving current state of tracked files without commiting"
+		tip := "git stash"
+		fmt.Fprintf(writer, "Default tip: \n %q \n %q \n", topic, tip)
+	default:
+		//to do retrun actual title
+		tip := model.GetTip(topic)
+		fmt.Fprintf(writer, "Tip for %s is %s \n", topic, tip)
+	}
+}
+
+//Implemention of interface methods with ScannerImpl struct type/class
+func (scan ScannerImpl) scanTitleFromConsole() string {
+	scanMessage := ScannerImpl{message: "->>> Enter key to get a tip or (git-tip --all)"}
+	fmt.Println(scanMessage.message)
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
+	// if err != nil {
+	// 	log.Fatal("An error occured while reading input.Please try again")
+	// }
 	input = strings.TrimSuffix(input, "\n")
-
 	return input
 }
