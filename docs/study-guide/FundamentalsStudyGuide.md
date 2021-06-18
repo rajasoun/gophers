@@ -73,4 +73,13 @@ Real World Project: tips
 ### NOTE: The actual time will depend on team to team. And The planned time is an approximate extimated time.
 
 
+Backlogs
 
+| S.No | Topics                        | Planned Time | Actual Time(hrs)|  Remarks   |
+| ---- | ----------------------------- | ------------ | ----------------| -----------|
+| 1    | Concurrency                   | 24 hours     |    1            |  1T + -UT  |
+| 2    | Select                        | 1 hours      |                 |            |
+| 3    | Reflection                    | 5 hours      |                 |            |
+| 4    | Sync                          | 24 hours     |                 |            |
+| 5    | Channel                       | 24 hours     |                 |            |
+| 6   | Maths                         | 5 hours      |                 |            |
