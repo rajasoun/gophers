@@ -48,9 +48,6 @@ func (scan ScannerImpl) scanTitleFromConsole() string {
 	fmt.Println(scanMessage.message)
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
-	// if err != nil {
-	// 	log.Fatal("An error occured while reading input.Please try again")
-	// }
 	input = strings.TrimSuffix(input, "\n")
 	return input
 }
