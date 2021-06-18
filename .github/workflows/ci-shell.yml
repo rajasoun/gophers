@@ -1,4 +1,4 @@
-name: CI to Docker Hub
+name: Docker
 
 on:
   push:
