@@ -82,4 +82,4 @@ Backlogs
 | 3    | Reflection                    | 5 hours      |                 |            |
 | 4    | Sync                          | 24 hours     |                 |            |
 | 5    | Channel                       | 24 hours     |                 |            |
-| 6   | Maths                         | 5 hours      |                 |            |
+| 6    | Maths                         | 5 hours      |                 |            |
