@@ -21,7 +21,7 @@ function help(){
     echo "   build           Build Container"
     echo "   shell           Run Container"
     echo "   clean           Stop and Remove Container"
-    echo "   test            Build, Run Test and Clean"
+    echo "   e2e            Build, Run Test and Clean"
     echo
     return 1
 }
@@ -89,6 +89,11 @@ function shell(){
   return 0
 }
 
+function clean(){
+  echo  "Clean Container"
+  docker rmi "$CONTAINER" || echo "Docker Image Remove Failed"
+}
+
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 load_config ".env"
@@ -101,15 +106,15 @@ case $choice in
       echo "Run  Container"
       shell || echo "Docker Run Failed"
       ;;
-    test)
+    e2e)
       echo "Test  Container"
       build # Build ci-shell
+      shell && shellspec -c ci-shell/spec --tag ci-build
       ci-shell/dev.sh e2e # e2e Test devcontainer within ci-shell
-      docker rmi "$CONTAINER" || echo "Docker Image Remove Failed"
+      clean
       ;;
     clean)
-      echo  "Clean Container"
-      docker rmi "$CONTAINER" || echo "Docker Image Remove Failed"
+      clean
       ;;
     *)  help ;;
 esac
