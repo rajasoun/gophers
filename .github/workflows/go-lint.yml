@@ -10,6 +10,7 @@ on:
       - "**.go"
       - go.mod
       - go.sum
+      - "go-.yml"
 
 jobs:
   lint:
@@ -26,6 +27,7 @@ jobs:
 
       - name: Verify dependencies
         run: |
+          cd workspace/tips || exit 1
           go mod verify
           go mod download
           LINT_VERSION=1.41.0
