@@ -1,0 +1,35 @@
+---
+command:
+  hello world:
+    exit-status: 0
+    exec: "echo hello world"
+    stdout:
+    - hello world
+    stderr: []
+    timeout: 0
+  husky --version:
+    exit-status: 0
+    stdout:
+      - 6.0.0
+    stderr: []
+  gh --version:
+    exit-status: 0
+    stdout:
+      - 1.11.0
+    stderr: []
+  node --version:
+    exit-status: 0
+    stdout:
+      - "v16"
+  npm --version:
+    exit-status: 0
+    stdout:
+      - "6"
+  docker --version:
+    exit-status: 0
+    stdout:
+      - "19.03.15,"
+  git --version:
+    exit-status: 0
+  kcov --version:
+    exit-status: 0

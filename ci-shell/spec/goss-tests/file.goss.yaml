@@ -1,0 +1,8 @@
+---
+
+file:
+  ~/.p10k.zsh:
+    exists: true
+    filetype: file
+    contains: 
+      - "p10k"

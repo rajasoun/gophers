@@ -1,0 +1,20 @@
+---
+package:
+
+  python3:
+    installed: true
+    versions:
+    - 3.8.10-r0
+  py3-pip:
+    installed: true
+    versions:
+    - 20.3.4-r0
+  git:
+    installed: true
+    versions:
+    - 2.30.2-r0
+  make:
+    installed: true
+    versions:
+    - 4.3-r0
+

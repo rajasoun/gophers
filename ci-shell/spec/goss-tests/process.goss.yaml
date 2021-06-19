@@ -1,0 +1,6 @@
+---
+process:
+  bash:
+    running: true
+    # TODO: needs implementation
+    skip: true

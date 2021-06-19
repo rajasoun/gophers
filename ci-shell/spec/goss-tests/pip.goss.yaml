@@ -1,0 +1,13 @@
+
+# command check
+command:
+  pip list:
+    exit-status: 0
+    stdout:
+      - cookiecutter
+      - cruft
+      - ggshield
+      - pip
+      - pipx
+      - pre-commit 
+      - virtualenv

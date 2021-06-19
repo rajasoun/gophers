@@ -1,0 +1,4 @@
+---
+mount:
+  /dev:
+    exists: true
