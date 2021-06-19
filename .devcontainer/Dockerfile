@@ -60,6 +60,10 @@ COPY --from=shellspec-kov   /opt/shellspec              /opt/shellspec
 COPY --from=shellspec-kov   /usr/local/bin/kcov*        /usr/local/bin/
 COPY --from=shellspec-kov   /usr/local/share/doc/kcov   /usr/local/share/doc/kcov
 
+# goss - Quick and Easy server validation
+RUN set -ex \
+    && curl -fsSL https://goss.rocks/install | sh
+    
 ENV PATH="/opt/shellspec:/tools:$PATH"
 
 
