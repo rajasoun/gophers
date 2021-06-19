@@ -14,6 +14,10 @@ RUN set -ex \
        jq libc6-compat netcat-openbsd tzdata \
     && rm -rf /var/cache/apk/*
 
+# goss - Quick and Easy server validation
+RUN set -ex \
+    && curl -fsSL https://goss.rocks/install | sh
+    
 # add new user
 RUN set -ex \
     && adduser -D $USER \
@@ -87,10 +91,6 @@ RUN set -ex \
     && echo "source ~/powerlevel10k/powerlevel10k.zsh-theme"  >> $HOME/.zshrc \
     && echo "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh."  >> $HOME/.zshrc \
     && echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
-
-# goss - Quick and Easy server validation
-RUN set -ex \
-    && curl -fsSL https://goss.rocks/install | sh
 
 COPY ci-shell/dotfiles/.p10k.zsh $HOME/.p10k.zsh
 COPY ci-shell   /workspaces/ci-shell
