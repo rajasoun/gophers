@@ -26,14 +26,14 @@ func GetTip(title string) string {
 }
 
 func GetAllCommands(data []Tips, title string) []string {
-	res := make([]string, 0)
+	commands := make([]string, 0)
 	for index := range data {
 		if strings.Contains(data[index].Tip, title) {
 			command := data[index].Title + " : " + data[index].Tip
-			res = append(res, command)
+			commands = append(commands, command)
 		}
 	}
-	return res
+	return commands
 }
 
 //reading json data from file
