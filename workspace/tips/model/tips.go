@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
@@ -16,12 +17,23 @@ type Tips struct {
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
 	data, _ := LoadTipsFromJson()
+	commands := GetAllCommands(data, title)
+	for _, tip := range commands {
+		return tip
+	}
+	fmt.Println(" \n ")
+	return "Tips Not Available for Topic"
+}
+
+func GetAllCommands(data []Tips, title string) []string {
+	res := make([]string, 0)
 	for index := range data {
 		if strings.Contains(data[index].Tip, title) {
-			return data[index].Title + " : " + data[index].Tip
+			command := data[index].Title + " : " + data[index].Tip
+			res = append(res, command)
 		}
 	}
-	return "Tips Not Available for Topic"
+	return res
 }
 
 //reading json data from file

@@ -14,11 +14,11 @@ type helpCommand struct {
 	command string
 }
 
-func (m mock) scanTitleFromConsole() string {
+func (m mock) ScanTitleFromConsole() string {
 	m.title = "delete"
 	return m.title
 }
-func (hc helpCommand) scanTitleFromConsole() string {
+func (hc helpCommand) ScanTitleFromConsole() string {
 	hc.command = "git-tip --all"
 	return hc.command
 }
@@ -46,8 +46,15 @@ func TestGetTipForTopic(t *testing.T) {
 		buffer := bytes.Buffer{}
 		GetTipForTopic(&buffer, hc)
 		got := buffer.String()
-		//want := 166
-		want := "Everyday Git in twenty commands or so"
+		want := "Extract file from another branch."
 		assert.Contains(t, got, want)
 	})
+}
+
+func TestMoreCommnads(t *testing.T) {
+	buffer := bytes.Buffer{}
+	MoreCommnads(&buffer, "stash")
+	got := buffer.String()
+	want := "Show list of all saved stashes : git stash list"
+	assert.Contains(t, got, want)
 }

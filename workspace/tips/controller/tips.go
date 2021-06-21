@@ -11,7 +11,7 @@ import (
 )
 
 type scanner interface {
-	scanTitleFromConsole() string
+	ScanTitleFromConsole() string
 }
 
 type ScannerImpl struct {
@@ -20,13 +20,15 @@ type ScannerImpl struct {
 
 const help = "git-tip --all"
 
+var data, _ = model.LoadTipsFromJson()
+
 //:ToDo: To Underdtand teh Logic
 //returning Tips in console according to user-input
 func GetTipForTopic(writer io.Writer, scan scanner) {
-	topic := cli.GetTopic(scan.scanTitleFromConsole)
+	topic := cli.GetTopic(scan.ScanTitleFromConsole)
 	switch topic {
 	case help:
-		data, _ := model.LoadTipsFromJson()
+		//data, _ := model.LoadTipsFromJson()
 		for index := range data {
 			title := data[index].Title
 			tip := data[index].Tip
@@ -43,12 +45,25 @@ func GetTipForTopic(writer io.Writer, scan scanner) {
 	}
 }
 
+var Input string
+
 //Implemention of interface methods with ScannerImpl struct type/class
-func (scan ScannerImpl) scanTitleFromConsole() string {
+func (scan ScannerImpl) ScanTitleFromConsole() string {
 	scanMessage := ScannerImpl{message: "->>> Enter key to get a tip or (git-tip --all)"}
 	fmt.Println(scanMessage.message)
 	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n')
-	input = strings.TrimSuffix(input, "\n")
-	return input
+	Input, _ = reader.ReadString('\n')
+	Input = strings.TrimSuffix(Input, "\n")
+	return Input
+}
+
+func MoreCommnads(writer io.Writer, input string) {
+	if input != "" && input != "dummy" {
+		fmt.Printf("More %q commands :\n", input)
+		commands := model.GetAllCommands(data, input)
+		for index := 1; index < len(commands); index++ {
+			fmt.Fprintf(writer, " %q \n\n", commands[index])
+
+		}
+	}
 }
