@@ -3,9 +3,8 @@ package model
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
+
 	"io/ioutil"
-	"path/filepath"
 	"strings"
 )
 
@@ -16,16 +15,19 @@ type Tips struct {
 
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	data, _ := LoadTipsFromJson()
-	commands := GetAllCommands(data, title)
+	data, err := loadTipsFromJson()
+
+	if len(err) != 0 {
+		return "Failed Loading JSON File" + err
+	}
+	commands := getAllCommands(data, title)
 	for _, tip := range commands {
 		return tip
 	}
-	fmt.Println(" \n ")
 	return "Tips Not Available for Topic"
 }
 
-func GetAllCommands(data []Tips, title string) []string {
+func getAllCommands(data []Tips, title string) []string {
 	commands := make([]string, 0)
 	for index := range data {
 		if strings.Contains(data[index].Tip, title) {
@@ -37,20 +39,19 @@ func GetAllCommands(data []Tips, title string) []string {
 }
 
 //reading json data from file
-func ReadJsonFile(path string) ([]byte, error) {
-	var ErrInsufficient = errors.New("file not found")
-	absPath, _ := filepath.Abs(path)
-	jsonData, err := ioutil.ReadFile(absPath)
+func readJsonFile(path string) ([]byte, error) {
+	var errFileNotFound = errors.New("file not found")
+	jsonData, err := ioutil.ReadFile(path)
 	if err != nil {
-		return nil, ErrInsufficient
+		return nil, errFileNotFound
 	}
 	return jsonData, nil
 }
 
 //loading json data into Tips struct
-func LoadTipsFromJson() ([]Tips, string) {
+func loadTipsFromJson() ([]Tips, string) {
 	var path = "../data/tips.json"
-	data, _ := ReadJsonFile(path)
+	data, _ := readJsonFile(path)
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result, string(data)

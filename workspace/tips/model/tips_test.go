@@ -46,14 +46,8 @@ func TestReadJsonFile(t *testing.T) {
 		assert.Contains(t, string(got), expected)
 	})
 	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := ReadJsonFile("../data1/tips.json")
+		_, got := ReadJsonFile("tips.json")
 		//Error asserts that a function returned an error (i.e. not `nil`).
 		assert.Error(t, got)
-	})
-	t.Run("Load Json File and check if it not contains for DUMMY ", func(t *testing.T) {
-		got, _ := ReadJsonFile("../data/tips.json")
-		expected := "DUMMY"
-		//NotContains asserts that the specified string, list(array, slice...) or map does NOT contain the specified substring or element.
-		assert.NotContains(t, string(got), expected)
 	})
 }
