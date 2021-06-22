@@ -8,18 +8,17 @@ import (
 
 func init() {
 	fmt.Println("-->>Git Commands<<--")
-	//fmt.Println("options")
-	//fmt.Println("git-tip --all")
-	//fmt.Println("<keyword> Gives the git tips consisting of the keyword")
 }
 
 func main() {
-	scan := controller.ScannerImpl{}
-	controller.GetTipForTopic(os.Stdout, scan)
+	//code done with Scanner interface implement function (without io.Reader interface)
+	//scan := controller.ScannerImpl{}
+	//controller.GetTipForTopic(os.Stdout, scan)
 
+	// Code done with io.Reader interface
+	controller.GetTipForTopicc(os.Stdout, os.Stdin)
+	fmt.Println(" \n ")
+	controller.GetMoreCommands(os.Stdout, controller.Input)
 }
 
-//todo add 1 json file with absolute data
 //to do error and pointer with Tdd coverage
-// to do reader interfaces
-//
