@@ -12,10 +12,15 @@ func TestGetTopic(t *testing.T) {
 	t.Run("Check GetTopic with reader interface", func(t *testing.T) {
 		key := strings.NewReader("git commit")
 		output_buffer := bytes.Buffer{}
-		GetTopic(key, &output_buffer)
-		got := output_buffer.String()
+		got, _ := GetTopic(key, &output_buffer)
 		want := "git commit"
 		assert.Equal(t, got, want)
+	})
+	t.Run("Check GetTopic invalid topic", func(t *testing.T) {
+		key := strings.NewReader("git")
+		output_buffer := bytes.Buffer{}
+		_, err := GetTopic(key, &output_buffer)
+		assert.Error(t, err)
 	})
 }
 

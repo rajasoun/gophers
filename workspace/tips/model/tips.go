@@ -15,14 +15,16 @@ type Tips struct {
 
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	data, err := loadTipsFromJson()
-
-	if len(err) != 0 {
-		return "Failed Loading JSON File" + err
-	}
-	commands := getAllCommands(data, title)
-	for _, tip := range commands {
-		return tip
+	data, err := loadTipsFromJson("../data/tips.json")
+	if err != nil {
+		return err.Error()
+	} else if title != "" {
+		commands := getAllCommands(data, title)
+		for _, tip := range commands {
+			return tip
+		}
+	} else if title == "" {
+		return "should not be Empty"
 	}
 	return "Tips Not Available for Topic"
 }
@@ -49,10 +51,14 @@ func readJsonFile(path string) ([]byte, error) {
 }
 
 //loading json data into Tips struct
-func loadTipsFromJson() ([]Tips, string) {
-	var path = "../data/tips.json"
+func loadTipsFromJson(path string) ([]Tips, error) {
+	var errorFile = errors.New("failed loading jSON file")
 	data, _ := readJsonFile(path)
+
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
-	return result, string(data)
+	if string(data) == "" {
+		return nil, errorFile
+	}
+	return result, nil
 }

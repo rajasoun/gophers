@@ -2,6 +2,7 @@ package cli
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"github/gophers/tips/controller"
 	"io"
@@ -30,7 +31,7 @@ func GetTopic(reader io.Reader, writer io.Writer) (string, error) {
 	if isValidInput(user_input) {
 		return user_input, nil
 	}
-	return nil, err
+	return "", errors.New("Issues")
 }
 
 func Run(reader io.Reader, writer io.Writer) {

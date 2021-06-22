@@ -6,11 +6,11 @@ import (
 	"io"
 )
 
-const ALL = "git-tip --all"
-const EMPTY = ""
+//const ALL = "git-tip --all"
+//const EMPTY = ""
 
 //with Reader interface
 func GetTipForTopic(topic string, writer io.Writer) {
 	var tip = model.GetTip(topic)
-	fmt.Fprintf(writer, " %q \n %q \n\n", topic, tip)
+	fmt.Fprintf(writer, "  \n %q \n\n", tip)
 }

@@ -27,14 +27,24 @@ func TestGetTip(t *testing.T) {
 		want := "Tips Not Available for Topic"
 		assert.Equal(t, got, want)
 	})
+	t.Run("Get Tip for invalid Topic - dummy", func(t *testing.T) {
+		got := GetTip("")
+		want := "should not be Empty"
+		assert.Equal(t, got, want)
+	})
 }
 
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		got, _ := loadTipsFromJson()
+		got, _ := loadTipsFromJson("../data/tips.json")
 		expected := 166
 		//Equal asserts that two objects are equal.
 		assert.Equal(t, len(got), expected)
+	})
+	t.Run("Load Tips From Json File and check  ", func(t *testing.T) {
+		_, got := loadTipsFromJson("data/tips.json")
+		//Equal asserts that two objects are equal.
+		assert.Error(t, got)
 	})
 }
 

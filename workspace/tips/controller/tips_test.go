@@ -13,14 +13,14 @@ func TestGetTipForTopiccWithReader(t *testing.T) {
 		output_buffer := bytes.Buffer{}
 		GetTipForTopic("delete", &output_buffer)
 		got := output_buffer.String()
-		want := "Tip for delete is Delete remote branch"
+		want := "Delete remote branch"
 		assert.Contains(t, got, want)
 	})
 	t.Run("Empty string", func(t *testing.T) {
 		buffer := bytes.Buffer{}
 		GetTipForTopic("", &buffer)
 		got := buffer.String()
-		want := "Default tip: \n \"Saving current state of tracked"
+		want := "should not be Empty"
 		assert.Contains(t, got, want)
 	})
 }
