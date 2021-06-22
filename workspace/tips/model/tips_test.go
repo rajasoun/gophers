@@ -31,7 +31,7 @@ func TestGetTip(t *testing.T) {
 
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		got, _ := LoadTipsFromJson()
+		got, _ := loadTipsFromJson()
 		expected := 166
 		//Equal asserts that two objects are equal.
 		assert.Equal(t, len(got), expected)
@@ -40,13 +40,13 @@ func TestLoadTipsFromJson(t *testing.T) {
 
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := ReadJsonFile("../data/tips.json")
+		got, _ := readJsonFile("../data/tips.json")
 		expected := "Everyday Git in twenty commands or so"
 		//Contains asserts that the specified string, list(array, slice...) or map contains the specified substring or element.
 		assert.Contains(t, string(got), expected)
 	})
 	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := ReadJsonFile("tips.json")
+		_, got := readJsonFile("tips.json")
 		//Error asserts that a function returned an error (i.e. not `nil`).
 		assert.Error(t, got)
 	})

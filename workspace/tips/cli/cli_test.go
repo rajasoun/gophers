@@ -11,14 +11,11 @@ import (
 func TestGetTopic(t *testing.T) {
 	t.Run("Check GetTopic with reader interface", func(t *testing.T) {
 		key := strings.NewReader("git commit")
-		got, _ := GetTopic(key)
+		output_buffer := bytes.Buffer{}
+		GetTopic(key, &output_buffer)
+		got := output_buffer.String()
 		want := "git commit"
 		assert.Equal(t, got, want)
-	})
-	t.Run("Check GetTopic with reader interface", func(t *testing.T) {
-		key := strings.NewReader("com")
-		_, err := GetTopic(key)
-		assert.Error(t, err)
 	})
 }
 
