@@ -12,4 +12,5 @@ source "$SCRIPT_DIR/lib/docker.sh"
 source "$SCRIPT_DIR/lib/git.sh"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/lib/os.sh"
-
+# shellcheck source=/dev/null
+source "$SCRIPT_DIR/lib/env.sh"

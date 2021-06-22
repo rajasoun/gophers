@@ -58,7 +58,7 @@ function report_results() {
 
 function check_dev_packages(){
    local FAILED=()
-   pkgs=(git go shellspec kcov jq nc gh curl python3)
+   pkgs=(git shellspec kcov jq nc gh curl python3)
    for pkg in "${pkgs[@]}"
    do 
         check "$pkg" || FAILED+=("$pkg")
@@ -68,7 +68,7 @@ function check_dev_packages(){
 
 function check_toolz_packages(){
    local FAILED=()
-   pkgs=(husky commitlint commitizen shellcheck)
+   pkgs=(commitlint commitizen shellcheck)
    for pkg in "${pkgs[@]}"
    do 
         check "$pkg" || FAILED+=("$pkg")

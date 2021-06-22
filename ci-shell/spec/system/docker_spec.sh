@@ -1,6 +1,6 @@
 #shellcheck shell=bash
 
-Describe "System Test : " ci-build
+Describe "System Test : " system
     Include src/load.sh
     Context "docker.sh"
         It "build_container builds image for .devcontainer" 

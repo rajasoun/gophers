@@ -1,7 +1,0 @@
-command:
-  shellspec -c ci-shell/spec --tag iaac --format d:
-    exit-status: 0
-    stdout:
-    - 6 examples
-    - 0 failures
-    stderr: []

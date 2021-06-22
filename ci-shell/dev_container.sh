@@ -4,27 +4,23 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/src/load.sh"
 
-VERBOSE=0
-export VERBOSE
-GIT_WORKSPACE="$(git rev-parse --show-toplevel)"
-APP_NAME=$(basename "$GIT_WORKSPACE")
-WORKSPACE="${GIT_WORKSPACE}"
-CONFIG_DIR="${WORKSPACE}/.devcontainer"
-CONFIG_FILE="devcontainer.json"
-DOCKER_IMAGE="vsc-$APP_NAME:$(git rev-parse HEAD)"
-debug "DOCKER_IMAGE : $DOCKER_IMAGE"
+DOCKER_BUILDKIT=1
+DEBUG_OFF="" 
+DEBUG_TOGGLE="${2:-$DEBUG_OFF}"
+DEV_SHELL="${3:-sfdx}"
 
+export DOCKER_BUILDKIT
 
+init_env_variables "$DEV_SHELL"
+_debug_option "$DEBUG_TOGGLE"
 check jq
-_file_exist "$CONFIG_DIR/$CONFIG_FILE" 
-# option -d parameter for debug
-_debug_option "$2"
+_file_exist "$DEV_CONTAINER_JSON_PATH" 
 
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
+echo "Starting --> $choice for $DEV_SHELL"
 case ${choice} in
     "e2e")
-        export DOCKER_BUILDKIT=1
         build_container > /dev/null 2>&1
         e2e_tests
         tear_down
@@ -33,8 +29,6 @@ case ${choice} in
         build_container
     ;;
     "shell")
-        _populate_dev_container_env
-        export DOCKER_BUILDKIT=1
         build_container
         shell_2_container
     ;;
@@ -42,7 +36,7 @@ case ${choice} in
         tear_down
     ;;
     *)
-    echo "${RED}Usage: automator/ci.sh <e2e | taerdown | shell> [-d]${NC}"
+    echo "${RED}Usage: automator/ci.sh <build | e2e | taerdown | shell> [-d]${NC}"
 cat <<-EOF
 Commands:
 ---------
