@@ -15,7 +15,8 @@ type Tips struct {
 
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	data, err := loadTipsFromJson("../data/tips.json")
+	//data, err := loadTipsFromJson("../data/tips.json")
+	data, err := loadTipsFromJson()
 	if err != nil {
 		return err.Error()
 	} else if title != "" {
@@ -50,8 +51,13 @@ func readJsonFile(path string) ([]byte, error) {
 	return jsonData, nil
 }
 
+// run an app from main.go -> file path should be "data/tips.json"
+// if want to check all unit test cases ->file path should be "../data/tips.json"
+
+var path = "../data/tips.json"
+
 //loading json data into Tips struct
-func loadTipsFromJson(path string) ([]Tips, error) {
+func loadTipsFromJson() ([]Tips, error) {
 	var errorFile = errors.New("failed loading jSON file")
 	data, _ := readJsonFile(path)
 

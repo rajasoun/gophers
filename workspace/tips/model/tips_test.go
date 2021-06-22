@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//:ToDo: Table Driven Tests
 func TestGetTip(t *testing.T) {
 	t.Run("Get Tip for valid Topic - rebase", func(t *testing.T) {
 		got := GetTip("rebase")
@@ -32,22 +33,28 @@ func TestGetTip(t *testing.T) {
 		want := "should not be Empty"
 		assert.Equal(t, got, want)
 	})
+
 }
 
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		got, _ := loadTipsFromJson("../data/tips.json")
+		got, _ := loadTipsFromJson()
 		expected := 166
 		//Equal asserts that two objects are equal.
 		assert.Equal(t, len(got), expected)
 	})
-	t.Run("Load Tips From Json File and check  ", func(t *testing.T) {
-		_, got := loadTipsFromJson("data/tips.json")
-		//Equal asserts that two objects are equal.
-		assert.Error(t, got)
-	})
 }
 
+func TestGetTipWithReadJsonFile(t *testing.T) {
+	t.Run("Load Tips From Json File and check file path ", func(t *testing.T) {
+		path = "data/tips.json"
+		readJsonFile(path)
+		got := GetTip("push")
+		want := "failed loading jSON file"
+		//Equal asserts that two objects are equal.
+		assert.Equal(t, got, want)
+	})
+}
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
 		got, _ := readJsonFile("../data/tips.json")

@@ -33,4 +33,12 @@ func TestRun(t *testing.T) {
 		want := "push"
 		assert.Contains(t, got, want)
 	})
+	t.Run("End to End Test (e2e) for tips tool with validation", func(t *testing.T) {
+		input_buffer := strings.NewReader("nor")
+		output_buffer := bytes.Buffer{}
+		Run(input_buffer, &output_buffer)
+		got := output_buffer.String()
+		want := "\"key length should be greater than 3\""
+		assert.Equal(t, got, want)
+	})
 }

@@ -27,17 +27,23 @@ func readInput(reader io.Reader) string {
 
 //returning Title
 func GetTopic(reader io.Reader, writer io.Writer) (string, error) {
+	var validError = errors.New("key length should be greater than 3")
 	user_input := readInput(reader)
 	if isValidInput(user_input) {
 		return user_input, nil
 	}
-	return "", errors.New("Issues")
+	return "", validError
 }
 
 func Run(reader io.Reader, writer io.Writer) {
 	fmt.Printf(" %q \n", "Enter Topic: ")
 	//Get topic from User
-	topic, _ := GetTopic(reader, writer)
-	//Print Tip for the Topic
-	controller.GetTipForTopic(topic, writer)
+	topic, err := GetTopic(reader, writer)
+	//print error
+	if err != nil {
+		fmt.Fprintf(writer, "%q", err.Error())
+	} else {
+		//Print Tip for the Topic
+		controller.GetTipForTopic(topic, writer)
+	}
 }
