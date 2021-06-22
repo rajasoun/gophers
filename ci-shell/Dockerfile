@@ -93,7 +93,6 @@ RUN set -ex \
     && echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
 
 COPY ci-shell/dotfiles/.p10k.zsh $HOME/.p10k.zsh
-COPY ci-shell   /workspaces/ci-shell
 
 WORKDIR /workspaces
 

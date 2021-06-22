@@ -1,0 +1,19 @@
+---
+command:
+  hello world:
+    exit-status: 0
+    exec: "echo hello world"
+    stdout:
+    - hello world
+    stderr: []
+    timeout: 0
+  husky --version:
+    exit-status: 0
+    stdout:
+      - 6.0.0
+    stderr: []
+  go version:
+    exit-status: 0
+    stdout:
+      - 1.6
+    stderr: []

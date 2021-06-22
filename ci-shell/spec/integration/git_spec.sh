@@ -29,7 +29,7 @@ Describe "Integration Test : " integration
             When call _get_app_name_from_git_workspace
             GIT_CMD=$(git remote get-url origin | xargs basename)
             The status should be success
-            The output should equal  "$GIT_CMD"
+            The output should equal  "${GIT_CMD%%.*}"
         End
         It "_get_app_name_from_git_workspace on /tmp fails"
             cd /tmp || return 1

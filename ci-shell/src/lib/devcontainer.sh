@@ -14,7 +14,6 @@ function _query_json(){
 }
 
 function _get_devcontainer_json(){
-    DEV_CONTAINER_JSON_PATH="$(_get_git_workspace)/.devcontainer/devcontainer.json"
     _file_exist "$DEV_CONTAINER_JSON_PATH" || raise_error "devcontainer.json Not Found"
     ## Load devcontainer.json to CONFIG_JSON
     _JSON="$(< "$DEV_CONTAINER_JSON_PATH"  grep -v // )"
@@ -36,7 +35,10 @@ function _get_docker_file_path(){
     [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
     ## Get Dockerfile name and derive Location Name from CONFIG_JSON
     DOCKER_FILE_NAME=$(_query_json "$CONFIG_JSON" ".build.dockerfile")
-    DOCKER_FILE_PATH="$(_get_git_workspace)/.devcontainer/$DOCKER_FILE_NAME"
+    if [ "$DOCKER_FILE_NAME" == "null" ] ; then 
+        DOCKER_FILE_NAME=$(_query_json "$CONFIG_JSON" ".dockerFile")
+    fi
+    DOCKER_FILE_PATH="$CONFIG_DIR/$DOCKER_FILE_NAME"
 
     _file_exist "$DOCKER_FILE_PATH" || raise_error "$DOCKER_FILE_PATH Not Found"
     echo "$DOCKER_FILE_PATH"
@@ -77,6 +79,10 @@ function _get_shell(){
     [ -n "$CONFIG_JSON" ] || raise_error "Parameter CONFIG_JSON is Empty! "
     ## Get Build Args from CONFIG_JSON
     SHELL=$(_query_json "$CONFIG_JSON" '.settings."terminal.integrated.shell.linux"')
+    if [ "$SHELL" == "null" ]; then
+        # Use default
+        SHELL="/bin/zsh"
+    fi
     echo "$SHELL"
     return 0
 }
