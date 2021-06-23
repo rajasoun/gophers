@@ -53,18 +53,16 @@ func readJsonFile(path string) ([]byte, error) {
 
 // run an app from main.go -> file path should be "data/tips.json"
 // if want to check all unit test cases ->file path should be "../data/tips.json"
-
 var path = "../data/tips.json"
 
 //loading json data into Tips struct
 func loadTipsFromJson() ([]Tips, error) {
 	var errorFile = errors.New("failed loading jSON file")
-	data, _ := readJsonFile(path)
-
-	var result []Tips
-	json.Unmarshal([]byte(data), &result)
-	if string(data) == "" {
+	data, err := readJsonFile(path)
+	if err != nil {
 		return nil, errorFile
 	}
+	var result []Tips
+	json.Unmarshal([]byte(data), &result)
 	return result, nil
 }
