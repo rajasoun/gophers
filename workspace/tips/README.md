@@ -54,4 +54,15 @@ Command Line Tool to provide tips on the command to be used based on the topic
 
 
 
-
+### Steps to build an app
+1. Read UseCases
+1. Make a Flow of Requirements(useCases)
+1. Do coding with TDD 
+1. Refactor the code 
+1. Add one by one requirements with TDD(make pass unit test case)
+1. Follow MVC Pattern(Check the app flow with MVC Pattern)
+1. Also write Integration and End to End tests if required.
+1. Make 100% code coverage in Testing
+1. Apply Continous Integration and Continous Developement with Github Action on GitHub.
+1. Build a packaging (build an .exe file for different platform)
+1. Deployment an App
