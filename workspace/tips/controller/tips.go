@@ -9,7 +9,6 @@ import (
 //const ALL = "git-tip --all"
 //const EMPTY = ""
 
-//with Reader interface
 func GetTipForTopic(topic string, writer io.Writer) {
 	var tip = model.GetTip(topic)
 	fmt.Fprintf(writer, "  \n %q \n\n", tip)
