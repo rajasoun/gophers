@@ -1,10 +1,15 @@
 package model
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func init() {
+	os.Setenv("GO_ENV", "test")
+}
 
 func TestGetTip(t *testing.T) {
 	input_ouputData := []struct {
@@ -34,15 +39,6 @@ func TestLoadTipsFromJson(t *testing.T) {
 	})
 }
 
-func TestGetTipWithReadJsonFile(t *testing.T) {
-	t.Run("Checking valid data from path ", func(t *testing.T) {
-		path = "data/tips.json"
-		got := GetTip("push")
-		want := "failed loading jSON file"
-		//Equal asserts that two objects are equal.
-		assert.Equal(t, got, want)
-	})
-}
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
 		got, _ := readJsonFile("../data/tips.json")
@@ -55,5 +51,14 @@ func TestReadJsonFile(t *testing.T) {
 		_, got := readJsonFile("tips.json")
 		//Error asserts that a function returned an error (i.e. not `nil`).
 		assert.Error(t, got)
+	})
+}
+
+func TestGetTipJsonFilePath(t *testing.T) {
+	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
+		got := getJsonFilePath()
+		expected := "data/tips.json"
+		//Contains asserts that the specified string, list(array, slice...) or map contains the specified substring or element.
+		assert.Contains(t, string(got), expected)
 	})
 }

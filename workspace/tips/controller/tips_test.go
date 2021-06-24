@@ -2,10 +2,15 @@ package controller
 
 import (
 	"bytes"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func init() {
+	os.Setenv("GO_ENV", "test")
+}
 
 func TestGetTipForTopic(t *testing.T) {
 	output_buffer := bytes.Buffer{}

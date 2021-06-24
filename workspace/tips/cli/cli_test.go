@@ -2,11 +2,16 @@ package cli
 
 import (
 	"bytes"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func init() {
+	os.Setenv("GO_ENV", "test")
+}
 
 func TestGetTopic(t *testing.T) {
 	t.Run("Check GetTopic with reader interface", func(t *testing.T) {
