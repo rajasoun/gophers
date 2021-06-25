@@ -60,12 +60,6 @@ func TestGetCurrentWorkingDir(t *testing.T) {
 		want := "/gophers/workspace/tips"
 		assert.Contains(t, got, want)
 	})
-	// t.Run("error", func(t *testing.T) {
-	// 	//os.Chdir("./path")
-	// 	_, got := getCurrentWorkingDir()
-	// 	//want := "/gophers/workspace/tips"
-	// 	assert.Error(t, got)
-	// })
 }
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {

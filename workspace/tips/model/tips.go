@@ -59,7 +59,6 @@ func loadTipsFromJson() ([]Tips, error) {
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
-	fmt.Println("---->" + path)
 	var errorFile = errors.New("failed loading jSON file")
 	data, err := readJsonFile(path)
 	if err != nil {
