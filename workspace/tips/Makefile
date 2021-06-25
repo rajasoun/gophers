@@ -10,15 +10,9 @@ bin: clean
 	mkdir -p bin 
 
 clean:
-	rm -rf bin Godeps
-
-start: bin/$(APP)
-	./bin/$(APP) serve -v
-
-start-consul: bin/$(APP)
-	./bin/$(APP) serve --jobdb=consul -v
+	rm -rf bin 
 
 test:
 	go test -v ./... --cover
 
-.PHONY: bin/$(APP) bin clean start test
+.PHONY: bin/$(APP) bin clean test
