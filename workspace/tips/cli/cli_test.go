@@ -1,47 +1,49 @@
 package cli
 
 import (
+	"bytes"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetTopic(t *testing.T) {
-	t.Run("Check GetTopic is equal to git status", func(t *testing.T) {
-		mockUserInput := struct {
-			title func() string
-		}{
-			title: func() string { return "git status" },
-		}
-
-		got := GetTopic(mockUserInput.title)
-		want := "git status"
-		assert.Equal(t, got, want)
-	})
-	t.Run("Check GetTopic is not equal to git dummy", func(t *testing.T) {
-		mockUserInput := struct {
-			title func() string
-		}{
-			title: func() string { return "git status" },
-		}
-
-		got := GetTopic(mockUserInput.title)
-		want := "git dummy"
-		assert.NotEqual(t, got, want)
-	})
+func init() {
+	os.Setenv("GO_ENV", "test")
 }
 
-func TestCase(t *testing.T) {
-	t.Run("Check GetTopicc with reader interface", func(t *testing.T) {
+func TestGetTopic(t *testing.T) {
+	t.Run("Check GetTopic with reader interface", func(t *testing.T) {
 		key := strings.NewReader("git commit")
-		got, _ := GetTopicc(key)
+		output_buffer := bytes.Buffer{}
+		got, _ := GetTopic(key, &output_buffer)
 		want := "git commit"
 		assert.Equal(t, got, want)
 	})
-	t.Run("Check GetTopicc with reader interface", func(t *testing.T) {
-		key := strings.NewReader("com")
-		_, err := GetTopicc(key)
+	t.Run("Check GetTopic invalid topic", func(t *testing.T) {
+		key := strings.NewReader("git")
+		output_buffer := bytes.Buffer{}
+		_, err := GetTopic(key, &output_buffer)
 		assert.Error(t, err)
+	})
+}
+
+func TestRun(t *testing.T) {
+	t.Run("End to End Test (e2e) for tips tool", func(t *testing.T) {
+		input_buffer := strings.NewReader("push")
+		output_buffer := bytes.Buffer{}
+		Run(input_buffer, &output_buffer)
+		got := output_buffer.String()
+		want := "push"
+		assert.Contains(t, got, want)
+	})
+	t.Run("End to End Test (e2e) for tips tool with validation", func(t *testing.T) {
+		input_buffer := strings.NewReader("nor")
+		output_buffer := bytes.Buffer{}
+		Run(input_buffer, &output_buffer)
+		got := output_buffer.String()
+		want := "\"key length should be greater than 3\""
+		assert.Equal(t, got, want)
 	})
 }

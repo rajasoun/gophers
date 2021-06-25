@@ -1,37 +1,38 @@
 package model
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetTip(t *testing.T) {
-	t.Run("Get Tip for valid Topic - rebase", func(t *testing.T) {
-		got := GetTip("rebase")
-		want := "Rebases 'feature' to 'master' and merges it in to master"
-		assert.Contains(t, got, want)
-	})
-	t.Run("Get Tip for valid Topic - help", func(t *testing.T) {
-		got := GetTip("help")
-		want := "Everyday Git in twenty commands or so : git help everyday"
-		assert.Equal(t, got, want)
-	})
-	t.Run("Get Tip for invalid Topic - dummy", func(t *testing.T) {
-		got := GetTip("dummy")
-		want := "Tips Not Available for Topic"
-		assert.Equal(t, got, want)
-	})
-	t.Run("Get Tip for invalid Topic - dummy", func(t *testing.T) {
-		got := GetTip("dummy")
-		want := "Tips Not Available for Topic"
-		assert.Equal(t, got, want)
-	})
+func init() {
+	os.Setenv("GO_ENV", "test")
 }
 
+func TestGetTip(t *testing.T) {
+	input_ouputData := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{name: "Get Tip for valid Topic - rebase", input: "rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
+		{name: "Get Tip for valid Topic - help", input: "help", want: "Everyday Git in twenty commands or so : git help everyday"},
+		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "Tips Not Available for Topic"},
+		{name: "Get Tip for invalid Topic - Empty", input: "", want: "should not be Empty"},
+	}
+	for _, tt := range input_ouputData {
+		t.Run(tt.name, func(t *testing.T) {
+			got := GetTip(tt.input)
+			assert.Equal(t, got, tt.want)
+		})
+	}
+
+}
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		got, _ := LoadTipsFromJson()
+		got, _ := loadTipsFromJson()
 		expected := 166
 		//Equal asserts that two objects are equal.
 		assert.Equal(t, len(got), expected)
@@ -40,20 +41,30 @@ func TestLoadTipsFromJson(t *testing.T) {
 
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := ReadJsonFile("../data/tips.json")
+		got, _ := readJsonFile("../data/tips.json")
 		expected := "Everyday Git in twenty commands or so"
 		//Contains asserts that the specified string, list(array, slice...) or map contains the specified substring or element.
 		assert.Contains(t, string(got), expected)
 	})
+
 	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := ReadJsonFile("../data1/tips.json")
+		_, got := readJsonFile("tips.json")
 		//Error asserts that a function returned an error (i.e. not `nil`).
 		assert.Error(t, got)
 	})
-	t.Run("Load Json File and check if it not contains for DUMMY ", func(t *testing.T) {
-		got, _ := ReadJsonFile("../data/tips.json")
-		expected := "DUMMY"
-		//NotContains asserts that the specified string, list(array, slice...) or map does NOT contain the specified substring or element.
-		assert.NotContains(t, string(got), expected)
+}
+
+func TestGetCurrentWorkingDir(t *testing.T) {
+	t.Run("Checking Current Working directory path", func(t *testing.T) {
+		got, _ := getCurrentWorkingDir()
+		want := "/gophers/workspace/tips"
+		assert.Contains(t, got, want)
+	})
+}
+func TestGetTipJsonFilePath(t *testing.T) {
+	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
+		got := getJsonFilePath()
+		want := "/gophers/workspace/tips"
+		assert.Contains(t, got, want)
 	})
 }

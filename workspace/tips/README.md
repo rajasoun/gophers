@@ -39,9 +39,11 @@ Command Line Tool to provide tips on the command to be used based on the topic
 1.	It covers unit tests using TDD (Test Driven Development).
 1.	Tips project is designed by using a framework-MVC (Model View Controller) architectural design pattern.
 1.	MVC consists of three main packages as below
-*	View--cli package(Taking input(title for tip) from console and passing to controller package)
-*	Model-model package(Taking title parameter from controller and based on title return proper tip to Controller)
-*	Controller—controller package(Prints the tips on console according to user input(title))
+*	**View**--cli package(Taking input(title for tip) from console and passing to controller package)
+*	**Model**-model package(Taking title parameter from controller and based on title return proper tip to Controller)
+*	**Controller**—controller package(Prints the tips on console according to user input(title))
+ 
+ #### Example: We can run an app from main function (go run main.go) and get a tip on user input.
 
 * Example of practical learnings link is given below.
 [Code for git-tips](https://github.com/rajasoun/gophers/tree/mvc_design_pattern/workspace/tips)
@@ -51,13 +53,16 @@ Command Line Tool to provide tips on the command to be used based on the topic
 [Git-Tips]( https://github.com/rajasoun/tips/blob/main/GitTips.md)
 
 
-## Challenges & difficulties
-1.	Getting user input and testing (from command line).
-1.	Refactoring  mock-function for tests.
-1.	Getting 100% code coverage
-1.	Making all tests to be passed
-1.	Using devcontainer
-1.	Git commands(git stash, git pull –rebase)
 
-
-
+### Steps to build an app
+1. Read UseCases
+1. Make a Flow of Requirements(useCases)
+1. Do coding with TDD 
+1. Refactor the code 
+1. Add one by one requirements with TDD(make pass unit test case)
+1. Follow MVC Pattern(Check the app flow with MVC Pattern)
+1. Also write Integration and End to End tests if required.
+1. Make 100% code coverage in Testing
+1. Apply Continous Integration and Continous Developement with Github Action on GitHub.
+1. Build a packaging (build an .exe file for different platform)
+1. Deployment an App
