@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"os"
 	"testing"
 
@@ -38,7 +39,6 @@ func TestLoadTipsFromJson(t *testing.T) {
 		assert.Equal(t, len(got), expected)
 	})
 }
-
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
 		got, _ := readJsonFile("../data/tips.json")
@@ -54,11 +54,26 @@ func TestReadJsonFile(t *testing.T) {
 	})
 }
 
+type getMockErrorImpl struct {
+	err error
+}
+
+func (m *getMockErrorImpl) error() error {
+	m.err = errors.New("error")
+	return m.err
+}
 func TestGetCurrentWorkingDir(t *testing.T) {
 	t.Run("Checking Current Working directory path", func(t *testing.T) {
-		got, _ := getCurrentWorkingDir()
+		getErrorImpl := &getErrorImpl{}
+		got, _ := getCurrentWorkingDir(getErrorImpl)
 		want := "/gophers/workspace/tips"
 		assert.Contains(t, got, want)
+	})
+	t.Run("Checking Error on reading current working directory path", func(t *testing.T) {
+		getMockErrorImpl := &getMockErrorImpl{}
+		_, got := getCurrentWorkingDir(getMockErrorImpl)
+		want := errors.New("error")
+		assert.Error(t, got, want)
 	})
 }
 func TestGetTipJsonFilePath(t *testing.T) {

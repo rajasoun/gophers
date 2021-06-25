@@ -55,10 +55,14 @@ func readJsonFile(path string) ([]byte, error) {
 
 //loading json data into Tips struct
 func loadTipsFromJson() ([]Tips, error) {
+
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
+
+	//write unit test for checking error
 	var errorFile = errors.New("failed loading jSON file")
+
 	data, err := readJsonFile(path)
 	if err != nil {
 		return nil, errorFile
@@ -68,11 +72,21 @@ func loadTipsFromJson() ([]Tips, error) {
 	return result, nil
 }
 
-func getCurrentWorkingDir() (string, error) {
+type getError interface {
+	error() error
+}
 
+type getErrorImpl struct {
+	err error
+}
+
+func (e *getErrorImpl) error() error {
+	return e.err
+}
+func getCurrentWorkingDir(d getError) (string, error) {
 	workingDir, err := os.Getwd()
-
-	if err != nil {
+	if err != nil || d.error() != nil {
+		err = errors.New("error")
 		return "", err
 	}
 	return workingDir, nil
@@ -80,7 +94,7 @@ func getCurrentWorkingDir() (string, error) {
 }
 
 func getJsonFilePath() string {
-	currentDir, _ := getCurrentWorkingDir()
+	currentDir, _ := getCurrentWorkingDir(&getErrorImpl{})
 	// remove base directory from the workingDir when run from test
 	baseDir := filepath.Base(currentDir)
 	isInTest := os.Getenv("GO_ENV") == "test"

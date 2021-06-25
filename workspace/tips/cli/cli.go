@@ -9,6 +9,12 @@ import (
 	"strings"
 )
 
+type Reader interface {
+	readInput(io.Reader) string
+}
+type readerInput struct {
+}
+
 func isValidInput(userInput string) bool {
 	if len(userInput) <= 3 && userInput != "" {
 		return false
@@ -16,7 +22,7 @@ func isValidInput(userInput string) bool {
 	return true
 }
 
-func readInput(reader io.Reader) string {
+func (r readerInput) readInput(reader io.Reader) string {
 	inputReader := bufio.NewReader(reader)
 	// ReadString will block until the delimiter is entered
 	input, _ := inputReader.ReadString('\n')
@@ -28,7 +34,8 @@ func readInput(reader io.Reader) string {
 //returning Title
 func GetTopic(reader io.Reader, writer io.Writer) (string, error) {
 	var validError = errors.New("key length should be greater than 3")
-	user_input := readInput(reader)
+	r := readerInput{}
+	user_input := r.readInput(reader)
 	if isValidInput(user_input) {
 		return user_input, nil
 	}
