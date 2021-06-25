@@ -54,11 +54,23 @@ func TestReadJsonFile(t *testing.T) {
 	})
 }
 
+func TestGetCurrentWorkingDir(t *testing.T) {
+	t.Run("Checking Current Working directory path", func(t *testing.T) {
+		got, _ := getCurrentWorkingDir()
+		want := "/gophers/workspace/tips"
+		assert.Contains(t, got, want)
+	})
+	// t.Run("error", func(t *testing.T) {
+	// 	//os.Chdir("./path")
+	// 	_, got := getCurrentWorkingDir()
+	// 	//want := "/gophers/workspace/tips"
+	// 	assert.Error(t, got)
+	// })
+}
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
 		got := getJsonFilePath()
-		expected := "data/tips.json"
-		//Contains asserts that the specified string, list(array, slice...) or map contains the specified substring or element.
-		assert.Contains(t, string(got), expected)
+		want := "/gophers/workspace/tips"
+		assert.Contains(t, got, want)
 	})
 }

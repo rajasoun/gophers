@@ -70,17 +70,24 @@ func loadTipsFromJson() ([]Tips, error) {
 	return result, nil
 }
 
-func getJsonFilePath() string {
-	workingDir, err := os.Getwd()
-	if err != nil {
-		fmt.Println(err)
-	}
+func getCurrentWorkingDir() (string, error) {
 
+	workingDir, err := os.Getwd()
+
+	if err != nil {
+		return "", err
+	}
+	return workingDir, nil
+
+}
+
+func getJsonFilePath() string {
+	currentDir, _ := getCurrentWorkingDir()
 	// remove base directory from the workingDir when run from test
-	baseDir := filepath.Base(workingDir)
+	baseDir := filepath.Base(currentDir)
 	isInTest := os.Getenv("GO_ENV") == "test"
 	if isInTest {
-		workingDir = strings.ReplaceAll(workingDir, baseDir, "")
+		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
 	}
-	return workingDir + "/data/tips.json"
+	return currentDir + "/data/tips.json"
 }
