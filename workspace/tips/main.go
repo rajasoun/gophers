@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	cli.Run(cli.ReaderInterface, os.Stdout)
+	cli.Run(cli.Stdin, os.Stdout)
 }

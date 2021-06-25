@@ -10,14 +10,14 @@ import (
 	"strings"
 )
 
-type Reader interface {
+type reader interface {
 	readInput(io.Reader) string
 }
 type ReaderInput struct {
 	input string
 }
 
-var ReaderInterface = ReaderInput{}
+var Stdin = ReaderInput{}
 
 func (reader_input ReaderInput) readInput(reader io.Reader) string {
 	inputReader := bufio.NewReader(reader)
@@ -35,7 +35,7 @@ func isValidInput(userInput string) bool {
 }
 
 //returning Title
-func GetTopic(reader Reader, writer io.Writer) (string, error) {
+func GetTopic(reader reader, writer io.Writer) (string, error) {
 	var validError = errors.New("key length should be greater than 3")
 	user_input := reader.readInput(os.Stdin)
 	if isValidInput(user_input) {
@@ -44,7 +44,7 @@ func GetTopic(reader Reader, writer io.Writer) (string, error) {
 	return "", validError
 }
 
-func Run(reader Reader, writer io.Writer) {
+func Run(reader reader, writer io.Writer) {
 	fmt.Printf(" %q \n", "Enter Topic: ")
 	//Get topic from User
 	topic, err := GetTopic(reader, writer)

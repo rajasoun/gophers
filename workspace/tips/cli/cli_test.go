@@ -26,12 +26,11 @@ func TestInValidInput(t *testing.T) {
 	})
 }
 func TestReadInput(t *testing.T) {
-	t.Run("Integartion testing : Reading data from console(userInput) ", func(t *testing.T) {
+	t.Run("Integration Testing : Reading data from console(userInput) ", func(t *testing.T) {
 		input_buffer := strings.NewReader("push")
-		got := ReaderInterface.readInput(input_buffer)
+		got := Stdin.readInput(input_buffer)
 		want := "push"
 		assert.Equal(t, got, want)
-
 	})
 }
 
