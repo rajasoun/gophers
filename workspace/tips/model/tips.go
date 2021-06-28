@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -17,11 +18,8 @@ type Tips struct {
 
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	//data, err := loadTipsFromJson("../data/tips.json")
-	data, err := loadTipsFromJson()
-	if err != nil {
-		return err.Error()
-	} else if title != "" {
+	data, _ := loadTipsFromJson()
+	if title != "" {
 		commands := getAllCommands(data, title)
 		for _, tip := range commands {
 			return tip
@@ -45,9 +43,10 @@ func getAllCommands(data []Tips, title string) []string {
 
 //reading json data from file
 func readJsonFile(path string) ([]byte, error) {
-	var errFileNotFound = errors.New("file not found")
+	var errFileNotFound = errors.New("failed loading jSON file")
 	jsonData, err := ioutil.ReadFile(path)
 	if err != nil {
+		fmt.Println(errFileNotFound)
 		return nil, errFileNotFound
 	}
 	return jsonData, nil
@@ -55,18 +54,10 @@ func readJsonFile(path string) ([]byte, error) {
 
 //loading json data into Tips struct
 func loadTipsFromJson() ([]Tips, error) {
-
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
-
-	//write unit test for checking error
-	var errorFile = errors.New("failed loading jSON file")
-
-	data, err := readJsonFile(path)
-	if err != nil {
-		return nil, errorFile
-	}
+	data, _ := readJsonFile(path)
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result, nil

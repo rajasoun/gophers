@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"io"
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
+//todo Table driven test
 func init() {
 	os.Setenv("GO_ENV", "test")
 }
@@ -27,8 +27,11 @@ func TestInValidInput(t *testing.T) {
 }
 func TestReadInput(t *testing.T) {
 	t.Run("Integration Testing : Reading data from console(userInput) ", func(t *testing.T) {
-		input_buffer := strings.NewReader("push")
-		got := Stdin.readInput(input_buffer)
+		//input_buffer := strings.NewReader("push")
+		var buffer bytes.Buffer
+		buffer.WriteString("push")
+		//got := Stdin.readInput(input_buffer)
+		got := Stdin.readInput(&buffer)
 		want := "push"
 		assert.Equal(t, got, want)
 	})

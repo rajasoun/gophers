@@ -31,6 +31,7 @@ func TestGetTip(t *testing.T) {
 	}
 
 }
+
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
 		got, _ := loadTipsFromJson()
@@ -38,6 +39,7 @@ func TestLoadTipsFromJson(t *testing.T) {
 		assert.Equal(t, len(got), expected)
 	})
 }
+
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
 		got, _ := readJsonFile("../data/tips.json")
