@@ -25,3 +25,11 @@ source <(curl -s https://raw.githubusercontent.com/rajasoun/common-lib/main/run_
 ln -s ${PWD}/.devcontainer vscode-iaac/go/.devcontainer
 ./ci.sh build -d
 ```
+
+## Continously Run Go Tests
+
+In Terminal 
+
+```
+gotestsum --watch --format testname
+```
