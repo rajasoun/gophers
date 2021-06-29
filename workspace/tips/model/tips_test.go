@@ -31,7 +31,6 @@ func TestGetTip(t *testing.T) {
 	}
 
 }
-
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
 		got, _ := loadTipsFromJson()
@@ -40,22 +39,7 @@ func TestLoadTipsFromJson(t *testing.T) {
 	})
 }
 
-func TestReadJsonFile(t *testing.T) {
-	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := readJsonFile("../data/tips.json")
-		expected := "Everyday Git in twenty commands or so"
-		assert.Contains(t, string(got), expected)
-	})
-
-	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := readJsonFile("tips.json")
-		assert.Error(t, got)
-	})
-}
-
-type getMockErrorImpl struct {
-	err error
-}
+type getMockErrorImpl struct{ err error }
 
 func (m *getMockErrorImpl) error() error {
 	m.err = errors.New("error")
@@ -75,10 +59,46 @@ func TestGetCurrentWorkingDir(t *testing.T) {
 		assert.Error(t, got, want)
 	})
 }
+
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
 		got := getJsonFilePath()
 		want := "/gophers/workspace/tips"
 		assert.Contains(t, got, want)
+	})
+}
+
+type readerMockImpl struct{}
+
+func (reader_mock_Impl readerMockImpl) readJsonFile(path string) ([]byte, error) {
+	if path == "../data/tips.json" {
+		return []byte("166"), nil
+	} else {
+		return nil, errors.New("error in file")
+	}
+}
+
+func TestReadJsonFile(t *testing.T) {
+	readerMockImpl := readerMockImpl{}
+	t.Run("Unit Testing readjson file data", func(t *testing.T) {
+		got, _ := readerMockImpl.readJsonFile("../data/tips.json")
+		want := "166"
+		assert.Equal(t, string(got), want)
+	})
+	t.Run("Unit Testing:Loading invalid Json File should fail", func(t *testing.T) {
+		_, got := readerMockImpl.readJsonFile("data/tips.json")
+		assert.Error(t, got)
+	})
+
+	file_reader_Impl := file_reader_Impl{}
+	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
+		got, _ := file_reader_Impl.readJsonFile("../data/tips.json")
+		expected := "Everyday Git in twenty commands or so"
+		assert.Contains(t, string(got), expected)
+	})
+
+	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
+		_, got := file_reader_Impl.readJsonFile("tips.json")
+		assert.Error(t, got)
 	})
 }

@@ -10,9 +10,8 @@ import (
 	"strings"
 )
 
-type reader interface {
-	readInput(io.Reader) string
-}
+type reader interface{ readInput(io.Reader) string }
+
 type ReaderInput struct {
 	input string
 }
@@ -35,7 +34,7 @@ func isValidInput(userInput string) bool {
 }
 
 //returning Title
-func GetTopic(reader reader, writer io.Writer) (string, error) {
+func getTopic(reader reader, writer io.Writer) (string, error) {
 	var validError = errors.New("key length should be greater than 3")
 	user_input := reader.readInput(os.Stdin)
 	if isValidInput(user_input) {
@@ -47,12 +46,13 @@ func GetTopic(reader reader, writer io.Writer) (string, error) {
 func Run(reader reader, writer io.Writer) {
 	fmt.Printf(" %q \n", "Enter Topic: ")
 	//Get topic from User
-	topic, err := GetTopic(reader, writer)
+	topic, err := getTopic(reader, writer)
 	//print error
 	if err != nil {
 		fmt.Fprintf(writer, " %q", err.Error())
 	} else {
 		//Print Tip for the Topic
-		controller.GetTipForTopic(topic, writer)
+		var controller_impl controller.Controller_Impl
+		controller.GetTipForTopic(topic, writer, controller_impl)
 	}
 }
