@@ -4,22 +4,24 @@ Career guide to become a Awesome Go Developer
 
 Project is aimed at creating a study guide for Early in Career developers to learn Go and gain expertise in handling real world projects
 
-# TDD - IaaC - In CI Shell
+## Dev Containers Inside Visual Studio Code
 
-Open Bash Terminal 
+1. Install [Visual Studio Code](https://code.visualstudio.com/download)
 
-1. `./ci.sh build`
+1. [Remote-Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-1. `./ci.sh shell`
+    - In the terminal `code --install-extension ms-vscode-remote.remote-containers`
+    - For robot files extension `code --install-extension tomiturtiainen.rf-intellisense`
 
-1. Run `goss --gossfile ci-shell/spec/goss-tests/gossfile.goss.yaml validate` 
-to check the container 
+1. [Docker](https://www.docker.com/)
 
 
-# TDD - IaaC - Dev Container 
+## Building Dev Containers Outside of Visual Studio Code
 
-Open Terminal 
+In Terminal 
 
-1. Run `shellspec -c ci-shell/spec --tag unit,integration,iaac  --kcov --profile` to check if the container provision is valid
-
-1. Run `goss validate `
+```
+source <(curl -s https://raw.githubusercontent.com/rajasoun/common-lib/main/run_ci_shell.sh)
+ln -s ${PWD}/.devcontainer vscode-iaac/go/.devcontainer
+./ci.sh build -d
+```
