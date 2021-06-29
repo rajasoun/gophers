@@ -1,4 +1,4 @@
-APP := tips
+APP :=  $(shell basename $(CURDIR))
 VERSION := $(shell git describe --tags --always --dirty)
 GOPATH := $(CURDIR)/Godeps/_workspace:$(GOPATH)
 PATH := $(GOPATH)/bin:$(PATH)
@@ -11,6 +11,9 @@ bin: clean
 
 clean:
 	rm -rf bin 
+
+watch:
+	gotestsum --watch --format testname
 
 test:
 	go test -v ./... --cover

@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -15,21 +16,24 @@ type Tips struct {
 	Tip   string `json:"tip"`
 }
 
+const (
+	empty_string  = ""
+	empty_value   = "should not be Empty"
+	default_value = "Tips Not Available for Topic"
+)
+
 //GetTip returning Tip/Command According to each title
 func GetTip(title string) string {
-	//data, err := loadTipsFromJson("../data/tips.json")
-	data, err := loadTipsFromJson()
-	if err != nil {
-		return err.Error()
-	} else if title != "" {
+	data, _ := loadTipsFromJson()
+	if title != empty_string {
 		commands := getAllCommands(data, title)
 		for _, tip := range commands {
 			return tip
 		}
-	} else if title == "" {
-		return "should not be Empty"
+	} else if title == empty_string {
+		return empty_value
 	}
-	return "Tips Not Available for Topic"
+	return default_value
 }
 
 func getAllCommands(data []Tips, title string) []string {
@@ -43,36 +47,28 @@ func getAllCommands(data []Tips, title string) []string {
 	return commands
 }
 
-//reading json data from file
-func readJsonFile(path string) ([]byte, error) {
-	var errFileNotFound = errors.New("file not found")
-	jsonData, err := ioutil.ReadFile(path)
-	if err != nil {
-		return nil, errFileNotFound
-	}
-	return jsonData, nil
-}
-
 //loading json data into Tips struct
 func loadTipsFromJson() ([]Tips, error) {
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
-	var errorFile = errors.New("failed loading jSON file")
-	data, err := readJsonFile(path)
-	if err != nil {
-		return nil, errorFile
-	}
+	var data []byte
+	fr_impl := file_reader_Impl{}
+	data, _ = fr_impl.readJsonFile(path)
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result, nil
 }
 
-func getCurrentWorkingDir() (string, error) {
+type getError interface{ error() error }
+type getErrorImpl struct{ err error }
 
+func (e *getErrorImpl) error() error { return e.err }
+
+func getCurrentWorkingDir(d getError) (string, error) {
 	workingDir, err := os.Getwd()
-
-	if err != nil {
+	if err != nil || d.error() != nil {
+		err = errors.New("error")
 		return "", err
 	}
 	return workingDir, nil
@@ -80,7 +76,7 @@ func getCurrentWorkingDir() (string, error) {
 }
 
 func getJsonFilePath() string {
-	currentDir, _ := getCurrentWorkingDir()
+	currentDir, _ := getCurrentWorkingDir(&getErrorImpl{})
 	// remove base directory from the workingDir when run from test
 	baseDir := filepath.Base(currentDir)
 	isInTest := os.Getenv("GO_ENV") == "test"
@@ -88,4 +84,16 @@ func getJsonFilePath() string {
 		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
 	}
 	return currentDir + "/data/tips.json"
+}
+
+type file_reader_Impl struct{}
+
+func (s file_reader_Impl) readJsonFile(path string) ([]byte, error) {
+	var errFileNotFound = errors.New("failed loading jSON file")
+	jsonData, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println(errFileNotFound)
+		return nil, errFileNotFound
+	}
+	return jsonData, nil
 }
