@@ -52,7 +52,6 @@ func Run(reader reader, writer io.Writer) {
 		fmt.Fprintf(writer, " %q", err.Error())
 	} else {
 		//Print Tip for the Topic
-		var controller_impl controller.Controller_Impl
-		controller.GetTipForTopic(topic, writer, controller_impl)
+		controller.GetTipForTopic(topic, writer, controller.Controller_impl)
 	}
 }

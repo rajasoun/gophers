@@ -7,5 +7,4 @@ import (
 
 func main() {
 	cli.Run(cli.Stdin, os.Stdout)
-
 }

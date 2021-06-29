@@ -1,3 +1,5 @@
+// +build integration
+
 package cli
 
 import (
@@ -12,6 +14,7 @@ import (
 func init() {
 	os.Setenv("GO_ENV", "test")
 }
+
 func TestReadInput(t *testing.T) {
 	t.Run("Integration Testing : Reading data from console(userInput) ", func(t *testing.T) {
 		var buffer bytes.Buffer

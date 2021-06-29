@@ -22,9 +22,15 @@ const (
 	default_value = "Tips Not Available for Topic"
 )
 
+var Model_Impl = File_reader_Impl{}
+
+type Model interface {
+	readJsonFile(path string) ([]byte, error)
+}
+
 //GetTip returning Tip/Command According to each title
-func GetTip(title string) string {
-	data, _ := loadTipsFromJson()
+func GetTip(title string, model Model) string {
+	data, _ := loadTipsFromJson(model)
 	if title != empty_string {
 		commands := getAllCommands(data, title)
 		for _, tip := range commands {
@@ -48,16 +54,37 @@ func getAllCommands(data []Tips, title string) []string {
 }
 
 //loading json data into Tips struct
-func loadTipsFromJson() ([]Tips, error) {
+func loadTipsFromJson(model Model) ([]Tips, error) {
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
 	var data []byte
-	fr_impl := file_reader_Impl{}
-	data, _ = fr_impl.readJsonFile(path)
+	data, _ = model.readJsonFile(path)
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result, nil
+}
+func getJsonFilePath() string {
+	currentDir, _ := getCurrentWorkingDir(&getErrorImpl{})
+	// remove base directory from the workingDir when run from test
+	baseDir := filepath.Base(currentDir)
+	isInTest := os.Getenv("GO_ENV") == "test"
+	if isInTest {
+		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
+	}
+	return currentDir + "/data/tips.json"
+}
+
+type File_reader_Impl struct{}
+
+func (s File_reader_Impl) readJsonFile(path string) ([]byte, error) {
+	var errFileNotFound = errors.New("failed loading jSON file")
+	jsonData, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println(errFileNotFound)
+		return nil, errFileNotFound
+	}
+	return jsonData, nil
 }
 
 type getError interface{ error() error }
@@ -73,27 +100,4 @@ func getCurrentWorkingDir(d getError) (string, error) {
 	}
 	return workingDir, nil
 
-}
-
-func getJsonFilePath() string {
-	currentDir, _ := getCurrentWorkingDir(&getErrorImpl{})
-	// remove base directory from the workingDir when run from test
-	baseDir := filepath.Base(currentDir)
-	isInTest := os.Getenv("GO_ENV") == "test"
-	if isInTest {
-		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
-	}
-	return currentDir + "/data/tips.json"
-}
-
-type file_reader_Impl struct{}
-
-func (s file_reader_Impl) readJsonFile(path string) ([]byte, error) {
-	var errFileNotFound = errors.New("failed loading jSON file")
-	jsonData, err := ioutil.ReadFile(path)
-	if err != nil {
-		fmt.Println(errFileNotFound)
-		return nil, errFileNotFound
-	}
-	return jsonData, nil
 }

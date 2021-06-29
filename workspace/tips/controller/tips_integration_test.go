@@ -1,3 +1,5 @@
+// +build integration
+
 package controller
 
 import (
@@ -12,7 +14,8 @@ func init() {
 	os.Setenv("GO_ENV", "test")
 }
 
-func TestGetTipForTopicIntegrationTesting(t *testing.T) {
+//integration Testing:
+func TestGetTipForTopicIntegration(t *testing.T) {
 	output_buffer := bytes.Buffer{}
 	controller := Controller_Impl{}
 	input_ouputData := []struct {
