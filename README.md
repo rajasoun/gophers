@@ -28,8 +28,13 @@ ln -s ${PWD}/.devcontainer vscode-iaac/go/.devcontainer
 
 ## Continously Run Go Tests
 
-In Terminal 
+In Terminal - To watch for changes and teh tests
 
 ```
 gotestsum --watch --format testname
+```
+
+To run only a specific tests
+```
+gotestsum --format testname  -- -tags=integration ./...
 ```
