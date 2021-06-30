@@ -4,7 +4,6 @@ package model
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"testing"
 
@@ -75,7 +74,7 @@ func TestGetTipJsonFilePath(t *testing.T) {
 
 type readerMockImpl struct{}
 
-func (reader_mock_Impl readerMockImpl) readJsonFile(path string) ([]byte, error) {
+func (reader_mock_Impl readerMockImpl) readFile(path string) ([]byte, error) {
 	var data = []byte(`[{
 		"title":"Rebases 'feature' to 'master' and merges it in to master ",
 		"tip":"git rebase master feature && git checkout master && git merge -"
@@ -86,13 +85,12 @@ func (reader_mock_Impl readerMockImpl) readJsonFile(path string) ([]byte, error)
 func TestRead(t *testing.T) {
 	file_reader_Impl := File_reader_Impl{}
 	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := file_reader_Impl.readJsonFile("tips.json")
+		_, got := readJsonFile("tips.json", file_reader_Impl)
 		assert.Error(t, got)
 	})
 	readerMockImpl := readerMockImpl{}
 	t.Run("Unit Testing readjson file data", func(t *testing.T) {
-		got, _ := readerMockImpl.readJsonFile("../data/tips.json")
-		fmt.Print(len(got))
+		got, _ := readJsonFile("../data/tips.json", readerMockImpl)
 		want := "Rebases 'feature' to 'master'"
 		assert.Contains(t, string(got), want)
 	})

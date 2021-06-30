@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 
-	"io/ioutil"
 	"strings"
 )
 
@@ -25,7 +25,7 @@ const (
 var Model_Impl = File_reader_Impl{}
 
 type Model interface {
-	readJsonFile(path string) ([]byte, error)
+	readFile(path string) ([]byte, error)
 }
 
 //GetTip returning Tip/Command According to each title
@@ -59,7 +59,7 @@ func loadTipsFromJson(model Model) ([]Tips, error) {
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
 	var data []byte
-	data, _ = model.readJsonFile(path)
+	data, _ = readJsonFile(path, model)
 	var result []Tips
 	json.Unmarshal([]byte(data), &result)
 	return result, nil
@@ -77,9 +77,13 @@ func getJsonFilePath() string {
 
 type File_reader_Impl struct{}
 
-func (s File_reader_Impl) readJsonFile(path string) ([]byte, error) {
+func (s File_reader_Impl) readFile(path string) ([]byte, error) {
+	return ioutil.ReadFile(path)
+}
+
+func readJsonFile(path string, model Model) ([]byte, error) {
 	var errFileNotFound = errors.New("failed loading jSON file")
-	jsonData, err := ioutil.ReadFile(path)
+	jsonData, err := model.readFile(path)
 	if err != nil {
 		fmt.Println(errFileNotFound)
 		return nil, errFileNotFound
