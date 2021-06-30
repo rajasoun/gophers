@@ -43,25 +43,14 @@ func TestLoadTipsFromJson(t *testing.T) {
 	})
 }
 
-type getMockErrorImpl struct{ err error }
-
-func (m *getMockErrorImpl) error() error {
-	m.err = errors.New("error")
-	return m.err
-}
 func TestGetCurrentWorkingDir(t *testing.T) {
+	handlerMockImpl := &handlerMockImpl{}
 	t.Run("Checking Current Working directory path", func(t *testing.T) {
-		getErrorImpl := &getErrorImpl{}
-		got, _ := getCurrentWorkingDir(getErrorImpl)
+		got, _ := getCurrentWorkingDir(handlerMockImpl)
 		want := "/gophers/workspace/tips"
-		assert.Contains(t, got, want)
+		assert.Equal(t, got, want)
 	})
-	t.Run("Checking Error on reading current working directory path", func(t *testing.T) {
-		getMockErrorImpl := &getMockErrorImpl{}
-		_, got := getCurrentWorkingDir(getMockErrorImpl)
-		want := errors.New("error")
-		assert.Error(t, got, want)
-	})
+
 }
 
 func TestGetTipJsonFilePath(t *testing.T) {
@@ -72,6 +61,28 @@ func TestGetTipJsonFilePath(t *testing.T) {
 	})
 }
 
+func TestReadJsonFile(t *testing.T) {
+	readerMockImpl := readerMockImpl{}
+	t.Run("Unit Testing readjson file data", func(t *testing.T) {
+		got, _ := readJsonFile("../data/tips.json", readerMockImpl)
+		want := "Rebases 'feature' to 'master'"
+		assert.Contains(t, string(got), want)
+	})
+	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
+		_, got := readJsonFile("tips.json", readerMockImpl)
+		assert.Error(t, got)
+	})
+
+}
+
+// Handling Error mock impl
+type handlerMockImpl struct{}
+
+func (hand_mockImple *handlerMockImpl) get_wd() (string, error) {
+	return "/gophers/workspace/tips", nil
+}
+
+//readFile mock impl
 type readerMockImpl struct{}
 
 func (reader_mock_Impl readerMockImpl) readFile(path string) ([]byte, error) {
@@ -79,20 +90,8 @@ func (reader_mock_Impl readerMockImpl) readFile(path string) ([]byte, error) {
 		"title":"Rebases 'feature' to 'master' and merges it in to master ",
 		"tip":"git rebase master feature && git checkout master && git merge -"
 	 }]`)
+	if path == "tips.json" {
+		return nil, errors.New("error")
+	}
 	return data, nil
-}
-
-func TestRead(t *testing.T) {
-	file_reader_Impl := File_reader_Impl{}
-	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := readJsonFile("tips.json", file_reader_Impl)
-		assert.Error(t, got)
-	})
-	readerMockImpl := readerMockImpl{}
-	t.Run("Unit Testing readjson file data", func(t *testing.T) {
-		got, _ := readJsonFile("../data/tips.json", readerMockImpl)
-		want := "Rebases 'feature' to 'master'"
-		assert.Contains(t, string(got), want)
-	})
-
 }

@@ -22,12 +22,6 @@ const (
 	default_value = "Tips Not Available for Topic"
 )
 
-var Model_Impl = File_reader_Impl{}
-
-type Model interface {
-	readFile(path string) ([]byte, error)
-}
-
 //GetTip returning Tip/Command According to each title
 func GetTip(title string, model Model) string {
 	data, _ := loadTipsFromJson(model)
@@ -65,7 +59,7 @@ func loadTipsFromJson(model Model) ([]Tips, error) {
 	return result, nil
 }
 func getJsonFilePath() string {
-	currentDir, _ := getCurrentWorkingDir(&getErrorImpl{})
+	currentDir, _ := getCurrentWorkingDir(&handlerImpl{})
 	// remove base directory from the workingDir when run from test
 	baseDir := filepath.Base(currentDir)
 	isInTest := os.Getenv("GO_ENV") == "test"
@@ -75,6 +69,10 @@ func getJsonFilePath() string {
 	return currentDir + "/data/tips.json"
 }
 
+//readFile impl
+type Model interface {
+	readFile(path string) ([]byte, error)
+}
 type File_reader_Impl struct{}
 
 func (s File_reader_Impl) readFile(path string) ([]byte, error) {
@@ -91,17 +89,18 @@ func readJsonFile(path string, model Model) ([]byte, error) {
 	return jsonData, nil
 }
 
-type getError interface{ error() error }
-type getErrorImpl struct{ err error }
+//getWd impl
+type handler interface {
+	get_wd() (string, error)
+}
+type handlerImpl struct{}
 
-func (e *getErrorImpl) error() error { return e.err }
-
-func getCurrentWorkingDir(d getError) (string, error) {
-	workingDir, err := os.Getwd()
-	if err != nil || d.error() != nil {
-		err = errors.New("error")
-		return "", err
-	}
+func (han_impl *handlerImpl) get_wd() (string, error) {
+	return os.Getwd()
+}
+func getCurrentWorkingDir(handler handler) (string, error) {
+	var workingDir string
+	workingDir, _ = handler.get_wd()
 	return workingDir, nil
 
 }
