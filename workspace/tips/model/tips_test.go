@@ -4,6 +4,7 @@ package model
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"testing"
 
@@ -22,7 +23,6 @@ func TestGetTip(t *testing.T) {
 		want  string
 	}{
 		{name: "Get Tip for valid Topic - rebase", input: "rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
-		//{name: "Get Tip for valid Topic - help", input: "help", want: "Everyday Git in twenty commands or so : git help everyday"},
 		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "Tips Not Available for Topic"},
 		{name: "Get Tip for invalid Topic - Empty", input: "", want: "should not be Empty"},
 	}
@@ -80,20 +80,21 @@ func (reader_mock_Impl readerMockImpl) readJsonFile(path string) ([]byte, error)
 		"title":"Rebases 'feature' to 'master' and merges it in to master ",
 		"tip":"git rebase master feature && git checkout master && git merge -"
 	 }]`)
-	// if path != "../data/tips.json" {
-	// 	return nil, errors.New("error in file")
-	// }
 	return data, nil
 }
 
-// readerMockImpl := readerMockImpl{}
-// // t.Run("Unit Testing readjson file data", func(t *testing.T) {
-// // 	got, _ := readerMockImpl.readJsonFile("../data/tips.json")
-// // 	want := "166"
-// // 	assert.Equal(t, string(got), want)
-// // })
-// t.Run("Unit Testing:Loading invalid Json File should fail", func(t *testing.T) {
-// 	_, got := readerMockImpl.readJsonFile("data/tips.json")
-// 	fmt.Print(got)
-// 	assert.Error(t, got)
-// })
+func TestRead(t *testing.T) {
+	file_reader_Impl := File_reader_Impl{}
+	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
+		_, got := file_reader_Impl.readJsonFile("tips.json")
+		assert.Error(t, got)
+	})
+	readerMockImpl := readerMockImpl{}
+	t.Run("Unit Testing readjson file data", func(t *testing.T) {
+		got, _ := readerMockImpl.readJsonFile("../data/tips.json")
+		fmt.Print(len(got))
+		want := "Rebases 'feature' to 'master'"
+		assert.Contains(t, string(got), want)
+	})
+
+}

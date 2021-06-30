@@ -21,8 +21,5 @@ func TestReadJsonFile(t *testing.T) {
 		expected := "Everyday Git in twenty commands or so"
 		assert.Contains(t, string(got), expected)
 	})
-	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := file_reader_Impl.readJsonFile("tips.json")
-		assert.Error(t, got)
-	})
+
 }
