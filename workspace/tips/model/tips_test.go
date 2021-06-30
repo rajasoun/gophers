@@ -75,7 +75,9 @@ func TestReadJsonFile(t *testing.T) {
 
 }
 
-// getWd mock impl & readFile mock impl
+/* INTERFACE IMPLEMENTATIONS FOR UNIT TESTING*/
+
+//mock implementations for get_wd and readFile function for unitTest
 type readerMockImpl struct{}
 
 func (reader_mock_Impl readerMockImpl) get_wd() (string, error) {

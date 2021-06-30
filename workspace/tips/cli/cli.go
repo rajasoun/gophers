@@ -10,6 +10,7 @@ import (
 	"github/gophers/tips/controller"
 )
 
+// scan inpur from user
 func readInput(reader io.Reader) string {
 	inputReader := bufio.NewReader(reader)
 	// ReadString will block until the delimiter is entered
@@ -18,6 +19,8 @@ func readInput(reader io.Reader) string {
 	input = strings.TrimSuffix(input, "\n")
 	return input
 }
+
+//check input validation
 func isValidInput(userInput string) bool {
 	if len(userInput) <= 3 && userInput != "" {
 		return false
@@ -26,8 +29,7 @@ func isValidInput(userInput string) bool {
 }
 
 //returning Title
-//to do remove io.Writer
-func getTopic(reader io.Reader, writer io.Writer) (string, error) {
+func getTopic(reader io.Reader) (string, error) {
 	var validError = errors.New("key length should be greater than 3")
 	user_input := readInput(reader)
 	if isValidInput(user_input) {
@@ -36,15 +38,13 @@ func getTopic(reader io.Reader, writer io.Writer) (string, error) {
 	return "", validError
 }
 
+//read user input and pass to controller
 func Run(reader io.Reader, writer io.Writer) {
 	fmt.Printf(" %q \n", "Enter Topic: ")
-	//Get topic from User
-	topic, err := getTopic(reader, writer)
-	//print error
+	topic, err := getTopic(reader)
 	if err != nil {
 		fmt.Fprintf(writer, " %q", err.Error())
 	} else {
-		//Print Tip for the Topic
 		controller.GetTipForTopic(topic, writer)
 	}
 }
