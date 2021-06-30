@@ -75,7 +75,7 @@ func TestReadJsonFile(t *testing.T) {
 
 }
 
-// Handling Error mock impl
+// getWd mock impl
 type handlerMockImpl struct{}
 
 func (hand_mockImple *handlerMockImpl) get_wd() (string, error) {

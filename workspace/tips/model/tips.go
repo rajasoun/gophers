@@ -73,9 +73,9 @@ func getJsonFilePath() string {
 type Model interface {
 	readFile(path string) ([]byte, error)
 }
-type File_reader_Impl struct{}
+type Reader struct{}
 
-func (s File_reader_Impl) readFile(path string) ([]byte, error) {
+func (reader Reader) readFile(path string) ([]byte, error) {
 	return ioutil.ReadFile(path)
 }
 

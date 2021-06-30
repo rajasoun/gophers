@@ -15,9 +15,9 @@ func init() {
 
 //Integration Testing:
 func TestReadFile(t *testing.T) {
-	file_reader_Impl := File_reader_Impl{}
+	reader := Reader{}
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := file_reader_Impl.readFile("../data/tips.json")
+		got, _ := reader.readFile("../data/tips.json")
 		expected := "Everyday Git in twenty commands or so"
 		assert.Contains(t, string(got), expected)
 	})
