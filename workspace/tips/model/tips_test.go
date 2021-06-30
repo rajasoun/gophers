@@ -33,7 +33,6 @@ func TestGetTip(t *testing.T) {
 	}
 
 }
-
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
 		readerMockImpl := readerMockImpl{}
@@ -44,7 +43,7 @@ func TestLoadTipsFromJson(t *testing.T) {
 }
 
 func TestGetCurrentWorkingDir(t *testing.T) {
-	handlerMockImpl := &handlerMockImpl{}
+	handlerMockImpl := &readerMockImpl{}
 	t.Run("Checking Current Working directory path", func(t *testing.T) {
 		got, _ := getCurrentWorkingDir(handlerMockImpl)
 		want := "/gophers/workspace/tips"
@@ -55,8 +54,9 @@ func TestGetCurrentWorkingDir(t *testing.T) {
 
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
-		got := getJsonFilePath()
-		want := "/gophers/workspace/tips"
+		readerMockImpl := readerMockImpl{}
+		got := getJsonFilePath(readerMockImpl)
+		want := "/data/tips.json"
 		assert.Contains(t, got, want)
 	})
 }
@@ -75,15 +75,12 @@ func TestReadJsonFile(t *testing.T) {
 
 }
 
-// getWd mock impl
-type handlerMockImpl struct{}
+// getWd mock impl & readFile mock impl
+type readerMockImpl struct{}
 
-func (hand_mockImple *handlerMockImpl) get_wd() (string, error) {
+func (reader_mock_Impl readerMockImpl) get_wd() (string, error) {
 	return "/gophers/workspace/tips", nil
 }
-
-//readFile mock impl
-type readerMockImpl struct{}
 
 func (reader_mock_Impl readerMockImpl) readFile(path string) ([]byte, error) {
 	var data = []byte(`[{

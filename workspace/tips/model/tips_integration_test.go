@@ -23,3 +23,9 @@ func TestReadFile(t *testing.T) {
 	})
 
 }
+func TestGet_wd(t *testing.T) {
+	reader := Reader{}
+	got, _ := reader.get_wd()
+	want := "/gophers/workspace/tips"
+	assert.Contains(t, got, want)
+}
