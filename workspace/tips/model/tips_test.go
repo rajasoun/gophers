@@ -15,7 +15,6 @@ func init() {
 }
 
 func TestGetTip(t *testing.T) {
-	readerMockImpl := readerMockImpl{}
 	input_ouputData := []struct {
 		name  string
 		input string
@@ -27,70 +26,74 @@ func TestGetTip(t *testing.T) {
 	}
 	for _, tt := range input_ouputData {
 		t.Run(tt.name, func(t *testing.T) {
-			got := GetTip(tt.input, readerMockImpl)
+			got := GetTip(tt.input)
 			assert.Equal(t, got, tt.want)
 		})
 	}
-
 }
+
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		readerMockImpl := readerMockImpl{}
-		got, _ := loadTipsFromJson(readerMockImpl)
-		expected := 1
+		got, _ := loadTipsFromJson()
+		expected := 166
 		assert.Equal(t, len(got), expected)
 	})
 }
 
-func TestGetCurrentWorkingDir(t *testing.T) {
-	handlerMockImpl := &readerMockImpl{}
-	t.Run("Checking Current Working directory path", func(t *testing.T) {
-		got, _ := getCurrentWorkingDir(handlerMockImpl)
-		want := "/gophers/workspace/tips"
-		assert.Equal(t, got, want)
-	})
-
-}
-
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
-		readerMockImpl := readerMockImpl{}
-		got := getJsonFilePath(readerMockImpl)
+		got := getJsonFilePath()
 		want := "/data/tips.json"
 		assert.Contains(t, got, want)
 	})
 }
 
+func TestGetCurrentWorkingDir(t *testing.T) {
+	t.Run("checking current dir error", func(t *testing.T) {
+		// Mocked function for os.Getwd
+		myGetWd := func() (string, error) {
+			myErr := errors.New("Simulated error")
+			return "", myErr
+		}
+		// Update the var to this mocked function
+		osGetWd = myGetWd
+		// This will return error
+		_, err := getCurrentWorkingDir()
+		assert.Error(t, err)
+	})
+	t.Run("Checking Current Working directory path", func(t *testing.T) {
+		// Mocked function for os.Getwd
+		myGetWd := func() (string, error) {
+			return "/gophers/workspace/tips", nil
+		}
+		osGetWd = myGetWd
+		got, _ := getCurrentWorkingDir()
+		want := "/gophers/workspace/tips"
+		assert.Equal(t, got, want)
+	})
+}
 func TestReadJsonFile(t *testing.T) {
-	readerMockImpl := readerMockImpl{}
+	t.Run("Loading invalid Json File should fail", func(t *testing.T) {
+		// Mocked function for os.ReadFile
+		file_read := func(string) ([]byte, error) {
+			myErr := errors.New("Simulated error")
+			return nil, myErr
+		}
+		fileRead = file_read
+		_, err := readJsonFile("/data")
+		assert.Error(t, err)
+	})
 	t.Run("Unit Testing readjson file data", func(t *testing.T) {
-		got, _ := readJsonFile("../data/tips.json", readerMockImpl)
+		file_read := func(string) ([]byte, error) {
+			var data = []byte(`[{
+				"title":"Rebases 'feature' to 'master' and merges it in to master ",
+				"tip":"git rebase master feature && git checkout master && git merge -"
+			 }]`)
+			return data, nil
+		}
+		fileRead = file_read
+		got, _ := readJsonFile("/gophers/workspace//data/tips.json")
 		want := "Rebases 'feature' to 'master'"
 		assert.Contains(t, string(got), want)
 	})
-	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := readJsonFile("tips.json", readerMockImpl)
-		assert.Error(t, got)
-	})
-
-}
-
-/* INTERFACE IMPLEMENTATIONS FOR UNIT TESTING*/
-
-//mock implementations for get_wd and readFile function for unitTest
-type readerMockImpl struct{}
-
-func (reader_mock_Impl readerMockImpl) get_wd() (string, error) {
-	return "/gophers/workspace/tips", nil
-}
-
-func (reader_mock_Impl readerMockImpl) readFile(path string) ([]byte, error) {
-	var data = []byte(`[{
-		"title":"Rebases 'feature' to 'master' and merges it in to master ",
-		"tip":"git rebase master feature && git checkout master && git merge -"
-	 }]`)
-	if path == "tips.json" {
-		return nil, errors.New("error")
-	}
-	return data, nil
 }

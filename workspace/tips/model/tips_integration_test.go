@@ -15,9 +15,8 @@ func init() {
 
 //integration testing:
 func TestReadFile(t *testing.T) {
-	reader := Reader{}
 	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := reader.readFile("../data/tips.json")
+		got, _ := readJsonFile("../data/tips.json")
 		expected := "Everyday Git in twenty commands or so"
 		assert.Contains(t, string(got), expected)
 	})
@@ -25,8 +24,7 @@ func TestReadFile(t *testing.T) {
 }
 func TestGet_wd(t *testing.T) {
 	t.Run("checking current working directory path", func(t *testing.T) {
-		reader := Reader{}
-		got, _ := reader.get_wd()
+		got, _ := getCurrentWorkingDir()
 		want := "/gophers/workspace/tips"
 		assert.Contains(t, got, want)
 	})
