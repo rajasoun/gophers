@@ -19,7 +19,7 @@ jobs:
         go-version: 1.16
 
     - name: Build
-      run: cd workspace/tips && make build && cd -
+      run: cd workspace/tips && go build ./... && cd -
 
     - name: Test
-      run: cd workspace/tips && make test && cd -
+      run: cd workspace/tips && go test ./...  && cd -
