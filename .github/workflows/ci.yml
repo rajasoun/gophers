@@ -46,4 +46,4 @@ jobs:
         - name: Run build
           run: |
             cd workspace/tips      
-            go build 
+            make build 
