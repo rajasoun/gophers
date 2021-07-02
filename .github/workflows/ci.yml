@@ -1,17 +1,11 @@
 name: CI
 
-# on:
-#   push:
-#     branches: 
-#       — main 
-#       — develop 
-#   pull_request: 
-#     branches: 
-#       — main 
-#       — develop
 on:
   push:
-    branches: [ main ]
+    branches: 
+      — main 
+      — develop 
+
 
 jobs:
   Explore-GitHub-Actions:
@@ -36,7 +30,8 @@ jobs:
         - name: Setup Go
           uses: actions/setup-go@v2
           with:
-            go-version: '1.16.5'
+            go-version: '^1.16.5'
+            run: go version
 
         - name: Install dependencies
           run: |
