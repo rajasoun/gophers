@@ -1,3 +1,5 @@
+// +build !integration
+
 package model
 
 import (
@@ -19,7 +21,6 @@ func TestGetTip(t *testing.T) {
 		want  string
 	}{
 		{name: "Get Tip for valid Topic - rebase", input: "rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
-		{name: "Get Tip for valid Topic - help", input: "help", want: "Everyday Git in twenty commands or so : git help everyday"},
 		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "Tips Not Available for Topic"},
 		{name: "Get Tip for invalid Topic - Empty", input: "", want: "should not be Empty"},
 	}
@@ -29,8 +30,8 @@ func TestGetTip(t *testing.T) {
 			assert.Equal(t, got, tt.want)
 		})
 	}
-
 }
+
 func TestLoadTipsFromJson(t *testing.T) {
 	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
 		got, _ := loadTipsFromJson()
@@ -39,66 +40,60 @@ func TestLoadTipsFromJson(t *testing.T) {
 	})
 }
 
-type getMockErrorImpl struct{ err error }
-
-func (m *getMockErrorImpl) error() error {
-	m.err = errors.New("error")
-	return m.err
-}
-func TestGetCurrentWorkingDir(t *testing.T) {
-	t.Run("Checking Current Working directory path", func(t *testing.T) {
-		getErrorImpl := &getErrorImpl{}
-		got, _ := getCurrentWorkingDir(getErrorImpl)
-		want := "/gophers/workspace/tips"
-		assert.Contains(t, got, want)
-	})
-	t.Run("Checking Error on reading current working directory path", func(t *testing.T) {
-		getMockErrorImpl := &getMockErrorImpl{}
-		_, got := getCurrentWorkingDir(getMockErrorImpl)
-		want := errors.New("error")
-		assert.Error(t, got, want)
-	})
-}
-
 func TestGetTipJsonFilePath(t *testing.T) {
 	t.Run("Check Getting Tips Json File Path Dynalically", func(t *testing.T) {
 		got := getJsonFilePath()
-		want := "/gophers/workspace/tips"
+		want := "/data/tips.json"
 		assert.Contains(t, got, want)
 	})
 }
 
-type readerMockImpl struct{}
-
-func (reader_mock_Impl readerMockImpl) readJsonFile(path string) ([]byte, error) {
-	if path == "../data/tips.json" {
-		return []byte("166"), nil
-	} else {
-		return nil, errors.New("error in file")
-	}
+func TestGetCurrentWorkingDir(t *testing.T) {
+	t.Run("checking current dir error", func(t *testing.T) {
+		// Mocked function for os.Getwd
+		myGetWd := func() (string, error) {
+			myErr := errors.New("Simulated error")
+			return "", myErr
+		}
+		// Update the var to this mocked function
+		osGetWd = myGetWd
+		// This will return error
+		_, err := getCurrentWorkingDir()
+		assert.Error(t, err)
+	})
+	t.Run("Checking Current Working directory path", func(t *testing.T) {
+		// Mocked function for os.Getwd
+		myGetWd := func() (string, error) {
+			return "/gophers/workspace/tips", nil
+		}
+		osGetWd = myGetWd
+		got, _ := getCurrentWorkingDir()
+		want := "/gophers/workspace/tips"
+		assert.Equal(t, got, want)
+	})
 }
-
 func TestReadJsonFile(t *testing.T) {
-	readerMockImpl := readerMockImpl{}
+	t.Run("Loading invalid Json File should fail", func(t *testing.T) {
+		// Mocked function for os.ReadFile
+		file_read := func(string) ([]byte, error) {
+			myErr := errors.New("Simulated error")
+			return nil, myErr
+		}
+		fileRead = file_read
+		_, err := readJsonFile("/data")
+		assert.Error(t, err)
+	})
 	t.Run("Unit Testing readjson file data", func(t *testing.T) {
-		got, _ := readerMockImpl.readJsonFile("../data/tips.json")
-		want := "166"
-		assert.Equal(t, string(got), want)
-	})
-	t.Run("Unit Testing:Loading invalid Json File should fail", func(t *testing.T) {
-		_, got := readerMockImpl.readJsonFile("data/tips.json")
-		assert.Error(t, got)
-	})
-
-	file_reader_Impl := file_reader_Impl{}
-	t.Run("Load Json File and check if it contains the tip starting with Everyday ", func(t *testing.T) {
-		got, _ := file_reader_Impl.readJsonFile("../data/tips.json")
-		expected := "Everyday Git in twenty commands or so"
-		assert.Contains(t, string(got), expected)
-	})
-
-	t.Run("Loading invalid Json File should fail ", func(t *testing.T) {
-		_, got := file_reader_Impl.readJsonFile("tips.json")
-		assert.Error(t, got)
+		file_read := func(string) ([]byte, error) {
+			var data = []byte(`[{
+				"title":"Rebases 'feature' to 'master' and merges it in to master ",
+				"tip":"git rebase master feature && git checkout master && git merge -"
+			 }]`)
+			return data, nil
+		}
+		fileRead = file_read
+		got, _ := readJsonFile("/gophers/workspace//data/tips.json")
+		want := "Rebases 'feature' to 'master'"
+		assert.Contains(t, string(got), want)
 	})
 }

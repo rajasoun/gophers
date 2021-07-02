@@ -2,19 +2,13 @@ package controller
 
 import (
 	"fmt"
-	"github/gophers/tips/model"
 	"io"
+
+	"github/gophers/tips/model"
 )
 
-func GetTipForTopic(topic string, writer io.Writer, controller Controller) {
-	tip := controller.getTip(topic)
+// pass userinput to model and also write tip in console
+func GetTipForTopic(topic string, writer io.Writer) {
+	tip := model.GetTip(topic)
 	fmt.Fprintf(writer, "  \n %q \n\n", tip)
 }
-
-func (con_impl Controller_Impl) getTip(topic string) string {
-	tip := model.GetTip(topic)
-	return tip
-}
-
-type Controller interface{ getTip(string) string }
-type Controller_Impl struct{}

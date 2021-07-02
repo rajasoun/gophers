@@ -52,9 +52,7 @@ Command Line Tool to provide tips on the command to be used based on the topic
 ## Git-tips
 [Git-Tips]( https://github.com/rajasoun/tips/blob/main/GitTips.md)
 
-
-
-### Steps to build an app
+## Steps to build an app
 1. Read UseCases
 1. Make a Flow of Requirements(useCases)
 1. Do coding with TDD 
@@ -65,4 +63,17 @@ Command Line Tool to provide tips on the command to be used based on the topic
 1. Make 100% code coverage in Testing
 1. Apply Continous Integration and Continous Developement with Github Action on GitHub.
 1. Build a packaging (build an .exe file for different platform)
-1. Deployment an App
+1. Deployment / Release an App
+
+### NOTE: 
+1. The Code Design should be loosely coupled and hightly cohesive .So, The Code will be maintainable .
+[click](https://medium.com/clarityhub/low-coupling-high-cohesion-3610e35ac4a6)
+
+1. Unit testing code should be separated from Integration testing code .
+[click](https://mickey.dev/posts/go-build-tags-testing/)
+
+1. When we need to do mocking in the code :
+  > 1. when OS(operating system) packages involve in the code.(like readFile)
+  > 1. when we may not able to do with DI(like io.Reader,io.writer) which can be used for both implementations i.e main functinality as well as testing .
+  > 1. when we have to increase the code coverage.
+  Because sometime, Mocking increases code complexity and less readability. 
