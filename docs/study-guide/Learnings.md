@@ -125,4 +125,20 @@
 1. Created documentation on Integer and Iteration with TDD
 1. Worked on Mocking with Refactoring the code and Recap topic(Iteration)
 
-## 11 June()
+## 7th June to 18th June(Team) first Sprint Tasks
+1. Worked on fundamentals of Golang with TDD Design(Ingeter,DataTypes,Iteration,Array,Slice,Methods,Struct,Interface,Pointers,Error,Maps).
+1. Also practiced code on DI with mocking.
+1. Worked on Go lang with some tools(Debugger, Code-Coverage)
+1. Worked on GitHub Action(CI/CD) and Packaging(build .exe file for different system)
+1. Created documentations on DataTypes,Debugger&Linter,DependencyInjection,Iteration,MockingTheory,Packaging&CI&CD,Pointer&Error.
+1. Learned Table Drive Test.
+
+## 21th June to 2nd July(Team) second Sprint Tasks
+1. Worked on Tips Project With TDD on writing unit test case and
+1. Also applied dependency injection(io.reader and io.writer interface)
+1. Designed low coulping and high cohesive design
+1. Build bin packaging
+1. Build tags (separate unit test from integration testing)
+1. Mocking(when is needed)
+1. Install gotestsum (for Continously Run Go Tests) [click] (https://github.com/gotestyourself/gotestsum)
+1. Updated a documentation on Tips.

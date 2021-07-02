@@ -68,6 +68,7 @@ Command Line Tool to provide tips on the command to be used based on the topic
 ### NOTE: 
 1. The Code Design should be loosely coupled and hightly cohesive .So, The Code will be maintainable .
 [click](https://medium.com/clarityhub/low-coupling-high-cohesion-3610e35ac4a6)
+[click](https://blog.learngoprogramming.com/packages-can-allow-or-disallow-for-reusability-2edb6bd18815)
 
 1. Unit testing code should be separated from Integration testing code .
 [click](https://mickey.dev/posts/go-build-tags-testing/)
@@ -77,3 +78,5 @@ Command Line Tool to provide tips on the command to be used based on the topic
   > 1. when we may not able to do with DI(like io.Reader,io.writer) which can be used for both implementations i.e main functinality as well as testing .
   > 1. when we have to increase the code coverage.
   Because sometime, Mocking increases code complexity and less readability. 
+  
+1. About MakeFile[click](https://www.youtube.com/watch?v=QztvWSCbQLU)
