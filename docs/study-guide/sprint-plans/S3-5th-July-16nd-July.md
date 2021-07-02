@@ -1,6 +1,6 @@
 # 2 Weeks Program_ Go-Lang Team 	            Date: 5th of July ’21 to 16th of July` 21
 
-### Tasks:
+### To Do Tasks:
 
 1. Apply thrid party Packages on tips Project.(like cobra for cli commands line Project) with TDD and MVC design Pattern
 -> commands i.e
