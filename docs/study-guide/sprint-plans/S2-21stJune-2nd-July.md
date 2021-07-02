@@ -36,6 +36,7 @@
    1. Build bin packaging
    1. Build tags (separate unit test from integration testing)
    1. Mocking(when is needed)
+   1. Install gotestsum (for Continously Run Go Tests) [click] (https://github.com/gotestyourself/gotestsum) 
 
 Review meetings:
 
