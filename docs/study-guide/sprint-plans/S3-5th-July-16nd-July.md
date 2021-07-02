@@ -2,7 +2,7 @@
 
 ### To Do Tasks:
 
-1. Apply thrid party Packages on tips Project.(like cobra for cli commands line Project) with TDD and MVC design Pattern
+1. Apply thrid party Packages on tips Project.(like cobra [click] (https://github.com/spf13/cobra) for cli commands line Project) with TDD and MVC design Pattern
 -> commands i.e
 ```
 tips <technology> <topic>
@@ -32,16 +32,35 @@ start a working area (see also: git help tutorial)
 1. Schedule Meeting (as a demo session about what Go-Team have learned) with Raja,Asfar,Maneesh,Venkateswara.
 1. Complete backlogs if necessary
 
+### NOTE: List of awesome Go frameworks, libraries   [click] (https://github.com/avelino/awesome-go)
+
 ## New Plan For next 2 Weeks: 
 
 | Date    |                       TOPICS                    |Sch. Time | Actual time | Remarks      | 
 | ------- | ----------------------------------------------- |--------- |------------ |------------  |
-|         |                                                 |          |     	       |              |
-|         |                                                 |          |     	       |              |
-|         |                                                 |          |     	       |              |
-|         |                                                 |          |     	       |              |
-|         |                                                 |          |     	       |              |
-|         |                                                 |          |     	       |              |
+|5th July | Read Doc and install cobra on system            |          |             |              |
+|         |                                                 |          |             |              |
+|6th July | Read Tutorials (on how to use cobra)            |          |             |              |
+|         |                                                 |          |             |              |
+|7th July | Write Basic app using cobra                     |          |             |              |
+|         |  (to understand its funcnality)                 |          |             |              |
+|         |                                                 |          |             |              |
+|8th July |  Write Basic app using cobra                    |          |             |              |
+|         |   (to understand its funcnality)                |          |             |              |
+|         |                                                 |          |             |              |
+|9th July |                                                 |          |             |              |
+|         |                                                 |          |             |              |
+|12th July|                                                 |          |             |              |
+|         |                                                 |          |             |              |
+|13h July |                                                 |          |             |              |
+|         |                                                 |          |             |              |
+|14th July|                                                 |          |             |              |
+|         |                                                 |          |             |              |
+|15th July|                                                 |          |             |              |
+|         |                                                 |          |             |              |
+|16th July|                                                 |          |             |              |
+|         |                                                 |          |             |              |
+                                          
 
 
 
