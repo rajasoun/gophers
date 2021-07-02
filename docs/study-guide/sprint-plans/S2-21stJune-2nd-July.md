@@ -29,7 +29,7 @@
 
 >	NOTE: " Release tips pkg " to github is pending.
 
->	In Sprint, I Worked on Tips Project :
+>	In Sprint, Team Worked on Tips Project :
    1. With TDD on writing unit test case and 
    1. Also applied dependency injection(io.reader and io.writer interface) 
    1. Designed low coulping and high cohesive design
