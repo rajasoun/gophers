@@ -11,7 +11,9 @@ name: CI
 #       — develop
 on:
   push:
-    branches: [ main ]
+    branches: 
+      — main 
+      — develop
 
 jobs:
   Explore-GitHub-Actions:
