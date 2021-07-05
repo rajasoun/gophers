@@ -2,7 +2,8 @@
 
 ### To Do Tasks:
 
-1. Apply thrid party Packages on tips Project.(like cobra [click] (https://github.com/spf13/cobra) for cli commands line Project) with TDD and MVC design Pattern
+1. Apply thrid party Packages on tips Project.(like cobra for cli commands line Project) with TDD and MVC design Pattern 
+[click](https://github.com/spf13/cobra)
 -> commands i.e
 ```
 tips <technology> <topic>
@@ -28,13 +29,13 @@ start a working area (see also: git help tutorial)
 ```
 1. Shift validation code to cli from model packages.
 1. Apply Logging packages in cli packages.
-1. How to ensure between two library  which one is good for using in the project (between gocorn and corn Library)
+1. How to ensure between two library which one is good for using in the project (between gocron and cron Library)
 1. Complete backlogs if necessary
 
-#### ToDo  : Schedule Meeting (as a demo session about what Go-Team have learned) with Raja,Asfar,Maneesh,Venkatesh.
+#### ToDo  : Schedule Meeting (as a demo session about what Go-Team has learned) with Raja,Asfar,Maneesh,Venkatesh.
 
 ### NOTE: List of awesome Go frameworks, libraries   
-[click] (https://github.com/avelino/awesome-go)
+[click](https://github.com/avelino/awesome-go)
 
 ## New Plan For next 2 Weeks: Total 80 hours (2 weeks Time / 10 days)
 
