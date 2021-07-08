@@ -25,15 +25,9 @@ import (
 
 // gitCmd represents the git command
 var gitCmd = &cobra.Command{
-	Use:   "git",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Github is a web-based platform used for version control.
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "git <command>",
+	Short: "Git is a command line tool",
+	Long:  `Github is a web-based platform used for version control.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		input := strings.NewReader(args[0])
 		cli.Run(input, os.Stdout)
@@ -52,5 +46,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// gitCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	gitCmd.Flags().BoolP("all", "a", false, "show all commands")
 }
