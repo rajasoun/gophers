@@ -40,7 +40,7 @@ func getTopic(reader io.Reader) (string, error) {
 
 //read user input and pass to controller
 func Run(reader io.Reader, writer io.Writer) {
-	fmt.Printf(" %q \n", "Enter Topic: ")
+	//fmt.Printf(" %q \n", "Enter Topic: ")
 	topic, err := getTopic(reader)
 	if err != nil {
 		fmt.Fprintf(writer, " %q", err.Error())
