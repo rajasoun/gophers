@@ -16,6 +16,7 @@ limitations under the License.
 package cmd
 
 import (
+	"errors"
 	"os"
 	"strings"
 
@@ -24,38 +25,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// todo test
-// gitCmd represents the git command
-// var gitCmd = &cobra.Command{
-// 	Use:   "git <command>",
-// 	Short: "Git is a command line tool",
-// 	Long:  `Github is a web-based platform used for version control.`,
-// 	Run: func(cmd *cobra.Command, args []string) {
-// 		if len(args) == 0 {
-// 			logrus.WithFields(logrus.Fields{"tech": "git", "help": "tips git --help/-h"}).Info("tips git <arguments> , argument(commands i.e push ,pull...) should not be empty")
-// 		} else {
-// 			input := strings.NewReader(args[0])
-// 			run(input, os.Stdout)
-// 		}
-// 	},
-// }
-
 func init() {
 	rootCmd.AddCommand(gitCmd())
 	gitCmd().Flags().BoolP("all", "a", false, "show all commands")
 }
 
+// gitCmd represents the git command
 func gitCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "git <command>",
 		Short: "Git is a command line tool",
 		Long:  `Github is a web-based platform used for version control.`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
 				logrus.WithFields(logrus.Fields{"tech": "git", "help": "tips git --help/-h"}).Info("tips git <arguments> , argument(commands i.e push ,pull...) should not be empty")
+				return errors.New("add needs a name for the command")
 			} else {
 				input := strings.NewReader(args[0])
 				run(input, os.Stdout)
+				return nil
 			}
 		},
 	}
