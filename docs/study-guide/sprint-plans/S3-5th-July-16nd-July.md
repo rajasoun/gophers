@@ -3,7 +3,7 @@
 ### To Do Tasks:
 
 1. Apply thrid party Packages on tips Project.(like cobra for cli commands line Project) with TDD and MVC design Pattern 
-[click](https://github.com/spf13/cobra)
+[cobra pkg](https://github.com/spf13/cobra)
 -> commands i.e
 ```
 tips <technology> <topic>
@@ -35,58 +35,62 @@ start a working area (see also: git help tutorial)
 #### ToDo  : Schedule Meeting (as a demo session about what Go-Team has learned) with Raja,Asfar,Maneesh,Venkatesh.
 
 ### NOTE: List of awesome Go frameworks, libraries   
-[click](https://github.com/avelino/awesome-go)
+[list go pkgs](https://github.com/avelino/awesome-go)
 
-## New Plan For next 2 Weeks: Total 80 hours (2 weeks Time / 10 days)
+## New Plan For next 2 Weeks: Total 78 hours (2 weeks Time / 10 days)
 
 | Date    |                       TOPICS                    |Sch. Time | Actual time | Remarks      | 
 | ------- | ----------------------------------------------- |--------- |------------ |------------  |
-|5th July | Read Doc and Apply cobra pkge on system         | 8 hours  |             |              |
+|5th July | Read Doc and Apply cobra pkge on system         | 8 hours  |   8 hours   |              |
 |         |                                                 |          |             |              |
 |         |                                                 |          |             |              |
-|6th July | Read Tutorials (on how to use cobra framework)  | 8 hours  |             |              |
+|6th July | Read Tutorials (on how to use cobra framework)  | 8 hours  |   5 hours   |              |
 |         |    (how can we apply it on tips Project)        |          |             |              |
 |         |                                                 |          |             |              |
-|7th July |   Write Basic app using cobra with Examples     | 10 hours |             |              |
+|7th July |   Write Basic app using cobra with Examples     | 5 hours  |   5 hours   |              |
 |         |  (to understand its functionality)              |          |             |              |
 |         |                                                 |          |             |              |
-|8th July |   Write Basic app using cobra with Examples     |          |             |              |
+|8th July |   Write Basic app using cobra with Examples     | 5 hours  |             |              |
 |         |  (to understand its functionality)              |          |             |              |
 |         |                                                 |          |             |              |
-|9th July |    Apply cobra lib on Tips Project              | 36 hours |             |              |
+|9th July |    Apply cobra lib on Tips Project              | 6 hours  |             |              |
 |         |                                                 |          |             |              |
 |         |                                                 |          |             |              |
-|12th July|    Apply cobra lib on Tips Project              |          |             |              |
+|12th July|    Apply cobra lib on Tips Project              | 6 hours  |             |              |
 |         |                                                 |          |             |              |
 |         |                                                 |          |             |              |
-|13h July |    Apply cobra lib on Tips Project              |          |             |              |
-|         |    Find logging pckage on github                | 2 hours  |             |              |
-|         |    Apply logging pckg on Tips Project           | 20 hours |             |              |
+|13h July |    Apply cobra lib on Tips Project              | 6 hours  |             |              |
+|         |    Find logging pckage on github                | 2 hours  |  1 hours    |              |
+|         |    Apply logging pckg on Tips Project           | 2 hours  |             |              |
 |         |                                                 |          |             |              |
-|14th July|    Apply cobra lib on Tips Project              |          |             |              |
-|         |    Apply logging pckg on Tips Project           |          |             |              |
+|14th July|    Apply cobra lib on Tips Project              | 6 hours  |             |              |
+|         |    Apply logging pckg on Tips Project           | 2 hours  |             |              |
 |         |                                                 |          |             |              |
-|15th July|    Apply cobra lib on Tips Project              |          |             |              |
-|         |    Apply logging pckg on Tips Project           |          |             |              |
-|         |    go cron/cron package                         | 10 hours |             |              |
+|15th July|    Apply cobra lib on Tips Project              | 6 hours  |             |              |
+|         |    Apply logging pckg on Tips Project           | 2 hours  |             |              |
+|         |    go cron/cron package                         | 3 hours  |             |              |
 |         |                                                 |          |             |              |
 |         |                                                 |          |             |              |
-|16th July|    Apply cobra lib on Tips Project              |          |             |              |
+|16th July|    Apply cobra lib on Tips Project              | 6 hours  |             |              |
 |         |    Documentations on project                    | 2 hours  |             |              |
-|         |    go-cron/cron package                         |          |             |              |
+|         |    go-cron/cron package                         | 3 hours  |             |              |
 |         |                                                 |          |             |              |
 
 ### NOTES:
-#### Sch. time :96 hours (16 hours more than 2 weeks plan(80 hours))
-#### Metting with (Raja,Asfar,Maneesh,Venkatesh) --- 25 mins
+#### Priorities shall be taken as follows
+1. Updates on the status, and highlight on accomplishments to the managements.
+1. Developing CLI Apps using Cobra Framework. Adopting COBRA framework in Tips Project
+1. Picking up a logging Framework in Go based on Stars, Recent Activities, Number of Open Issues. Capturing the details and get concurrence along with Spike and Data Points
+1. Stretch Target : How to Assess if chooses go cron package will work for our Project
+
 #### Issues/Cards Details :
 1. Read Doc and Apply cobra pkge on system --- 8 hours/1 Day
 1. Read Tutorials (on how to use cobra framework)  --- 8 hours
 1. Write Basic app using cobra with Examples --- 10 hours
 1. Apply cobra lib on Tips Project --- 36 hours
 1. Find logging pckage on github --- 2 hours
-1. Apply logging pckg on Tips Project --- 20 hours
-1. go cron/cron package --- 10 hours
+1. Apply logging pckg on Tips Project --- 6 hours
+1. go cron/cron package --- 6 hours
 1. Documentations on project --- 2 hours
 
 
