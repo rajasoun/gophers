@@ -22,6 +22,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/viper"
+
+	"github.com/sirupsen/logrus"
 )
 
 var cfgFile string
@@ -40,7 +42,8 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print("Command Line Interface Application with github,docker technology")
+		fmt.Println("Tips is a Command-Line-Interface app with 'git' commands")
+		logrus.WithFields(logrus.Fields{}).Info("tips <tech> [commands] [flags]")
 	},
 }
 

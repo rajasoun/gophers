@@ -16,35 +16,31 @@ limitations under the License.
 package cmd
 
 import (
-	"github/gophers/tips/cli"
 	"os"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/spf13/cobra"
 )
 
+// todo test
 // gitCmd represents the git command
 var gitCmd = &cobra.Command{
 	Use:   "git <command>",
 	Short: "Git is a command line tool",
 	Long:  `Github is a web-based platform used for version control.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		input := strings.NewReader(args[0])
-		cli.Run(input, os.Stdout)
-
+		if len(args) == 0 {
+			logrus.WithFields(logrus.Fields{"tech": "git", "arg size": "nil"}).Error("tips git <arguments>, argument should not be empty")
+		} else {
+			input := strings.NewReader(args[0])
+			run(input, os.Stdout)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(gitCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	//gitCmd.PersistentFlags().String("push", "", "upload changes remotely")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 	gitCmd.Flags().BoolP("all", "a", false, "show all commands")
 }

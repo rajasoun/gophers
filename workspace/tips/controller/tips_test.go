@@ -22,7 +22,7 @@ func TestGetTipForTopicIntegration(t *testing.T) {
 		want  string
 	}{
 		{name: "Delete", input: "delete", want: "Delete remote branch"},
-		{name: "Empty string", input: "", want: "should not be Empty"},
+		//{name: "Empty string", input: "", want: "should not be Empty"},
 	}
 	for _, tt := range input_ouputData {
 		t.Run(tt.name, func(t *testing.T) {

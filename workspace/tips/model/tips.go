@@ -16,7 +16,6 @@ type Tips struct {
 
 const (
 	empty_string  = ""
-	empty_value   = "should not be Empty"
 	default_value = "Tips Not Available for Topic"
 )
 
@@ -28,8 +27,6 @@ func GetTip(title string) string {
 		for _, tip := range commands {
 			return tip
 		}
-	} else if title == empty_string {
-		return empty_value
 	}
 	return default_value
 }
