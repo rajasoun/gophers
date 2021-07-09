@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"github/gophers/tips/controller"
+
+	"github.com/sirupsen/logrus"
 )
 
 // scan inpur from user
@@ -22,7 +24,8 @@ func readInput(reader io.Reader) string {
 
 //check input validation
 func isValidInput(userInput string) bool {
-	if len(userInput) <= 3 || len(userInput) == 0 {
+	var length int = len(userInput)
+	if userInputLength := 4; length < userInputLength {
 		return false
 	}
 	return true
@@ -42,6 +45,7 @@ func getTopic(reader io.Reader) (string, error) {
 func run(reader io.Reader, writer io.Writer) {
 	topic, err := getTopic(reader)
 	if err != nil {
+		logrus.Error("key length should be greater than 3 and not be empty")
 		fmt.Fprintf(writer, " %q", err.Error())
 	} else {
 		controller.GetTipForTopic(topic, writer)

@@ -19,6 +19,8 @@ import (
 	"github/gophers/tips/cmd"
 )
 
+//build an app into binary with command: " go install "
+// working commands : tips,tips --help ,tips git <commands> ,tips git --help
 func main() {
 	cmd.Execute()
 

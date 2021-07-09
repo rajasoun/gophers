@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // tips class with field(title and tip)
@@ -15,18 +17,15 @@ type Tips struct {
 }
 
 const (
-	empty_string  = ""
 	default_value = "Tips Not Available for Topic"
 )
 
 //GetTip returning Tip/Command to the controller
 func GetTip(title string) string {
 	data, _ := loadTipsFromJson()
-	if title != empty_string {
-		commands := getAllCommands(data, title)
-		for _, tip := range commands {
-			return tip
-		}
+	commands := getAllCommands(data, title)
+	for _, tip := range commands {
+		return tip
 	}
 	return default_value
 }
@@ -75,6 +74,7 @@ var fileRead = os.ReadFile
 func readJsonFile(path string) ([]byte, error) {
 	data, err := fileRead(path)
 	if err != nil {
+		logrus.Error("could not get file path")
 		return nil, err
 	}
 	return data, nil
@@ -87,6 +87,7 @@ var osGetWd = os.Getwd
 func getCurrentWorkingDir() (string, error) {
 	workingDir, err := osGetWd()
 	if err != nil {
+		logrus.Error("could not get current working directory")
 		return "", errors.New("could not get current working directory")
 	}
 	return workingDir, nil
