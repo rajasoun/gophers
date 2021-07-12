@@ -70,6 +70,7 @@ func TestGetCurrentWorkingDir(t *testing.T) {
 		want := "/gophers/workspace/tips"
 		assert.Equal(t, got, want)
 	})
+
 }
 func TestReadJsonFile(t *testing.T) {
 	t.Run("Loading invalid Json File should fail", func(t *testing.T) {

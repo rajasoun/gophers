@@ -87,7 +87,10 @@ var osGetWd = os.Getwd
 func getCurrentWorkingDir() (string, error) {
 	workingDir, err := osGetWd()
 	if err != nil {
-		logrus.Error("could not get current working directory")
+		//todo : logger/return error
+		//log.Print("could not get current working directory")
+		//panic(err)
+		//logrus.Panic()
 		return "", errors.New("could not get current working directory")
 	}
 	return workingDir, nil

@@ -1,6 +1,6 @@
 // +build !integration
 
-package cmd
+package cli
 
 import (
 	"bytes"
