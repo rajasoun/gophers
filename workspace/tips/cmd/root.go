@@ -9,7 +9,7 @@ import (
 )
 
 var rootCmd = NewRootCmd()
-var topic string
+var topic, subtopic string
 
 func NewRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -18,15 +18,18 @@ func NewRootCmd() *cobra.Command {
 		Long:  "tips provides help for docker and git cli commands ",
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			user_input, _ := cmd.Flags().GetString("topic")
-			if len(user_input) > 3 {
+			if len(topic) > 3 {
+				//topic := topic + " " + subtopic
 				controller.GetTipForTopic(topic, cmd.OutOrStdout())
-				return nil
+			} else {
+				return errors.New("key length should be greater than 3 and not be empty")
 			}
-			return errors.New("key length should be greater than 3 and not be empty")
+			return nil
 		},
 	}
 	cmd.Flags().StringVar(&topic, "topic", "", "User Input String help for the topic")
+	cmd.Flags().StringVar(&subtopic, "subtopic", "", "User Input String help for the topic")
+
 	return cmd
 }
 

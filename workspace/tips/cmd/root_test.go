@@ -36,10 +36,11 @@ func Test_NewRootCmd(t *testing.T) {
 	t.Run("Checking Validation error", func(t *testing.T) {
 		inputBuffer := "abc"
 		rootCmd.SetArgs([]string{"--topic", inputBuffer}) //input
-		got := rootCmd.Execute()
-		assert.Error(t, got)
+		err := rootCmd.Execute()
+		assert.Error(t, err)
 
 	})
+
 }
 
 func TestExecute(t *testing.T) {
