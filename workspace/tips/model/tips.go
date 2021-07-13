@@ -3,11 +3,10 @@ package model
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/sirupsen/logrus"
 )
 
 // tips class with field(title and tip)
@@ -74,7 +73,8 @@ var fileRead = os.ReadFile
 func readJsonFile(path string) ([]byte, error) {
 	data, err := fileRead(path)
 	if err != nil {
-		logrus.Error("could not get file path")
+		//logrus.Error("could not get file path, getting Error while reading the file")
+		fmt.Println("some internal issue")
 		return nil, err
 	}
 	return data, nil
@@ -87,10 +87,6 @@ var osGetWd = os.Getwd
 func getCurrentWorkingDir() (string, error) {
 	workingDir, err := osGetWd()
 	if err != nil {
-		//todo : logger/return error
-		//log.Print("could not get current working directory")
-		//panic(err)
-		//logrus.Panic()
 		return "", errors.New("could not get current working directory")
 	}
 	return workingDir, nil

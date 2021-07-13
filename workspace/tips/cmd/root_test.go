@@ -32,10 +32,13 @@ func Test_NewRootCmd(t *testing.T) {
 		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
 	})
 	t.Run("checking invalid user inputs", func(t *testing.T) {
-		inputBuffer := "ab"
+		inputBuffer := ""
 		rootCmd.SetArgs([]string{"--topic", inputBuffer})
 		err := rootCmd.Execute()
-		assert.Error(t, err)
+
+		if err != nil {
+			assert.Error(t, err)
+		}
 
 	})
 
@@ -52,7 +55,8 @@ func TestExecute(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			rootCmd.SetArgs([]string{tt.flag, tt.want})
+			//rootCmd.SetArgs([]string{tt.flag, tt.want})
+			NewRootCmd().Flags().Set(tt.flag, tt.want)
 			writer := &bytes.Buffer{}
 			err := Execute(writer)
 			if err != nil {

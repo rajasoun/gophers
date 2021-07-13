@@ -12,9 +12,6 @@ var (
 	rootCmd         = NewRootCmd()
 	topic, subtopic string
 )
-var (
-	validError = errors.New("key length should be greater than '2 ' ")
-)
 
 const (
 	validLen int    = 2
@@ -23,16 +20,20 @@ const (
 
 func NewRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "tips",
-		Short: "tips for command line interface function",
-		Long:  "tips provides help for docker and git cli commands ",
+		Use:     "tips",
+		Short:   "tips for command line interface function",
+		Long:    "tips provides help for docker and git cli commands ",
+		Aliases: []string{"flags", "arguments"},
+		Version: "0.1v",
+		Example: `-> tips --topic stash 
+->"Saving current state of unstaged changes to tracked files : git stash -k" `,
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			topic, err := getTopic(topic)
+			topic, err := getTopic(args)
 			if err != nil {
 				return err
 			}
 			controller.GetTipForTopic(topic, cmd.OutOrStdout())
-
 			return nil
 		},
 	}
@@ -48,15 +49,18 @@ func Execute(writer io.Writer) error {
 	return rootCmd.Execute()
 }
 
-func getTopic(userInput string) (string, error) {
-	if isValidInput(userInput) {
+func getTopic(args []string) (string, error) {
+	if isValidInput(topic) {
+		userInput := topic
 		return userInput, nil
 	}
+	var validError error = errors.New("key length should be greater than 2")
 	return "", validError
+
 }
 
 func isValidInput(userInput string) bool {
-	if len(userInput) > validLen || topic == validArg {
+	if len(userInput) > validLen || userInput == validArg {
 		return true
 	}
 	return false
