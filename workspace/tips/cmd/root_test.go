@@ -18,7 +18,7 @@ func Test_NewRootCmd(t *testing.T) {
 	rootCmd.SetOut(outputBuffer)
 	t.Run("checking valid inputs", func(t *testing.T) {
 		inputBuffer := "push"
-		rootCmd.SetArgs([]string{"--topic", inputBuffer}) //input
+		rootCmd.SetArgs([]string{"--topic", inputBuffer})
 		err := rootCmd.Execute()
 		if err != nil {
 			t.Fatal(err)
@@ -28,14 +28,12 @@ func Test_NewRootCmd(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := string(out)
-		//want := "Remove sensitive data from history, after a push"
 		want := "push"
-		assert.Contains(t, got, want,
-			"expected \"%s\" got \"%s\"", want, got)
+		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
 	})
-	t.Run("Checking Validation error", func(t *testing.T) {
-		inputBuffer := "abc"
-		rootCmd.SetArgs([]string{"--topic", inputBuffer}) //input
+	t.Run("checking invalid user inputs", func(t *testing.T) {
+		inputBuffer := "ab"
+		rootCmd.SetArgs([]string{"--topic", inputBuffer})
 		err := rootCmd.Execute()
 		assert.Error(t, err)
 

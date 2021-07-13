@@ -21,7 +21,7 @@ func TestGetTip(t *testing.T) {
 		want  string
 	}{
 		{name: "Get Tip for valid Topic - rebase", input: "rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
-		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "Tips Not Available for Topic"},
+		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "invalid command ,please pass valid tool command "},
 	}
 	for _, tt := range input_ouputData {
 		t.Run(tt.name, func(t *testing.T) {

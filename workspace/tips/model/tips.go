@@ -17,7 +17,7 @@ type Tips struct {
 }
 
 const (
-	default_value = "Tips Not Available for Topic"
+	default_value = "invalid command ,please pass valid tool command "
 )
 
 //GetTip returning Tip/Command to the controller
