@@ -7,6 +7,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,4 +32,21 @@ func TestGetTipForTopicIntegration(t *testing.T) {
 			assert.Contains(t, got, tt.want)
 		})
 	}
+
+}
+
+func Test_GetTipForTopic_LoggerLevel(t *testing.T) {
+	t.Run("checking logger level", func(t *testing.T) {
+		logLevel, err := logrus.ParseLevel("debug")
+		if err != nil {
+			t.Fatal(err)
+		}
+		output_buffer := bytes.Buffer{}
+		logrus.SetLevel(logLevel)
+		GetTipForTopic("pull", &output_buffer)
+		got := output_buffer.String()
+		expected := ""
+		assert.Equal(t, got, expected)
+	})
+
 }

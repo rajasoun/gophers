@@ -14,11 +14,12 @@ func init() {
 }
 
 func Test_NewRootCmd(t *testing.T) {
-	outputBuffer := bytes.NewBufferString("")
-	rootCmd.SetOut(outputBuffer)
+
 	t.Run("checking valid inputs", func(t *testing.T) {
-		inputBuffer := "push"
-		rootCmd.SetArgs([]string{"--topic", inputBuffer})
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		expected := "push"
+		rootCmd.SetArgs([]string{"--topic", expected})
 		err := rootCmd.Execute()
 		if err != nil {
 			t.Fatal(err)
@@ -28,18 +29,16 @@ func Test_NewRootCmd(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := string(out)
-		want := "push"
+		want := expected
 		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
 	})
 	t.Run("checking invalid user inputs", func(t *testing.T) {
 		inputBuffer := ""
 		rootCmd.SetArgs([]string{"--topic", inputBuffer})
 		err := rootCmd.Execute()
-
 		if err != nil {
 			assert.Error(t, err)
 		}
-
 	})
 
 }
@@ -67,4 +66,30 @@ func TestExecute(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_SetLogger(t *testing.T) {
+	tests := []struct {
+		name  string
+		want  string
+		level string
+	}{
+		{"Checking set level logger ", "", "debug"},
+		{"invalid level logger", "error", "dummy"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			output := bytes.Buffer{}
+			err := setUpLogs(&output, tt.level)
+			if err != nil {
+				assert.Error(t, err)
+			} else {
+				got := output.String()
+				want := tt.want
+				assert.Equal(t, got, want)
+			}
+
+		})
+	}
+
 }

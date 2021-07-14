@@ -3,10 +3,11 @@ package model
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // tips class with field(title and tip)
@@ -58,6 +59,7 @@ func getJsonFilePath() string {
 	currentDir, _ := getCurrentWorkingDir()
 	// remove base directory from the workingDir when run from test
 	baseDir := filepath.Base(currentDir)
+
 	isInTest := os.Getenv("GO_ENV") == "test"
 	if isInTest {
 		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
@@ -73,10 +75,10 @@ var fileRead = os.ReadFile
 func readJsonFile(path string) ([]byte, error) {
 	data, err := fileRead(path)
 	if err != nil {
-		//logrus.Error("could not get file path, getting Error while reading the file")
-		fmt.Println("some internal issue")
+		logrus.WithField("file path ", path).Debug("unsuccessfully reading the file path ")
 		return nil, err
 	}
+	logrus.WithField("file path ", path).Debug("successfully reading the file path ")
 	return data, nil
 }
 
@@ -87,7 +89,9 @@ var osGetWd = os.Getwd
 func getCurrentWorkingDir() (string, error) {
 	workingDir, err := osGetWd()
 	if err != nil {
+		logrus.WithField("working dir", workingDir).Debug("unsuccessfully reading the working dir path ")
 		return "", errors.New("could not get current working directory")
 	}
+	logrus.WithField("working dir", workingDir).Debug("successfully reading the working dir path ")
 	return workingDir, nil
 }
