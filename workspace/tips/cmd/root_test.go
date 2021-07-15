@@ -93,9 +93,3 @@ func Test_SetLogger(t *testing.T) {
 	}
 
 }
-
-func Test_HideDebugFlag(t *testing.T) {
-	got := ""
-	want := ""
-	assert.Equal(t, got, want)
-}

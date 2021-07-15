@@ -20,6 +20,8 @@ const (
 	validArg string = "git"
 )
 
+var name string
+
 func NewRootCmd() *cobra.Command {
 	cmd = &cobra.Command{
 		Use:     "tips",
@@ -49,7 +51,6 @@ func NewRootCmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().StringVar(&topic, "topic", "", "user input string help for the topic")
-	//viper.BindPFlag("debug", cmd.Flags().Lookup("debug"))
 
 	return cmd
 }
