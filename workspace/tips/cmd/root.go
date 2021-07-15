@@ -85,11 +85,14 @@ func setUpLogs(out io.Writer, level string) error {
 		return err
 	}
 	logrus.SetLevel(logLevel)
+	logrus.SetFormatter(&logrus.TextFormatter{FullTimestamp: true})
+
 	return nil
 }
 
 func init() {
 	//todo how to hide this flag from help command
+
 	cmd.PersistentFlags().StringVarP(&debug, "debug", "d", "", "verbose logging")
 
 }
