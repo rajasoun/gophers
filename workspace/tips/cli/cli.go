@@ -8,8 +8,6 @@ import (
 	"strings"
 
 	"github/gophers/tips/controller"
-
-	"github.com/sirupsen/logrus"
 )
 
 // scan inpur from user
@@ -45,7 +43,6 @@ func getTopic(reader io.Reader) (string, error) {
 func run(reader io.Reader, writer io.Writer) {
 	topic, err := getTopic(reader)
 	if err != nil {
-		logrus.Error("key length should be greater than 3 and not be empty")
 		fmt.Fprintf(writer, " %q", err.Error())
 	} else {
 		controller.GetTipForTopic(topic, writer)

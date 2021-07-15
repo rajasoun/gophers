@@ -93,3 +93,21 @@ func Test_SetLogger(t *testing.T) {
 	}
 
 }
+
+func Test_GitCommand(t *testing.T) {
+	outputBuffer := bytes.NewBufferString("")
+	rootCmd.SetOut(outputBuffer)
+	expected := "checkout"
+	rootCmd.SetArgs([]string{"git", "--arg", expected})
+	err := gitCmd.Execute()
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := ioutil.ReadAll(outputBuffer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := string(out)
+	assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
+
+}

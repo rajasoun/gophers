@@ -2,25 +2,25 @@ package cmd
 
 import (
 	"errors"
-	"github/gophers/tips/controller"
 	"io"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github/gophers/tips/controller"
 )
 
 var (
-	rootCmd      = NewRootCmd()
-	cmd          *cobra.Command
-	topic, debug string
+	gitCmd                    = GitCommand()
+	rootCmd                   = NewRootCmd()
+	cmd                       *cobra.Command
+	topic, arg, subarg, debug string
 )
 
 const (
 	validLen int    = 2
 	validArg string = "git"
 )
-
-var name string
 
 func NewRootCmd() *cobra.Command {
 	cmd = &cobra.Command{
@@ -41,7 +41,7 @@ func NewRootCmd() *cobra.Command {
 			// getting topic
 			input, err := getTopic(args)
 			if err != nil {
-				logrus.WithField("err", err).Debug("invalid user-input,topic value length should be greater than 2")
+				logrus.WithField("err", err).Debug("invalid user input")
 				return err
 			} else {
 				logrus.WithField("userInput", input).Debug("successfully getting valid input ")
@@ -55,6 +55,30 @@ func NewRootCmd() *cobra.Command {
 	return cmd
 }
 
+func GitCommand() *cobra.Command {
+	var gitcmd = &cobra.Command{
+		Use:   "git",
+		Short: "Git is a DevOps tool used for source code management.",
+		Long: ` "Git is used to tracking changes in the source code,
+ enabling multiple developers to work together on non-linear development"`,
+		Aliases: []string{},
+		Version: "0.1v",
+		Example: `tips git --arg stash / --subarg stash
+"Saving current state of unstaged changes to tracked files : git stash -k" `,
+		Args: cobra.MaximumNArgs(1),
+
+		RunE: func(cmd *cobra.Command, args []string) error {
+			arg := arg + " " + subarg
+			controller.GetTipForTopic(arg, cmd.OutOrStdout())
+			return nil
+		},
+	}
+	gitcmd.Flags().StringVar(&arg, "arg", "", "argument help for the tip")
+	gitcmd.Flags().StringVar(&subarg, "subarg", "", "sub argument help for the tip")
+
+	return gitcmd
+}
+
 // Execute executes the root command.
 func Execute(writer io.Writer) error {
 	rootCmd.SetOutput(writer)
@@ -63,12 +87,12 @@ func Execute(writer io.Writer) error {
 
 // getting topic with checking validation
 func getTopic(args []string) (string, error) {
-	if isValidInput(topic) {
-		userInput := topic
-		logrus.WithField("topic", userInput).Debug("successfully validation checked ")
+	userInput := topic
+	if isValidInput(userInput) {
+		logrus.WithField("topic", userInput).Debug("successfully validation checked")
 		return userInput, nil
 	}
-	var validError error = errors.New("key length should be greater than 2")
+	var validError error = errors.New("flag needs an argument:--topic & argument should be greater than 2")
 	return "", validError
 }
 
@@ -95,5 +119,6 @@ func setUpLogs(out io.Writer, level string) error {
 func init() {
 	cmd.PersistentFlags().StringVarP(&debug, "debug", "", "", "verbose logging")
 	cmd.PersistentFlags().MarkHidden("debug")
+	rootCmd.AddCommand(gitCmd)
 
 }
