@@ -49,6 +49,8 @@ func NewRootCmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().StringVar(&topic, "topic", "", "user input string help for the topic")
+	//viper.BindPFlag("debug", cmd.Flags().Lookup("debug"))
+
 	return cmd
 }
 
@@ -86,13 +88,11 @@ func setUpLogs(out io.Writer, level string) error {
 	}
 	logrus.SetLevel(logLevel)
 	logrus.SetFormatter(&logrus.TextFormatter{FullTimestamp: true})
-
 	return nil
 }
 
 func init() {
-	//todo how to hide this flag from help command
-
-	cmd.PersistentFlags().StringVarP(&debug, "debug", "d", "", "verbose logging")
+	cmd.PersistentFlags().StringVarP(&debug, "debug", "", "", "verbose logging")
+	cmd.PersistentFlags().MarkHidden("debug")
 
 }
