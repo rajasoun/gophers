@@ -48,7 +48,7 @@ start a working area (see also: git help tutorial)
 |6th July | Read Tutorials (on how to use cobra framework)  | 8 hours  |             | Sick ,this task was done on 7th of july (3-4hr)|
 |         |    (how can we apply it on tips Project)        |          |             |                                                |
 |         |                                                 |          |             |                                                |
-|7th July |   Write Basic app using cobra with Examples     | 5 hours  |  3+5 hours  | Initing implemention takes time in using       |
+|7th July |   Write Basic app using cobra with Examples     | 5 hours  |  3+5 hours  | initiating implemention takes time in using    |
 |         |  (to understand its functionality)              |          |             |  the refernces                                 |
 |         |                                                 |          |             |                                                |
 |8th July |   Write Basic app using cobra with Examples     | 5 hours  |  5-6 hours  | go get -u github.com/spf13/cobra/cobra         |
@@ -68,9 +68,9 @@ start a working area (see also: git help tutorial)
 |14th July|    Apply cobra lib on Tips Project              | 6 hours  | 3 hours     | Refactored the code                            |
 |         |    Apply logging pckg on Tips Project           | 2 hours  | 2 hours     | set debug logger code in tips project with TDD |
 |         |                                                 |          |             |                                                |
-|15th July|    Apply cobra lib on Tips Project              | 6 hours  | 4-5 hours   |  Reforted the code & added git cmd in tips     |
-|         |                                                 |          |             |  using cobra                                   |
-|         |    Apply logging pckg on Tips Project           | 2 hours  | 2 hours     |  Hide flag for debug level from help command   |
+|15th July|    Apply cobra lib on Tips Project              | 6 hours  | 4-5 hours   |  Refactored the tips Project code &            |
+|         |                                                 |          |             |  added git command in tips using cobra lib     |
+|         |    Apply logging pckg on Tips Project           | 2 hours  | 2 hours     |  Hid flag for debug level from help command    |
 |         |    go cron/cron package                         | 3 hours  | 3 hours     |  Worked on go-cron library                     |
 |         |                                                 |          |             |                                                |
 |         |                                                 |          |             |                                                |
