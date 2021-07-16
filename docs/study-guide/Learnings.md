@@ -144,5 +144,17 @@
 1. Install gotestsum (for Continously Run Go Tests) [click](https://github.com/gotestyourself/gotestsum)
 1. Updated a documentation on Tips.
 
-## 5th July to 16th July(Team) second Sprint Tasks
+## 5th July to 16th July(Team) third Sprint Tasks
+1. Worked on cobra lib (CLI Framework)
+1. Applied Cobra lib in tips cli Project
+1. Implemented tho cobra lib in tips with TDD design 
+1. Worked on finding the Good one logging pkg 
+1. Applied the logging (logrus lib) debug level in tips 
+1. Worked on cobra how to create flags and how to hide them from help command.
+1. Worked with cobra lib with TDD (How to write unit test for cobra lib functions)
+1. Worked on go-cron(job scheduling at pre-determined interval) libs
+1. Worked and practice how to find good lib to implement on project needs.
 
+## 19th July to 30th July(Team) fourth Sprint Tasks
+
+ 
