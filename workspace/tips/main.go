@@ -17,7 +17,6 @@ package main
 
 import (
 	"github/gophers/tips/cmd"
-
 	"os"
 )
 

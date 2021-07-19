@@ -32,8 +32,15 @@ func NewRootCmd() *cobra.Command {
 		Example: `-> tips --topic stash 
 ->"Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
-
+		// PreRunE: func(cmd *cobra.Command, args []string) error {
+		// 	if len(args) == 0 {
+		// 		cmd.Help()
+		// 	}
+		// 	return nil
+		// },
 		RunE: func(cmd *cobra.Command, args []string) error {
+			//if len(args) != 0 {
+
 			//calling setUplogs func to set logger level for debugging the code
 			setUpLogs(cmd.OutOrStdout(), debug)
 			logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
@@ -47,6 +54,7 @@ func NewRootCmd() *cobra.Command {
 				logrus.WithField("userInput", input).Debug("successfully getting valid input ")
 				controller.GetTipForTopic(input, cmd.OutOrStdout())
 			}
+			//}
 			return nil
 		},
 	}
@@ -65,12 +73,23 @@ func GitCommand() *cobra.Command {
 		Version: "0.1v",
 		Example: `tips git --arg stash / --subarg stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
-		Args: cobra.MaximumNArgs(1),
+		Args:       cobra.MaximumNArgs(1),
+		SuggestFor: []string{"nmae"},
+
+		// PreRunE: func(cmd *cobra.Command, args []string) error {
+		// 	if len(args) == 0 {
+		// 		cmd.Help()
+		// 	}
+		// 	return nil
+		// },
 
 		RunE: func(cmd *cobra.Command, args []string) error {
+			//	if len(args) != 0 {
 			arg := arg + " " + subarg
 			controller.GetTipForTopic(arg, cmd.OutOrStdout())
+			//}
 			return nil
+
 		},
 	}
 	gitcmd.Flags().StringVar(&arg, "arg", "", "argument help for the tip")
