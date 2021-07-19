@@ -1,4 +1,4 @@
-package restclient
+package client
 
 import (
 	"testing"
@@ -8,6 +8,6 @@ import (
 
 func TestLoadfromEnv(t *testing.T) {
 	got := loadfromEnv()
-	want := "token"
-	assert.Contains(t, got, want)
+	want := 8
+	assert.Equal(t, len(got), want)
 }

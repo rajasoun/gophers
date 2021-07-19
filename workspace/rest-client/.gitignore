@@ -1,1 +1,5 @@
+#Enviromental Variables file(.env)
+
 *.env
+bin
+Godeps
