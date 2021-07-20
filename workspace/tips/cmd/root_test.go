@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -123,19 +124,38 @@ func Test_SetLogger(t *testing.T) {
 }
 
 func Test_GitCommand(t *testing.T) {
-	outputBuffer := bytes.NewBufferString("")
-	rootCmd.SetOut(outputBuffer)
-	expected := "checkout"
-	rootCmd.SetArgs([]string{"git", "--arg", expected})
-	err := gitCmd.Execute()
-	if err != nil {
-		t.Fatal(err)
-	}
-	out, err := ioutil.ReadAll(outputBuffer)
-	if err != nil {
-		t.Fatal(err)
-	}
-	got := string(out)
-	assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
+	t.Run("checking help command", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		rootCmd.SetArgs([]string{"git"})
+		err := gitCmd.Execute()
+		if err != nil {
+			t.Fatal(err)
+		}
+		out, err := ioutil.ReadAll(outputBuffer)
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := string(out)
+		fmt.Print(got)
+		want := "help"
+		assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
+	})
 
+	t.Run("Checking valid data", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		expected := "checkout"
+		rootCmd.SetArgs([]string{"git", "--arg", expected})
+		err := gitCmd.Execute()
+		if err != nil {
+			t.Fatal(err)
+		}
+		out, err := ioutil.ReadAll(outputBuffer)
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := string(out)
+		assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
+	})
 }

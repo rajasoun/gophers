@@ -68,27 +68,20 @@ func GitCommand() *cobra.Command {
 		Version: "0.1v",
 		Example: `tips git --arg stash / --subarg stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
-		Args:       cobra.MaximumNArgs(1),
-		SuggestFor: []string{"name"},
-
-		// PreRunE: func(cmd *cobra.Command, args []string) error {
-		// 	if len(args) == 0 {
-		// 		cmd.Help()
-		// 	}
-		// 	return nil
-		// },
-
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//if len(args) != 0 {
-			arg := arg + " " + subarg
-			controller.GetTipForTopic(arg, cmd.OutOrStdout())
-			//}
+			if len(args) == 0 && arg == "" && subarg == "" {
+				cmd.Help()
+				return nil
+			} else if arg != "" || subarg != "" {
+				arg := arg + " " + subarg
+				controller.GetTipForTopic(arg, cmd.OutOrStdout())
+			}
 			return nil
-
 		},
 	}
-	gitcmd.Flags().StringVar(&arg, "arg", "", "argument help for the tip")
-	gitcmd.Flags().StringVar(&subarg, "subarg", "", "sub argument help for the tip")
+	gitcmd.Flags().StringVarP(&arg, "arg", "c", "", "argument help for the tip")
+	gitcmd.Flags().StringVarP(&subarg, "subarg", "f", "", "sub argument help for the tip")
 
 	return gitcmd
 }
