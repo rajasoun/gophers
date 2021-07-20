@@ -40,22 +40,50 @@ func Test_NewRootCmd(t *testing.T) {
 			assert.Error(t, err)
 		}
 	})
+	t.Run("checking help commands", func(t *testing.T) {
+		rootCmd.SetArgs([]string{})
+		err := rootCmd.Execute()
+		if err != nil {
+			assert.NoError(t, err)
+		}
+	})
+
+	t.Run("checking invalid input data", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		var inValidInput string = "lo"
+		rootCmd.SetArgs([]string{"--topic", inValidInput})
+		err := rootCmd.Execute()
+		if err != nil {
+			assert.Error(t, err)
+		}
+		out, _ := ioutil.ReadAll(outputBuffer)
+		if err != nil {
+			//t.Fatal(err)
+			assert.Error(t, err)
+		}
+		got := string(out)
+		want := "help"
+		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
+	})
 
 }
 
 func TestExecute(t *testing.T) {
 	tests := []struct {
-		name string
-		want string
-		flag string
+		name  string
+		input string
+		want  string
+		flag  string
 	}{
-		{"Success Case", "stash", "--topic"},
-		{"Error Case", "error", "--tips"},
+		{"Success Case", "stash", "stash", "--topic"},
+		{"Error Case", "help", "help", "--tips"},
+		{"Invalid Data", "gf", "help", "--topic"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			//rootCmd.SetArgs([]string{tt.flag, tt.want})
-			NewRootCmd().Flags().Set(tt.flag, tt.want)
+			NewRootCmd().Flags().Set(tt.flag, tt.input)
 			writer := &bytes.Buffer{}
 			err := Execute(writer)
 			if err != nil {

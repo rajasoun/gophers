@@ -32,33 +32,28 @@ func NewRootCmd() *cobra.Command {
 		Example: `-> tips --topic stash 
 ->"Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
-		// PreRunE: func(cmd *cobra.Command, args []string) error {
-		// 	if len(args) == 0 {
-		// 		cmd.Help()
-		// 	}
-		// 	return nil
-		// },
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//if len(args) != 0 {
-
-			//calling setUplogs func to set logger level for debugging the code
-			setUpLogs(cmd.OutOrStdout(), debug)
-			logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
-
-			// getting topic
-			input, err := getTopic(args)
-			if err != nil {
-				logrus.WithField("err", err).Debug("invalid user input")
-				return err
-			} else {
-				logrus.WithField("userInput", input).Debug("successfully getting valid input ")
-				controller.GetTipForTopic(input, cmd.OutOrStdout())
+			if len(args) == 0 && topic == "" && debug == "" {
+				cmd.Help()
+				return nil
+			} else if topic != "" || debug != "" {
+				//calling setUplogs func to set logger level for debugging the code
+				setUpLogs(cmd.OutOrStdout(), debug)
+				logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
+				// getting topic
+				input, err := getTopic(args)
+				if err != nil {
+					logrus.WithField("err", err).Debug("invalid user input")
+					return err
+				} else {
+					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
+					controller.GetTipForTopic(input, cmd.OutOrStdout())
+				}
 			}
-			//}
 			return nil
 		},
 	}
-	cmd.Flags().StringVar(&topic, "topic", "", "user input string help for the topic")
+	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic")
 
 	return cmd
 }
@@ -74,7 +69,7 @@ func GitCommand() *cobra.Command {
 		Example: `tips git --arg stash / --subarg stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args:       cobra.MaximumNArgs(1),
-		SuggestFor: []string{"nmae"},
+		SuggestFor: []string{"name"},
 
 		// PreRunE: func(cmd *cobra.Command, args []string) error {
 		// 	if len(args) == 0 {
@@ -84,7 +79,7 @@ func GitCommand() *cobra.Command {
 		// },
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//	if len(args) != 0 {
+			//if len(args) != 0 {
 			arg := arg + " " + subarg
 			controller.GetTipForTopic(arg, cmd.OutOrStdout())
 			//}
