@@ -3,7 +3,6 @@ package client
 import (
 	"bufio"
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -12,19 +11,20 @@ import (
 )
 
 var values = make(map[string]string)
+var openFile = os.Open
 
-func loadfromEnv() map[string]string {
-	file, err := os.Open("data.env")
+func loadDatafromEnv() (map[string]string, error) {
+	file, err := openFile("../data.env")
 	if err != nil {
-		fmt.Printf("error opening file: %v\n", err)
+		//	fmt.Printf("error opening file: %v\n", err)
+		return map[string]string{}, err
 	}
 	reader := bufio.NewReader(file)
 	data, err := readln(reader)
 	for err == nil {
 		data, err = readln(reader)
 	}
-	return data
-
+	return data, nil
 }
 
 func readln(reader *bufio.Reader) (map[string]string, error) {
@@ -43,29 +43,32 @@ func readln(reader *bufio.Reader) (map[string]string, error) {
 	}
 	return values, err
 }
-
-func FindMapValues(d string) string {
-	loadfromEnv()
-	for j, i := range values {
-		if strings.Contains(j, d) {
-			return i
+func findMapValues(oauthId string) string {
+	clientValues, _ := loadDatafromEnv()
+	for Key, value := range clientValues {
+		if strings.Contains(Key, oauthId) {
+			return value
 		}
 	}
-	return ""
+	return "not available"
 }
 
-func getAccessToken() (string, string) {
+var userName string = findMapValues("user.name")
+var pass string = findMapValues("password")
+
+func getAccessToken() (string, string, error) {
 	config := oauth2.Config{
-		ClientID:     FindMapValues("token.client.id"),
-		ClientSecret: FindMapValues("token.client.secret"),
-		TokenURL:     FindMapValues("token.request.url"),
+		ClientID:     findMapValues("token.client.id"),
+		ClientSecret: findMapValues("token.client.secret"),
+		TokenURL:     findMapValues("token.request.url"),
 	}
 	// create a client
 	new_client := oauth2.NewClient(http.DefaultClient, config)
-	token, err := new_client.CredentialsToken(context.Background(), FindMapValues("user.name"), FindMapValues("password"))
+	token, err := new_client.CredentialsToken(context.Background(), userName, pass)
 	if err != nil {
-		fmt.Print(err)
+		//fmt.Println("Erorr from main:", err)
+		return "", "", err
 	}
-	return token.AccessToken, token.TokenType
+	return token.AccessToken, token.TokenType, nil
 
 }

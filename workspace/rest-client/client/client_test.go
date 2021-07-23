@@ -1,31 +1,64 @@
 package client
 
 import (
+	"errors"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLoadfromEnv(t *testing.T) {
-	got := loadfromEnv()
+func TestLoadDatafromEnv(t *testing.T) {
+	got, _ := loadDatafromEnv()
 	want := 8
 	assert.Equal(t, len(got), want)
-}
 
+}
 func TestGetAccesToken(t *testing.T) {
 	t.Run("Checking access token , token string length should not be 0 ", func(t *testing.T) {
-		got_token, _ := getAccessToken()
+		got_token, _, _ := getAccessToken()
 		expectedToken := ""
 		assert.NotEqual(t, len(got_token), len(expectedToken))
 	})
 	t.Run("Checking token type", func(t *testing.T) {
-		_, got_tokenType := getAccessToken()
+		_, got_tokenType, _ := getAccessToken()
 		expectedTokenType := "Bearer"
 		assert.Equal(t, got_tokenType, expectedTokenType)
 
 	})
 }
 
+func TestGetError(t *testing.T) {
+	t.Run("Checking Error if username and password are wrong", func(t *testing.T) {
+		userName = "user1"
+		pass = "pss12"
+		_, _, err := getAccessToken()
+		assert.Error(t, err)
+	})
+}
+
+func TestGettingErrorOnReadFile(t *testing.T) {
+	t.Run("Loading invalid env File should fail", func(t *testing.T) {
+		// Mocked function for os.ReadFile
+		file_read := func(string) (*os.File, error) {
+			myErr := errors.New("error")
+			return nil, myErr
+		}
+		openFile = file_read
+		_, err := loadDatafromEnv()
+		assert.Error(t, err)
+	})
+
+}
+
+func TestFindMapValues(t *testing.T) {
+	t.Run("getting invalid data if key is not present", func(t *testing.T) {
+		got := findMapValues("dummy")
+		want := "not available"
+		assert.Equal(t, got, want)
+
+	})
+}
 
 // func newServer(h func(w http.ResponseWriter, r *http.Request)) *httptest.Server {
 // 	return httptest.NewServer(http.HandlerFunc(h))

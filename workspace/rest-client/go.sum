@@ -1,3 +1,5 @@
+github.com/cristalhq/oauth2 v0.1.0 h1:dU0Sa+maVxJO+2V3lJ45KXh3OuBN8X9JapAwF5zS0Sc=
+github.com/cristalhq/oauth2 v0.1.0/go.mod h1:ZcrZUX1P8ytfdfpYNKm29oQB9z4KkJHxP0BeKafpxWM=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
