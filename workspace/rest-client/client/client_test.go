@@ -12,12 +12,20 @@ func TestLoadfromEnv(t *testing.T) {
 	assert.Equal(t, len(got), want)
 }
 
-func TestGetAccessToken(t *testing.T) {
-	got1, got2 := getAccessToken()
-	want := ""
-	assert.NotEqual(t, got1, want)
-	assert.NotEqual(t, got2, want)
+func TestGetAccesToken(t *testing.T) {
+	t.Run("Checking access token , token string length should not be 0 ", func(t *testing.T) {
+		got_token, _ := getAccessToken()
+		expectedToken := ""
+		assert.NotEqual(t, len(got_token), len(expectedToken))
+	})
+	t.Run("Checking token type", func(t *testing.T) {
+		_, got_tokenType := getAccessToken()
+		expectedTokenType := "Bearer"
+		assert.Equal(t, got_tokenType, expectedTokenType)
+
+	})
 }
+
 
 // func newServer(h func(w http.ResponseWriter, r *http.Request)) *httptest.Server {
 // 	return httptest.NewServer(http.HandlerFunc(h))
