@@ -2,9 +2,13 @@ package client
 
 import (
 	"bufio"
+	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
+
+	"github.com/cristalhq/oauth2"
 )
 
 var values = make(map[string]string)
@@ -40,14 +44,28 @@ func readln(reader *bufio.Reader) (map[string]string, error) {
 	return values, err
 }
 
-// Config describes a 3-legged OAuth2 flow.
-// type Config struct {
-// 	ClientID     string
-// 	ClientSecret string
-// 	UserName     string
-// 	Password     string
-// 	TokenURL     string
-// 	ProductURL   string
-// 	ModifiedURL  string
-// 	CreatedURL   string
-// }
+func FindMapValues(d string) string {
+	loadfromEnv()
+	for j, i := range values {
+		if strings.Contains(j, d) {
+			return i
+		}
+	}
+	return ""
+}
+
+func getAccessToken() (string, string) {
+	config := oauth2.Config{
+		ClientID:     FindMapValues("token.client.id"),
+		ClientSecret: FindMapValues("token.client.secret"),
+		TokenURL:     FindMapValues("token.request.url"),
+	}
+	// create a client
+	new_client := oauth2.NewClient(http.DefaultClient, config)
+	token, err := new_client.CredentialsToken(context.Background(), FindMapValues("user.name"), FindMapValues("password"))
+	if err != nil {
+		fmt.Print(err)
+	}
+	return token.AccessToken, token.TokenType
+
+}
