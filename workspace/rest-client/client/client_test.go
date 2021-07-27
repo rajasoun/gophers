@@ -98,3 +98,28 @@ func Test_GetHttpRequest(t *testing.T) {
 	})
 
 }
+
+func Test_getDatafromRestapi(t *testing.T) {
+	json := `{"hasUnlimitedLicenses":false,"lastModifiedBy":"test full name","createdBy":"login"}`
+	// create a new reader with that JSON
+	reader := ioutil.NopCloser(bytes.NewReader([]byte(json)))
+	GetDoFunc = func(*http.Request) (*http.Response, error) {
+		return &http.Response{
+			StatusCode: 200,
+			Body:       reader,
+		}, nil
+	}
+	t.Run("Checking fetch valid data from restapi", func(t *testing.T) {
+		client = &mockClient{}
+		resp, err := getHttpRequest(nil, "@com.in")
+		if err != nil {
+			t.Fatal(err)
+		}
+		_, err, got := getDatafromRestapi(resp)
+		assert.NotNil(t, got)
+		assert.Nil(t, err)
+		assert.EqualValues(t, 200, resp.StatusCode)
+		assert.Contains(t, got, "hasUnlimitedLicenses")
+	})
+
+}

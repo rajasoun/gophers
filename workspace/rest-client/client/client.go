@@ -2,7 +2,9 @@ package client
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/spf13/viper"
@@ -69,9 +71,6 @@ func init() {
 	client = &http.Client{}
 }
 func getHttpRequest(header http.Header, url string) (*http.Response, error) {
-	//client := &http.Client{}
-	//config, _ := loadfromEnv(configFilepath)
-	//token, _ := getToken()
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Print(err)
@@ -80,10 +79,51 @@ func getHttpRequest(header http.Header, url string) (*http.Response, error) {
 	return client.Do(request)
 }
 
-// func CallfromMain() {
-//var configFilepath string = "../configfile" //current working directory
-// 	config, _ := loadfromEnv(configFilepath)
-// 	token, _ := getToken(config)
-// 	header := setHeader(token)
-// 	getHttpRequest(header, config.ProductURL)
-// }
+type data struct {
+	// todo add more fields
+	HasUnlimited bool   `json:"hasUnlimitedLicenses"`
+	LastModi     string `json:"lastModifiedBy"`
+	Created      string `json:"createdBy"`
+}
+
+func getDatafromRestapi(response *http.Response) ([]data, error, string) {
+	bodyBytes, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err, ""
+	}
+	var dataString []data
+	json.Unmarshal(bodyBytes, &dataString)
+	fmt.Println(len(dataString))
+	return dataString, nil, string(bodyBytes)
+}
+
+func Run() {
+	// 	var configFilepath string = "./configfile" //current working directory
+	// 	config, err := loadfromEnv(configFilepath)
+	// 	fmt.Println(config)
+
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// 	token, err := getToken(config)
+	// 	fmt.Println(token)
+
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// 	header := setHeader(token)
+	// 	fmt.Println(header)
+
+	// 	req, err := getHttpRequest(header, config.ProductURL)
+	// 	fmt.Println(req)
+
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// 	jsonString, err, _ := getDatafromRestapi(req)
+	// 	fmt.Println(jsonString)
+
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+}
