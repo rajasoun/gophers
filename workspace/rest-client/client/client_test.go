@@ -25,6 +25,7 @@ func Test_LoadfromEnv(t *testing.T) {
 
 func Test_GetToken(t *testing.T) {
 	t.Run("Checking Error ", func(t *testing.T) {
+		//mocking to get token
 		congdata := configuration{
 			ClientID:     "124",
 			ClientSecret: "wer3d",
@@ -115,7 +116,7 @@ func Test_getDatafromRestapi(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err, got := getDatafromRestapi(resp)
+		_, got, err := getDatafromRestapi(resp)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 		assert.EqualValues(t, 200, resp.StatusCode)

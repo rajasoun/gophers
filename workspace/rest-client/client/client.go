@@ -74,6 +74,7 @@ func getHttpRequest(header http.Header, url string) (*http.Response, error) {
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Print(err)
+		return nil, err
 	}
 	request.Header = header
 	return client.Do(request)
@@ -86,44 +87,16 @@ type data struct {
 	Created      string `json:"createdBy"`
 }
 
-func getDatafromRestapi(response *http.Response) ([]data, error, string) {
+func getDatafromRestapi(response *http.Response) ([]data, string, error) {
 	bodyBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return nil, err, ""
+		return nil, "invalid data", err
 	}
 	var dataString []data
 	json.Unmarshal(bodyBytes, &dataString)
-	fmt.Println(len(dataString))
-	return dataString, nil, string(bodyBytes)
+	return dataString, string(bodyBytes), nil
 }
 
 func Run() {
-	// 	var configFilepath string = "./configfile" //current working directory
-	// 	config, err := loadfromEnv(configFilepath)
-	// 	fmt.Println(config)
 
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// 	token, err := getToken(config)
-	// 	fmt.Println(token)
-
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// 	header := setHeader(token)
-	// 	fmt.Println(header)
-
-	// 	req, err := getHttpRequest(header, config.ProductURL)
-	// 	fmt.Println(req)
-
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// 	jsonString, err, _ := getDatafromRestapi(req)
-	// 	fmt.Println(jsonString)
-
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
 }
