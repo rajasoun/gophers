@@ -21,8 +21,8 @@ func TestGetTipForTopicIntegration(t *testing.T) {
 		input string
 		want  string
 	}{
-		{name: "Delete", input: "delete", want: "Delete remote branch"},
-		{name: "Empty string", input: "", want: "should not be Empty"},
+		{name: "Checking with Valid input", input: "delete", want: "Delete remote branch"},
+		{name: "Checking with invalid input", input: "hello", want: "invalid command"},
 	}
 	for _, tt := range input_ouputData {
 		t.Run(tt.name, func(t *testing.T) {
@@ -31,4 +31,5 @@ func TestGetTipForTopicIntegration(t *testing.T) {
 			assert.Contains(t, got, tt.want)
 		})
 	}
+
 }

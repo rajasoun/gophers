@@ -22,7 +22,8 @@ func readInput(reader io.Reader) string {
 
 //check input validation
 func isValidInput(userInput string) bool {
-	if len(userInput) <= 3 && userInput != "" {
+	var length int = len(userInput)
+	if userInputLength := 4; length < userInputLength {
 		return false
 	}
 	return true
@@ -30,7 +31,7 @@ func isValidInput(userInput string) bool {
 
 //returning Title
 func getTopic(reader io.Reader) (string, error) {
-	var validError = errors.New("key length should be greater than 3")
+	var validError = errors.New("key length should be greater than 3 and not be empty")
 	user_input := readInput(reader)
 	if isValidInput(user_input) {
 		return user_input, nil
@@ -39,8 +40,7 @@ func getTopic(reader io.Reader) (string, error) {
 }
 
 //read user input and pass to controller
-func Run(reader io.Reader, writer io.Writer) {
-	fmt.Printf(" %q \n", "Enter Topic: ")
+func run(reader io.Reader, writer io.Writer) {
 	topic, err := getTopic(reader)
 	if err != nil {
 		fmt.Fprintf(writer, " %q", err.Error())

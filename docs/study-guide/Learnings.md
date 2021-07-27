@@ -4,7 +4,7 @@
 
 1. Mindmap - [Xmind](https://www.xmind.net/download/) ✅
 1. Git Hub Project Management ✅
-1. Kanban Planning 🟡
+1. Kanban Planning 🟡 
 1. Project Charter ✅
 1. Definition of Done ✅
 1. Git Basics 🟡
@@ -108,23 +108,6 @@
 ## 4th June(Team)
 1. Refactored the code in tips project with interface and structs
 
-## 7th June(Team)
-1. Add table driven tests in git-tips project
-2. Made a plan for 2 weeks to work on Go with TDD
-
-## 8th June(Team)
-1. Created documentation on Debugger.
-1. Worked on Mocking with TDD and Recap topic (Hello World).
-
-## 9th June(Team)
-1. Updated some tools in Debugger documentation
-1. Pushed 2 Weeks plan to github
-1. Worked on Mocking with more unit test cases and Recap Topic(Integer)
-
-## 10 June(Team)
-1. Created documentation on Integer and Iteration with TDD
-1. Worked on Mocking with Refactoring the code and Recap topic(Iteration)
-
 ## 7th June to 18th June(Team) first Sprint Tasks
 1. Worked on fundamentals of Golang with TDD Design(Ingeter,DataTypes,Iteration,Array,Slice,Methods,Struct,Interface,Pointers,Error,Maps).
 1. Also practiced code on DI with mocking.
@@ -132,6 +115,24 @@
 1. Worked on GitHub Action(CI/CD) and Packaging(build .exe file for different system)
 1. Created documentations on DataTypes,Debugger&Linter,DependencyInjection,Iteration,MockingTheory,Packaging&CI&CD,Pointer&Error.
 1. Learned Table Drive Test.
+ 
+### 7th June(Team)
+1. Add table driven tests in git-tips project
+2. Made a plan for 2 weeks to work on Go with TDD
+
+### 8th June(Team)
+1. Created documentation on Debugger.
+1. Worked on Mocking with TDD and Recap topic (Hello World).
+
+### 9th June(Team)
+1. Updated some tools in Debugger documentation
+1. Pushed 2 Weeks plan to github
+1. Worked on Mocking with more unit test cases and Recap Topic(Integer)
+
+### 10 June(Team)
+1. Created documentation on Integer and Iteration with TDD
+1. Worked on Mocking with Refactoring the code and Recap topic(Iteration)
+
 
 ## 21th June to 2nd July(Team) second Sprint Tasks
 1. Worked on Tips Project With TDD on writing unit test case and
@@ -140,5 +141,20 @@
 1. Build bin packaging
 1. Build tags (separate unit test from integration testing)
 1. Mocking(when is needed)
-1. Install gotestsum (for Continously Run Go Tests) [click] (https://github.com/gotestyourself/gotestsum)
+1. Install gotestsum (for Continously Run Go Tests) [click](https://github.com/gotestyourself/gotestsum)
 1. Updated a documentation on Tips.
+
+## 5th July to 16th July(Team) third Sprint Tasks
+1. Worked on cobra lib (CLI Framework)
+1. Applied Cobra lib in tips cli Project
+1. Implemented tho cobra lib in tips with TDD design 
+1. Worked on finding the Good one logging pkg 
+1. Applied the logging (logrus lib) debug level in tips 
+1. Worked on cobra how to create flags and how to hide them from help command.
+1. Worked with cobra lib with TDD (How to write unit test for cobra lib functions)
+1. Worked on go-cron(job scheduling at pre-determined interval) libs
+1. Worked and practice how to find good lib to implement on project needs.
+
+## 19th July to 30th July(Team) fourth Sprint Tasks
+
+ 
