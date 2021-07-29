@@ -2,12 +2,18 @@ package client
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func init() {
+	os.Setenv("GO_ENV", "test")
+}
 
 func Test_LoadfromEnv(t *testing.T) {
 	t.Run("Checking error", func(t *testing.T) {
@@ -123,4 +129,19 @@ func Test_getDatafromRestapi(t *testing.T) {
 		assert.Contains(t, got, "hasUnlimitedLicenses")
 	})
 
+}
+
+func Test_WriteDataintoJson(t *testing.T) {
+	t.Run("", func(t *testing.T) {
+		test_data := []data{
+			{HasUnlimited: false},
+			{HasUnlimited: true},
+		}
+		var fileRead = os.ReadFile
+		err := writeDataintoJson(test_data, "test.json")
+		got, _ := fileRead("test.json")
+		fmt.Print(string(got))
+		assert.Contains(t, string(got), "hasUnlimitedLicenses")
+		assert.NoError(t, err)
+	})
 }

@@ -82,6 +82,7 @@ func getHttpRequest(header http.Header, url string) (*http.Response, error) {
 
 type data struct {
 	// todo add more fields
+	//todo put in model package
 	HasUnlimited bool   `json:"hasUnlimitedLicenses"`
 	LastModi     string `json:"lastModifiedBy"`
 	Created      string `json:"createdBy"`
@@ -97,6 +98,18 @@ func getDatafromRestapi(response *http.Response) ([]data, string, error) {
 	return dataString, string(bodyBytes), nil
 }
 
+func writeDataintoJson(jsonData []data, fileSavePath string) error {
+	json_Data, err := json.MarshalIndent(jsonData, "", "")
+	if err != nil {
+		return err
+	}
+	//var fileSavePath ="configfile/configJsonData.json"
+	err = ioutil.WriteFile(fileSavePath, json_Data, 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func Run() {
 
 }
