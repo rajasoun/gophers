@@ -15,6 +15,7 @@ var (
 	rootCmd                   = NewRootCmd()
 	cmd                       *cobra.Command
 	topic, arg, subarg, debug string
+	about                     bool
 )
 
 const (
@@ -32,7 +33,9 @@ func NewRootCmd() *cobra.Command {
 		Example: `-> tips --topic stash 
 ->"Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
+
 		RunE: func(cmd *cobra.Command, args []string) error {
+
 			if len(args) == 0 && topic == "" && debug == "" {
 				cmd.Help()
 				return nil
@@ -51,6 +54,8 @@ func NewRootCmd() *cobra.Command {
 				}
 			}
 			return nil
+			//return cobra.CheckErr(rootCmd.Execute())
+
 		},
 	}
 	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic")
@@ -69,6 +74,7 @@ func GitCommand() *cobra.Command {
 		Example: `tips git --arg stash / --subarg stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
+
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 && arg == "" && subarg == "" {
 				cmd.Help()
@@ -90,6 +96,8 @@ func GitCommand() *cobra.Command {
 func Execute(writer io.Writer) error {
 	rootCmd.SetOutput(writer)
 	return rootCmd.Execute()
+	//return cobra.CheckErr(rootCmd.Execute())
+	//return err
 }
 
 // getting topic with checking validation
@@ -124,8 +132,17 @@ func setUpLogs(out io.Writer, level string) error {
 }
 
 func init() {
+
 	cmd.PersistentFlags().StringVarP(&debug, "debug", "", "", "verbose logging")
+
 	cmd.PersistentFlags().MarkHidden("debug")
 	rootCmd.AddCommand(gitCmd)
+	rootCmd.PersistentFlags().BoolVarP(&about, "about", "a", false, "persistant flag")
+
+	//rootCmd.SetUsageTemplate(strings.Replace(cmd.UsageString(), "tips [flags]", "tips git <order_id> [flags]", 1))
+
+	//cmd.SetHelpCommand(cmd * Command)
+	//cmd.SetHelpFunc(f func( *Command , []string))
+	//cmd.SetHelpTemplate("golabal")
 
 }
