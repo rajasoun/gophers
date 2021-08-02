@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 
@@ -11,6 +11,16 @@ import (
 
 	"github.com/cristalhq/oauth2"
 )
+
+var (
+	client      HTTPClient
+	httpRequest = http.NewRequest
+	read_All    = io.ReadAll
+)
+
+func init() {
+	client = &http.Client{}
+}
 
 type configuration struct {
 	ClientID     string `mapstructure:"client_id"`
@@ -65,15 +75,10 @@ type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-var client HTTPClient
-
-func init() {
-	client = &http.Client{}
-}
 func getHttpRequest(header http.Header, url string) (*http.Response, error) {
-	request, err := http.NewRequest("GET", url, nil)
+	request, err := httpRequest("GET", url, nil)
+
 	if err != nil {
-		fmt.Print(err)
 		return nil, err
 	}
 	request.Header = header
@@ -82,21 +87,37 @@ func getHttpRequest(header http.Header, url string) (*http.Response, error) {
 
 type data struct {
 	// todo add more fields
+	//todo put in model package
 	HasUnlimited bool   `json:"hasUnlimitedLicenses"`
 	LastModi     string `json:"lastModifiedBy"`
 	Created      string `json:"createdBy"`
 }
 
 func getDatafromRestapi(response *http.Response) ([]data, string, error) {
-	bodyBytes, err := ioutil.ReadAll(response.Body)
+	bodyBytes, err := read_All(response.Body)
 	if err != nil {
 		return nil, "invalid data", err
 	}
 	var dataString []data
+
 	json.Unmarshal(bodyBytes, &dataString)
 	return dataString, string(bodyBytes), nil
 }
 
+func writeDataintoJson(jsonData []data, fileSavePath string) error {
+	json_Data, _ := json.MarshalIndent(jsonData, "", "")
+	//var fileSavePath ="configfile/configJsonData.json"
+	err := ioutil.WriteFile(fileSavePath, json_Data, 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func writeintoDatabase() error {
+	return nil
+
+}
 func Run() {
 
 }

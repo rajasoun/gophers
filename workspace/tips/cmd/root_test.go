@@ -15,7 +15,6 @@ func init() {
 }
 
 func Test_NewRootCmd(t *testing.T) {
-
 	t.Run("checking valid inputs", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
 		rootCmd.SetOut(outputBuffer)
@@ -158,4 +157,20 @@ func Test_GitCommand(t *testing.T) {
 		got := string(out)
 		assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
 	})
+
 }
+
+// func Test_Error(t *testing.T) {
+// 	t.Run("checking valid command", func(t *testing.T) {
+// 		outputBuffer := bytes.NewBufferString("")
+// 		rootCmd.SetOut(outputBuffer)
+// 		rootCmd.SetArgs([]string{"gi"})
+// 		err := rootCmd.Execute()
+// 		//out, _ := ioutil.ReadAll(outputBuffer)
+// 		//got := string(out)
+// 		//want := "help"
+// 		//	assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
+// 		assert.Error(t, err)
+
+// 	})
+// }

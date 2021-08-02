@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	gitCmd                    = GitCommand()
-	rootCmd                   = NewRootCmd()
-	cmd                       *cobra.Command
-	topic, arg, subarg, debug string
+	gitCmd                             = GitCommand()
+	rootCmd                            = NewRootCmd()
+	cmd                                *cobra.Command
+	topic, arg, subarg, debug, cfgFile string
 )
 
 const (
@@ -29,7 +29,7 @@ func NewRootCmd() *cobra.Command {
 		Long:    "tips provides help for docker and git cli commands ",
 		Aliases: []string{},
 		Version: "0.1v",
-		Example: `-> tips --topic stash 
+		Example: `-> tips -c stash 
 ->"Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -50,11 +50,18 @@ func NewRootCmd() *cobra.Command {
 					controller.GetTipForTopic(input, cmd.OutOrStdout())
 				}
 			}
+			// else if args[0] != "git" {
+			// 	if string(args[0][0]) == "g" {
+			// 		fmt.Print("Did you mean this? \n git\n\n ")
+			// 	}
+			// 	fmt.Print("unknown command ", args[0], " for tips \n")
+			// 	cobra.CheckErr("invalid command for tips  \n Run 'tips --help' for usage.")
+			//}
+
 			return nil
 		},
 	}
 	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic")
-
 	return cmd
 }
 
@@ -69,6 +76,7 @@ func GitCommand() *cobra.Command {
 		Example: `tips git --arg stash / --subarg stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
+
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 && arg == "" && subarg == "" {
 				cmd.Help()
@@ -126,6 +134,10 @@ func setUpLogs(out io.Writer, level string) error {
 func init() {
 	cmd.PersistentFlags().StringVarP(&debug, "debug", "", "", "verbose logging")
 	cmd.PersistentFlags().MarkHidden("debug")
+
 	rootCmd.AddCommand(gitCmd)
 
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tips.yaml)")
+
+	//rootCmd.SetUsageTemplate(strings.Replace(cmd.UsageString(), "tips [command]", "tips [command] [flags]", 1))
 }
