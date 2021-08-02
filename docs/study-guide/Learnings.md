@@ -156,5 +156,14 @@
 1. Worked and practice how to find good lib to implement on project needs.
 
 ## 19th July to 30th July(Team) fourth Sprint Tasks
+1. Worked on tips cli Project with cobra lib and Explore Cobra Lib
+1. Worked on rest-client project(data scraping from restapi)
+1. Applied 3-legged OAuth2 flow in rest-client project.
+1. Also got Token value.
+1. Worked with Viper lib for reading config data from env file
+1. Implemented Mocking for GetHttpRequest
+1. Tried to set own help commands in tips project with cobra lib
+1. Find database plugin lib to store data in database (i.e Gorm)
+1. Practice on Gorm Library.
 
  
