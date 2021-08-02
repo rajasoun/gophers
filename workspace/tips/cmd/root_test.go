@@ -13,7 +13,16 @@ import (
 func init() {
 	os.Setenv("GO_ENV", "test")
 }
+func Test_NewRootCmdwithInvalidCommand(t *testing.T) {
+	t.Run("checking unknown commands expect git", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		rootCmd.SetArgs([]string{"gi"})
+		err := rootCmd.Execute()
+		assert.Error(t, err)
 
+	})
+}
 func Test_NewRootCmd(t *testing.T) {
 	t.Run("checking valid inputs", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
@@ -159,18 +168,3 @@ func Test_GitCommand(t *testing.T) {
 	})
 
 }
-
-// func Test_Error(t *testing.T) {
-// 	t.Run("checking valid command", func(t *testing.T) {
-// 		outputBuffer := bytes.NewBufferString("")
-// 		rootCmd.SetOut(outputBuffer)
-// 		rootCmd.SetArgs([]string{"gi"})
-// 		err := rootCmd.Execute()
-// 		//out, _ := ioutil.ReadAll(outputBuffer)
-// 		//got := string(out)
-// 		//want := "help"
-// 		//	assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
-// 		assert.Error(t, err)
-
-// 	})
-// }

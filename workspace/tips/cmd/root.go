@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"io"
 
 	"github.com/sirupsen/logrus"
@@ -49,14 +50,14 @@ func NewRootCmd() *cobra.Command {
 					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
 					controller.GetTipForTopic(input, cmd.OutOrStdout())
 				}
+			} else if args[0] != "git" {
+				if string(args[0][0]) == "g" {
+					fmt.Print("Did you mean this? \n git\n\n ")
+				}
+				fmt.Print("unknown command ", args[0], " for tips \n")
+				//cobra.CheckErr("invalid command for tips  \n Run 'tips --help' for usage.")
+				return errors.New("invalid command for tips")
 			}
-			// else if args[0] != "git" {
-			// 	if string(args[0][0]) == "g" {
-			// 		fmt.Print("Did you mean this? \n git\n\n ")
-			// 	}
-			// 	fmt.Print("unknown command ", args[0], " for tips \n")
-			// 	cobra.CheckErr("invalid command for tips  \n Run 'tips --help' for usage.")
-			//}
 
 			return nil
 		},

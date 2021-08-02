@@ -11,24 +11,27 @@ Command Line Tool to provide tips on the command to be used based on the topic
 ## Usage
 
 ```
-  Usage
-      $ tip [options]
-  Options
-      --help    Provides usage help (Shows the current page)
-      --all     Gives all the git tips
-      <keyword> Gives the git tips consisting of the keyword
-  Examples
-      $ tip bypass
+tips provides help for docker and git cli commands
 
-      1. Bypass pre-commit and commit-msg githooks
-      => git commit --no-verify
+Usage:
+  tips [flags]
+  tips [command]
 
-      $ tip
+Examples:
+-> tips -c stash 
+->"Saving current state of unstaged changes to tracked files : git stash -k" 
 
-      Git Tip of the Terminal
-      -------------------------
-      Saving current state of tracked files without commiting
-      => git stash
+Available Commands:
+  completion  generate the autocompletion script for the specified shell
+  git         Git is a DevOps tool used for source code management.
+  help        Help about any command
+
+Flags:
+  -h, --help            help for tips
+  -c, --topic string    user input string help for the topic
+  -v, --version         version for tips
+
+Use "tips [command] --help" for more information about a command.
 ```
 
 ##  Running Notes
