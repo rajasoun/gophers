@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/cristalhq/oauth2"
+
+	"gorm.io/driver/mysql"
+
+	"gorm.io/gorm"
 )
 
 var (
@@ -17,6 +21,8 @@ var (
 	httpRequest = http.NewRequest
 	read_All    = io.ReadAll
 )
+
+const jsonPath string = "configfile/configJsonData.json"
 
 func init() {
 	client = &http.Client{}
@@ -114,10 +120,32 @@ func writeDataintoJson(jsonData []data, fileSavePath string) error {
 	return nil
 }
 
+const dbConfig string = "root:root@tcp(localhost:3306)/testdb?charset=utf8mb4&parseTime=True&loc=Local"
+
+type DataInformation struct {
+	gorm.Model
+	HasUnlimited bool
+	LastModi     string
+	Created      string
+}
+
+func setupforDbConnection(jsonData []data) error {
+	dsn := dbConfig
+	_, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	// db.AutoMigrate(&DataInformation{})
+
+	// // Create
+	// for _, j := range jsonData {
+	// 	db.Create(&DataInformation{HasUnlimited: j.HasUnlimited, LastModi: j.LastModi, Created: j.LastModi})
+	// }
+	return err
+}
+
 func writeintoDatabase() error {
 	return nil
-
 }
+
 func Run() {
 
 }

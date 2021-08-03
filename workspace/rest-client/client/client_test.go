@@ -180,6 +180,12 @@ func Test_WriteDataintoJson(t *testing.T) {
 	})
 }
 
+func Test_SetupforDbConnection(t *testing.T) {
+	err := setupforDbConnection(nil)
+	assert.Error(t, err)
+
+}
+
 func Test_WriteintoDatabase(t *testing.T) {
 	got := writeintoDatabase()
 	assert.NoError(t, got)
