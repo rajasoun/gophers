@@ -68,7 +68,6 @@ func Test_NewRootCmd(t *testing.T) {
 		}
 		out, _ := ioutil.ReadAll(outputBuffer)
 		if err != nil {
-			//t.Fatal(err)
 			assert.Error(t, err)
 		}
 		got := string(out)
@@ -92,8 +91,8 @@ func TestExecute(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			//rootCmd.SetArgs([]string{tt.flag, tt.want})
-			NewRootCmd().Flags().Set(tt.flag, tt.input)
 			writer := &bytes.Buffer{}
+			NewRootCmd(writer).Flags().Set(tt.flag, tt.input)
 			err := Execute(writer)
 			if err != nil {
 				assert.Error(t, err)
@@ -130,7 +129,14 @@ func Test_SetLogger(t *testing.T) {
 	}
 
 }
-
+func Test_GitCommandwithinvalidCommand(t *testing.T) {
+	t.Run("Checking invalid passing command", func(t *testing.T) {
+		expected := "dummy"
+		rootCmd.SetArgs([]string{"git", expected})
+		err := gitCmd.Execute()
+		assert.Error(t, err)
+	})
+}
 func Test_GitCommand(t *testing.T) {
 	t.Run("checking help command", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
@@ -166,5 +172,4 @@ func Test_GitCommand(t *testing.T) {
 		got := string(out)
 		assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
 	})
-
 }

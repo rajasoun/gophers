@@ -17,7 +17,8 @@ type Tips struct {
 }
 
 const (
-	default_value = "invalid command ,please pass valid tool command "
+	default_value     = "invalid command ,please pass valid tool command "
+	empty_stringVAlue = " "
 )
 
 //GetTip returning Tip/Command to the controller
@@ -30,16 +31,32 @@ func GetTip(title string) string {
 	return default_value
 }
 
+type dataInfo struct {
+	titleData string
+	tipData   string
+}
+
 //getting all tips and titles
 func getAllCommands(data []Tips, title string) []string {
-	commands := make([]string, 0)
-	for index := range data {
-		if strings.Contains(data[index].Tip, title) {
-			command := data[index].Title + " : " + data[index].Tip
-			commands = append(commands, command)
+	title = title + empty_stringVAlue
+	cmd := strings.Split(title, empty_stringVAlue)
+	cmds := []dataInfo{}
+	subcommands := make([]string, 0)
+
+	for _, value := range data {
+		details := dataInfo{}
+		if strings.Contains(value.Tip, cmd[0]) {
+			details = dataInfo{titleData: value.Title, tipData: value.Tip}
+			cmds = append(cmds, details)
 		}
 	}
-	return commands
+	for _, val := range cmds {
+		if strings.Contains(val.tipData, cmd[1]) {
+			command := val.titleData + " : " + val.tipData
+			subcommands = append(subcommands, command)
+		}
+	}
+	return subcommands
 }
 
 //unmarshal json data into Tips struct

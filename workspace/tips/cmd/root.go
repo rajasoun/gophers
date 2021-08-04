@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -13,17 +14,18 @@ import (
 
 var (
 	gitCmd                             = GitCommand()
-	rootCmd                            = NewRootCmd()
+	rootCmd                            = NewRootCmd(os.Stdout)
 	cmd                                *cobra.Command
 	topic, arg, subarg, debug, cfgFile string
 )
 
 const (
-	validLen int    = 2
-	validArg string = "git"
+	validLen    int    = 2
+	validArg    string = "git"
+	firstLetter string = "g"
 )
 
-func NewRootCmd() *cobra.Command {
+func NewRootCmd(writer io.Writer) *cobra.Command {
 	cmd = &cobra.Command{
 		Use:     "tips",
 		Short:   "tips for command line interface function",
@@ -33,6 +35,7 @@ func NewRootCmd() *cobra.Command {
 		Example: `-> tips -c stash 
 ->"Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
+
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 && topic == "" && debug == "" {
 				cmd.Help()
@@ -50,19 +53,18 @@ func NewRootCmd() *cobra.Command {
 					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
 					controller.GetTipForTopic(input, cmd.OutOrStdout())
 				}
-			} else if args[0] != "git" {
-				if string(args[0][0]) == "g" {
-					fmt.Print("Did you mean this? \n git\n\n ")
+			} else if args[0] != validArg {
+				if string(args[0][0]) == firstLetter {
+					fmt.Fprint(writer, "Did you mean this? \n git\n\n ")
 				}
-				fmt.Print("unknown command ", args[0], " for tips \n")
-				//cobra.CheckErr("invalid command for tips  \n Run 'tips --help' for usage.")
+				fmt.Fprint(writer, "unknown command ", args[0], " for tips \n")
+				logrus.WithField("command", args[0]).Debug("unknown command for tips ")
 				return errors.New("invalid command for tips")
 			}
-
 			return nil
 		},
 	}
-	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic")
+	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic/command")
 	return cmd
 }
 
@@ -85,13 +87,14 @@ func GitCommand() *cobra.Command {
 			} else if arg != "" || subarg != "" {
 				arg := arg + " " + subarg
 				controller.GetTipForTopic(arg, cmd.OutOrStdout())
+			} else if args[0] != "" {
+				return errors.New("no subcommand available for git in tips")
 			}
 			return nil
 		},
 	}
-	gitcmd.Flags().StringVarP(&arg, "arg", "c", "", "argument help for the tip")
-	gitcmd.Flags().StringVarP(&subarg, "subarg", "f", "", "sub argument help for the tip")
-
+	gitcmd.Flags().StringVarP(&arg, "arg", "c", "", "argument/command help for the tip")
+	gitcmd.Flags().StringVarP(&subarg, "subarg", "f", "", "subArgument/subCommand help for the tip")
 	return gitcmd
 }
 
@@ -108,7 +111,7 @@ func getTopic(args []string) (string, error) {
 		logrus.WithField("topic", userInput).Debug("successfully validation checked")
 		return userInput, nil
 	}
-	var validError error = errors.New("flag needs an argument:--topic & argument should be greater than 2")
+	var validError error = errors.New("flag needs an argument:--topic/-c & argument should be greater than 2")
 	return "", validError
 }
 
@@ -135,10 +138,6 @@ func setUpLogs(out io.Writer, level string) error {
 func init() {
 	cmd.PersistentFlags().StringVarP(&debug, "debug", "", "", "verbose logging")
 	cmd.PersistentFlags().MarkHidden("debug")
-
 	rootCmd.AddCommand(gitCmd)
-
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tips.yaml)")
-
-	//rootCmd.SetUsageTemplate(strings.Replace(cmd.UsageString(), "tips [command]", "tips [command] [flags]", 1))
 }
