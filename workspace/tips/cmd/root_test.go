@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -21,6 +20,13 @@ func Test_NewRootCmdwithInvalidCommand(t *testing.T) {
 		err := rootCmd.Execute()
 		assert.Error(t, err)
 
+	})
+	t.Run("checking unknown commands expect git", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		rootCmd.SetArgs([]string{"git"})
+		err := rootCmd.Execute()
+		assert.NoError(t, err)
 	})
 }
 func Test_NewRootCmd(t *testing.T) {
@@ -92,7 +98,7 @@ func TestExecute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			//rootCmd.SetArgs([]string{tt.flag, tt.want})
 			writer := &bytes.Buffer{}
-			NewRootCmd(writer).Flags().Set(tt.flag, tt.input)
+			NewRootCmd().Flags().Set(tt.flag, tt.input)
 			err := Execute(writer)
 			if err != nil {
 				assert.Error(t, err)
@@ -151,8 +157,8 @@ func Test_GitCommand(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := string(out)
-		fmt.Print(got)
 		want := "help"
+		assert.NoError(t, err) //
 		assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
 	})
 

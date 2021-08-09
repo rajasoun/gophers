@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -14,7 +13,7 @@ import (
 
 var (
 	gitCmd                             = GitCommand()
-	rootCmd                            = NewRootCmd(os.Stdout)
+	rootCmd                            = NewRootCmd()
 	cmd                                *cobra.Command
 	topic, arg, subarg, debug, cfgFile string
 )
@@ -23,9 +22,10 @@ const (
 	validLen    int    = 2
 	validArg    string = "git"
 	firstLetter string = "g"
+	emptyString string = ""
 )
 
-func NewRootCmd(writer io.Writer) *cobra.Command {
+func NewRootCmd() *cobra.Command {
 	cmd = &cobra.Command{
 		Use:     "tips",
 		Short:   "tips for command line interface function",
@@ -37,10 +37,10 @@ func NewRootCmd(writer io.Writer) *cobra.Command {
 		Args: cobra.MaximumNArgs(1),
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 && topic == "" && debug == "" {
+			if len(args) == 0 && topic == emptyString && debug == emptyString {
 				cmd.Help()
 				return nil
-			} else if topic != "" || debug != "" {
+			} else if topic != emptyString || debug != emptyString {
 				//calling setUplogs func to set logger level for debugging the code
 				setUpLogs(cmd.OutOrStdout(), debug)
 				logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
@@ -53,13 +53,8 @@ func NewRootCmd(writer io.Writer) *cobra.Command {
 					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
 					controller.GetTipForTopic(input, cmd.OutOrStdout())
 				}
-			} else if args[0] != validArg {
-				if string(args[0][0]) == firstLetter {
-					fmt.Fprint(writer, "Did you mean this? \n git\n\n ")
-				}
-				fmt.Fprint(writer, "unknown command ", args[0], " for tips \n")
-				logrus.WithField("command", args[0]).Debug("unknown command for tips ")
-				return errors.New("invalid command for tips")
+			} else if err := isValidArguments(cmd.OutOrStdout(), args); err != nil {
+				return err
 			}
 			return nil
 		},
@@ -81,13 +76,13 @@ func GitCommand() *cobra.Command {
 		Args: cobra.MaximumNArgs(1),
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 && arg == "" && subarg == "" {
+			if len(args) == 0 && arg == emptyString && subarg == emptyString {
 				cmd.Help()
 				return nil
-			} else if arg != "" || subarg != "" {
+			} else if arg != emptyString || subarg != emptyString {
 				arg := arg + " " + subarg
 				controller.GetTipForTopic(arg, cmd.OutOrStdout())
-			} else if args[0] != "" {
+			} else if args[0] != emptyString {
 				return errors.New("no subcommand available for git in tips")
 			}
 			return nil
@@ -121,6 +116,16 @@ func isValidInput(userInput string) bool {
 		return true
 	}
 	return false
+}
+func isValidArguments(writer io.Writer, args []string) error {
+	if args[0] != validArg {
+		if string(args[0][0]) == firstLetter {
+			fmt.Fprint(writer, "Did you mean this? \n git\n\n ")
+		}
+	}
+	fmt.Fprint(writer, "unknown command ", args[0], " for tips \n")
+	logrus.WithField("command", args[0]).Debug("unknown command for tips ")
+	return errors.New("invalid command for tips")
 }
 
 //setting log level
