@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"io"
 
 	"github.com/sirupsen/logrus"
@@ -18,8 +19,10 @@ var (
 )
 
 const (
-	validLen int    = 2
-	validArg string = "git"
+	validLen    int    = 2
+	validArg    string = "git"
+	emptyString string = ""
+	firstLetter string = "g"
 )
 
 func NewRootCmd() *cobra.Command {
@@ -29,39 +32,18 @@ func NewRootCmd() *cobra.Command {
 		Long:    "tips provides help for docker and git cli commands ",
 		Aliases: []string{},
 		Version: "0.1v",
-		Example: `-> tips -c stash 
-->"Saving current state of unstaged changes to tracked files : git stash -k" `,
-		Args: cobra.MaximumNArgs(1),
+		Example: `-> tips <tool_name> <command>`,
+		Args:    cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 && topic == "" && debug == "" {
+			if len(args) == 0 {
 				cmd.Help()
-				return nil
-			} else if topic != "" || debug != "" {
-				//calling setUplogs func to set logger level for debugging the code
-				setUpLogs(cmd.OutOrStdout(), debug)
-				logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
-				// getting topic
-				input, err := getTopic(args)
-				if err != nil {
-					logrus.WithField("err", err).Debug("invalid user input")
-					return err
-				} else {
-					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
-					controller.GetTipForTopic(input, cmd.OutOrStdout())
-				}
-			}
-			// else if args[0] != "git" {
-			// 	if string(args[0][0]) == "g" {
-			// 		fmt.Print("Did you mean this? \n git\n\n ")
-			// 	}
-			// 	fmt.Print("unknown command ", args[0], " for tips \n")
-			// 	cobra.CheckErr("invalid command for tips  \n Run 'tips --help' for usage.")
-			//}
+			} else if err := isValidArguments(cmd.OutOrStdout(), args); err != nil {
+				return err
+			} //set arguments
 
 			return nil
 		},
 	}
-	cmd.Flags().StringVarP(&topic, "topic", "c", "", "user input string help for the topic")
 	return cmd
 }
 
@@ -78,19 +60,26 @@ func GitCommand() *cobra.Command {
 		Args: cobra.MaximumNArgs(1),
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 && arg == "" && subarg == "" {
+			if len(args) == 0 && debug == emptyString {
 				cmd.Help()
 				return nil
-			} else if arg != "" || subarg != "" {
-				arg := arg + " " + subarg
-				controller.GetTipForTopic(arg, cmd.OutOrStdout())
+			} else if args[0] != emptyString || debug != emptyString {
+				//calling setUplogs func to set logger level for debugging the code
+				setUpLogs(cmd.OutOrStdout(), debug)
+				logrus.WithField("loglevel", debug).Debug("successfully set logger level to debug ")
+				// getting topic
+				input, err := getTopic(args)
+				if err != nil {
+					logrus.WithField("err", err).Debug("invalid user input")
+					return err
+				} else {
+					logrus.WithField("userInput", input).Debug("successfully getting valid input ")
+					controller.GetTipForTopic(input, cmd.OutOrStdout())
+				}
 			}
 			return nil
 		},
 	}
-	gitcmd.Flags().StringVarP(&arg, "arg", "c", "", "argument help for the tip")
-	gitcmd.Flags().StringVarP(&subarg, "subarg", "f", "", "sub argument help for the tip")
-
 	return gitcmd
 }
 
@@ -102,7 +91,7 @@ func Execute(writer io.Writer) error {
 
 // getting topic with checking validation
 func getTopic(args []string) (string, error) {
-	userInput := topic
+	userInput := args[0]
 	if isValidInput(userInput) {
 		logrus.WithField("topic", userInput).Debug("successfully validation checked")
 		return userInput, nil
@@ -117,6 +106,16 @@ func isValidInput(userInput string) bool {
 		return true
 	}
 	return false
+}
+func isValidArguments(writer io.Writer, args []string) error {
+	if args[0] != validArg {
+		if string(args[0][0]) == firstLetter {
+			fmt.Fprint(writer, "Did you mean this? \n git\n\n ")
+		}
+	}
+	fmt.Fprint(writer, "unknown command ", args[0], " for tips \n")
+	logrus.WithField("command", args[0]).Debug("unknown command for tips ")
+	return errors.New("invalid command for tips")
 }
 
 //setting log level
@@ -139,5 +138,4 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tips.yaml)")
 
-	//rootCmd.SetUsageTemplate(strings.Replace(cmd.UsageString(), "tips [command]", "tips [command] [flags]", 1))
 }

@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -18,8 +17,7 @@ func Test_NewRootCmd(t *testing.T) {
 	t.Run("checking valid inputs", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
 		rootCmd.SetOut(outputBuffer)
-		expected := "push"
-		rootCmd.SetArgs([]string{"--topic", expected})
+		rootCmd.SetArgs([]string{})
 		err := rootCmd.Execute()
 		if err != nil {
 			t.Fatal(err)
@@ -29,44 +27,18 @@ func Test_NewRootCmd(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := string(out)
-		want := expected
-		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
-	})
-	t.Run("checking invalid user inputs", func(t *testing.T) {
-		inputBuffer := ""
-		rootCmd.SetArgs([]string{"--topic", inputBuffer})
-		err := rootCmd.Execute()
-		if err != nil {
-			assert.Error(t, err)
-		}
-	})
-	t.Run("checking help commands", func(t *testing.T) {
-		rootCmd.SetArgs([]string{})
-		err := rootCmd.Execute()
-		if err != nil {
-			assert.NoError(t, err)
-		}
-	})
-
-	t.Run("checking invalid input data", func(t *testing.T) {
-		outputBuffer := bytes.NewBufferString("")
-		rootCmd.SetOut(outputBuffer)
-		var inValidInput string = "lo"
-		rootCmd.SetArgs([]string{"--topic", inValidInput})
-		err := rootCmd.Execute()
-		if err != nil {
-			assert.Error(t, err)
-		}
-		out, _ := ioutil.ReadAll(outputBuffer)
-		if err != nil {
-			//t.Fatal(err)
-			assert.Error(t, err)
-		}
-		got := string(out)
 		want := "help"
 		assert.Contains(t, got, want, "expected \"%s\" got \"%s\"", want, got)
 	})
-
+	t.Run("checking invalid user inputs", func(t *testing.T) {
+		inputBuffer := "dummy"
+		rootCmd.SetArgs([]string{inputBuffer})
+		err := rootCmd.Execute()
+		if err != nil {
+			assert.Error(t, err)
+		}
+		assert.Error(t, err)
+	})
 }
 
 func TestExecute(t *testing.T) {
@@ -76,14 +48,14 @@ func TestExecute(t *testing.T) {
 		want  string
 		flag  string
 	}{
-		{"Success Case", "stash", "stash", "--topic"},
-		{"Error Case", "help", "help", "--tips"},
-		{"Invalid Data", "gf", "help", "--topic"},
+		{"Success Case", "stash", "stash", "git"},
+		//{"Error Case", "help", "help", "--tips"},
+		//{"Invalid Data", "gf", "help", "git"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			//rootCmd.SetArgs([]string{tt.flag, tt.want})
-			NewRootCmd().Flags().Set(tt.flag, tt.input)
+			rootCmd.SetArgs([]string{tt.flag, tt.want})
+			//NewRootCmd().Flags().Set(tt.flag, tt.input)
 			writer := &bytes.Buffer{}
 			err := Execute(writer)
 			if err != nil {
@@ -121,7 +93,6 @@ func Test_SetLogger(t *testing.T) {
 	}
 
 }
-
 func Test_GitCommand(t *testing.T) {
 	t.Run("checking help command", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
@@ -136,7 +107,6 @@ func Test_GitCommand(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := string(out)
-		fmt.Print(got)
 		want := "help"
 		assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
 	})
@@ -145,7 +115,7 @@ func Test_GitCommand(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
 		rootCmd.SetOut(outputBuffer)
 		expected := "checkout"
-		rootCmd.SetArgs([]string{"git", "--arg", expected})
+		rootCmd.SetArgs([]string{"git", expected})
 		err := gitCmd.Execute()
 		if err != nil {
 			t.Fatal(err)
@@ -157,20 +127,30 @@ func Test_GitCommand(t *testing.T) {
 		got := string(out)
 		assert.Contains(t, got, expected, "expected \"%s\" got \"%s\"", expected, got)
 	})
+	t.Run("Checking valid data", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		expected := "du"
+		rootCmd.SetArgs([]string{"git", expected})
+		err := gitCmd.Execute()
+		if err != nil {
+			//t.Fatal(err)
+			assert.Error(t, err)
+		}
+		out, err := ioutil.ReadAll(outputBuffer)
+		if err != nil {
+			//t.Fatal(err)
+			assert.Error(t, err)
+		}
+		got := string(out)
+		assert.Contains(t, got, "help", "expected \"%s\" got \"%s\"", "help", got)
+	})
+	t.Run("checking valid command", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		rootCmd.SetArgs([]string{"gi"})
+		err := gitCmd.Execute()
+		assert.Error(t, err)
+	})
 
 }
-
-// func Test_Error(t *testing.T) {
-// 	t.Run("checking valid command", func(t *testing.T) {
-// 		outputBuffer := bytes.NewBufferString("")
-// 		rootCmd.SetOut(outputBuffer)
-// 		rootCmd.SetArgs([]string{"gi"})
-// 		err := rootCmd.Execute()
-// 		//out, _ := ioutil.ReadAll(outputBuffer)
-// 		//got := string(out)
-// 		//want := "help"
-// 		//	assert.Contains(t, got, want, "want \"%s\" got \"%s\"", want, got)
-// 		assert.Error(t, err)
-
-// 	})
-// }
