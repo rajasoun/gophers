@@ -2,34 +2,101 @@
 
 ## The Problem
 
-As developers we need to remember several commands related to git, tdd, general development environment setup making it overwhelming
+As developers we need to remember several commands related to git, docker, tdd, general development environment setup making it overwhelming
 
 ## Solution
 
 Command Line Tool to provide tips on the command to be used based on the topic
 
 ## Usage
+```
+  tips provides help for docker and git cli commands
+
+Usage:
+  tips [flags]
+  tips [command]
+
+Examples:
+-> tips <tool_name> <command>
+
+tips git push
+tips docker ps
+
+Available Commands:
+  completion  generate the autocompletion script for the specified shell
+  docker      Docker provides the ability to package and run an application.
+  git         Git is a DevOps tool used for source code management.
+  help        Help about any command
+
+Flags:
+      --config string   config file (default is $HOME/.tips.yaml)
+  -h, --help            help for tips
+  -v, --version         version for tips
+
+Use "tips [command] --help" for more information about a command.
+```
 
 ```
-  Usage
-      $ tip [options]
-  Options
-      --help    Provides usage help (Shows the current page)
-      --all     Gives all the git tips
-      <keyword> Gives the git tips consisting of the keyword
-  Examples
-      $ tip bypass
+"Docker is a software platform that simplifies the process of building, running,
+managing and distributing applications."
 
-      1. Bypass pre-commit and commit-msg githooks
-      => git commit --no-verify
+Usage:
+  tips docker [flags]
 
-      $ tip
+Examples:
+tips docker <command>
 
-      Git Tip of the Terminal
-      -------------------------
-      Saving current state of tracked files without commiting
-      => git stash
+tips docker ps
+"List all containers : docker ps -a "
+
+Flags:
+  -h, --help      help for docker
+  -v, --version   version for docker
+
+Global Flags:
+      --config string   config file (default is $HOME/.tips.yaml)
 ```
+```
+"Git is used to tracking changes in the source code,
+ enabling multiple developers to work together on non-linear development"
+
+Usage:
+  tips git [flags]
+
+Examples:
+tips git <command>
+
+tips git stash
+"Saving current state of unstaged changes to tracked files : git stash -k" 
+
+Flags:
+  -h, --help      help for git
+  -v, --version   version for git
+
+Global Flags:
+      --config string   config file (default is $HOME/.tips.yaml)
+```
+```
+###  User can get a tip on giving a command of the tool (i.e git,docker)
+
+1. Bypass ps docker command in terminal like [tips docker <command>]
+
+tips docker ps
+"List all containers : docker ps -a" 
+
+2. Bypass log git tool command in terminal [tips git <command>]
+
+tips git log
+"Search change by content : git log -S'<a term in the source>'"
+
+3. Help Command-> tips --help ,tips git/docker -h 
+```
+## Libraries 
+
+1. We used Cobra library to build Tips command line app [cli].
+2. We used Logrus library to set the log status (i.e debug).
+3. We followed TDD design while building the Tips cli app, Also used Testify library for checking test cases.
+
 
 ##  Running Notes
 
