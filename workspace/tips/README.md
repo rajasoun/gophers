@@ -29,7 +29,11 @@ tips git/docker <command> <flag>
 
 ```
 ## Usage
+
+### Tips tool Usage
 ```
+$ tips
+
   tips provides help for docker and git cli commands
 
 Usage:
@@ -55,8 +59,10 @@ Flags:
 
 Use "tips [command] --help" for more information about a command.
 ```
-
+### Docker Usage
 ```
+$ tips docker
+
 "Docker is a software platform that simplifies the process of building, running,
 managing and distributing applications."
 
@@ -76,7 +82,11 @@ Flags:
 Global Flags:
       --config string   config file (default is $HOME/.tips.yaml)
 ```
+
+### Git Usage
 ```
+$ tips git
+
 "Git is used to tracking changes in the source code,
  enabling multiple developers to work together on non-linear development"
 
@@ -96,8 +106,9 @@ Flags:
 Global Flags:
       --config string   config file (default is $HOME/.tips.yaml)
 ```
+###  User can get a tip , on giving a command
+
 ```
-###  User can get a tip on giving a command of the tool (i.e git,docker)
 
 1. Bypass ps docker command in terminal like [tips docker <command>]
 
@@ -109,12 +120,13 @@ $ tips docker ps
 $ tips git log
 "Search change by content : git log -S'<a term in the source>'"
 
-3. Help Command-> $ tips --help , $ tips git/docker -h 
+3. Help Command (set the help flag)-> $ tips --help , $ tips git/docker -h 
+
 ```
 
 ## Libraries 
 
-1. Cobra library is used to build Tips command line app [cli].
+1. Cobra library  is used to build Tips command line app [cli].
 2. Logrus library is used to set the log status (i.e debug).
 3. We followed TDD design while building the Tips cli app, Also used Testify library for testing test cases.
 
