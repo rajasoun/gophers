@@ -155,5 +155,12 @@ func Test_GitCommand(t *testing.T) {
 		err := gitCmd.Execute()
 		assert.Error(t, err)
 	})
+	t.Run("checking valid command", func(t *testing.T) {
+		outputBuffer := bytes.NewBufferString("")
+		rootCmd.SetOut(outputBuffer)
+		rootCmd.SetArgs([]string{"git", "--debug", "debug"})
+		err := gitCmd.Execute()
+		assert.Error(t, err)
+	})
 
 }

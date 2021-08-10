@@ -35,7 +35,10 @@ func NewRootCmd() *cobra.Command {
 		Aliases: []string{},
 		Version: "0.1v",
 		Args:    cobra.MaximumNArgs(1),
-		Example: `-> tips <tool_name> <command>`,
+		Example: `-> tips <tool_name> <command>
+
+tips git push
+tips docker ps`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
 				cmd.Help()
@@ -57,7 +60,9 @@ func GitCommand() *cobra.Command {
  enabling multiple developers to work together on non-linear development"`,
 		Aliases: []string{},
 		Version: "0.1v",
-		Example: `tips git stash
+		Example: `tips git <command>
+		
+tips git stash
 "Saving current state of unstaged changes to tracked files : git stash -k" `,
 		Args: cobra.MaximumNArgs(1),
 
@@ -80,8 +85,11 @@ func DockerCommand() *cobra.Command {
 managing and distributing applications."`,
 		Aliases: []string{},
 		Version: "0.1v",
-		Example: `tips docker ps`,
-		Args:    cobra.MaximumNArgs(1),
+		Example: `tips docker <command>
+	
+tips docker ps
+"List all containers : docker ps -a "`,
+		Args: cobra.MaximumNArgs(1),
 
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := isValidTopic(args, "docker", cmd); err != nil {
@@ -104,6 +112,8 @@ func isValidTopic(args []string, toolName string, cmd *cobra.Command) error {
 	if len(args) == 0 && debug == emptyString {
 		cmd.Help()
 		return nil
+	} else if len(args) == 0 && debug != emptyString {
+		return errors.New("please add an arugment to debug")
 	} else if args[0] != emptyString || debug != emptyString {
 		//calling setUplogs func to set logger level for debugging the code
 		setUpLogs(cmd.OutOrStdout(), debug)
