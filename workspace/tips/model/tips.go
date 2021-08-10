@@ -15,6 +15,10 @@ type Tips struct {
 	Title string `json:"title"`
 	Tip   string `json:"tip"`
 }
+type Tools struct {
+	Git    []Tips `json : "git"`
+	Docker []Tips `json : "docker"`
+}
 
 const (
 	default_value = "invalid command ,please pass valid tool command "
@@ -31,25 +35,36 @@ func GetTip(title string) string {
 }
 
 //getting all tips and titles
-func getAllCommands(data []Tips, title string) []string {
-	commands := make([]string, 0)
-	for index := range data {
-		if strings.Contains(data[index].Tip, title) {
-			command := data[index].Title + " : " + data[index].Tip
-			commands = append(commands, command)
-		}
+func getAllCommands(data Tools, title string) []string {
+	title=title+" "
+	cmdTool := strings.Split(title, " ")
+    commands := make([]string, 0)
+	if cmdTool[0]=="git"{
+		for _, value := range data.Git {
+			if strings.Contains(value.Tip,cmdTool[1]){
+				command:=value.Title+" : "+value.Tip
+				commands = append(commands, command)
+		    }
+	    }
+	}else if cmdTool[0]=="docker"{
+		for _, value := range data.Docker {
+			if strings.Contains(value.Tip,cmdTool[1]){
+				command:=value.Title+" : "+value.Tip
+			 	commands = append(commands, command)
+	        }
+        }
 	}
 	return commands
 }
 
-//unmarshal json data into Tips struct
-func loadTipsFromJson() ([]Tips, error) {
+func loadTipsFromJson() (Tools, error) {
 	// run an app from main.go -> file path should be "data/tips.json"
 	// if want to check all unit test cases ->file path should be "../data/tips.json"
 	var path = getJsonFilePath()
 	var data []byte
 	data, _ = readJsonFile(path)
-	var result []Tips
+	//var result []Tips
+	var result Tools
 	json.Unmarshal([]byte(data), &result)
 	return result, nil
 }
@@ -65,7 +80,7 @@ func getJsonFilePath() string {
 		currentDir = strings.ReplaceAll(currentDir, baseDir, "")
 
 	}
-	return currentDir + "/data/tips.json"
+	return currentDir + "/data/tips.json" // file path
 }
 
 // get json file data
@@ -95,3 +110,6 @@ func getCurrentWorkingDir() (string, error) {
 	logrus.WithField("working dir", workingDir).Debug("successfully reading the working dir path ")
 	return workingDir, nil
 }
+
+
+

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -48,13 +49,14 @@ func TestExecute(t *testing.T) {
 		want  string
 		flag  string
 	}{
-		{"Success Case", "stash", "stash", "git"},
-		//{"Error Case", "help", "help", "--tips"},
-		//{"Invalid Data", "gf", "help", "git"},
+		{"Success Case for git command", "stash", "stash", "git"},
+		{"Error Case", "help", "help", "--tips"},
+		{"Invalid Data", "j", "help", "docker"},
+		{"Success Case for docker command ", "log", "log", "docker"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			rootCmd.SetArgs([]string{tt.flag, tt.want})
+			rootCmd.SetArgs([]string{tt.flag, tt.input})
 			//NewRootCmd().Flags().Set(tt.flag, tt.input)
 			writer := &bytes.Buffer{}
 			err := Execute(writer)
@@ -62,6 +64,7 @@ func TestExecute(t *testing.T) {
 				assert.Error(t, err)
 			} else {
 				gotWriter := writer.String()
+				fmt.Print(gotWriter)
 				assert.Contains(t, gotWriter, tt.want)
 			}
 		})
@@ -130,7 +133,7 @@ func Test_GitCommand(t *testing.T) {
 	t.Run("Checking valid data", func(t *testing.T) {
 		outputBuffer := bytes.NewBufferString("")
 		rootCmd.SetOut(outputBuffer)
-		expected := "du"
+		expected := "d"
 		rootCmd.SetArgs([]string{"git", expected})
 		err := gitCmd.Execute()
 		if err != nil {

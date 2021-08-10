@@ -20,8 +20,9 @@ func TestGetTip(t *testing.T) {
 		input string
 		want  string
 	}{
-		{name: "Get Tip for valid Topic - rebase", input: "rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
+		{name: "Get Tip for valid Topic - rebase", input: "git rebase", want: "Rebases 'feature' to 'master' and merges it in to master  : git rebase master feature && git checkout master && git merge -"},
 		{name: "Get Tip for invalid Topic - dummy", input: "dummy", want: "invalid command ,please pass valid tool command "},
+		{name: "Get Tip for valid Topic - log", input: "docker log", want: "Search change by content : docker log -S'<a term in the source>'"},
 	}
 	for _, tt := range input_ouputData {
 		t.Run(tt.name, func(t *testing.T) {
@@ -32,10 +33,9 @@ func TestGetTip(t *testing.T) {
 }
 
 func TestLoadTipsFromJson(t *testing.T) {
-	t.Run("Load Tips From Json File and check if there are 166 tips ", func(t *testing.T) {
-		got, _ := loadTipsFromJson()
-		expected := 166
-		assert.Equal(t, len(got), expected)
+	t.Run("Load Tips From Json File and check if there are tips ", func(t *testing.T) {
+		_, err := loadTipsFromJson()
+		assert.NoError(t, err)
 	})
 }
 

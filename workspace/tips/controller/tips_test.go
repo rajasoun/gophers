@@ -21,7 +21,7 @@ func TestGetTipForTopicIntegration(t *testing.T) {
 		input string
 		want  string
 	}{
-		{name: "Checking with Valid input", input: "delete", want: "Delete remote branch"},
+		{name: "Checking with Valid input", input: "git delete", want: "Delete remote branch"},
 		{name: "Checking with invalid input", input: "hello", want: "invalid command"},
 	}
 	for _, tt := range input_ouputData {
