@@ -174,6 +174,15 @@
  1. Refactor the debug flag in tips cli for debugging
  1. Add and Refactor the Input validation code
  1. Updated the Readme file.
+ 1. Understand concepts of Refactoring the code
+ 1. Check the code functional testing by adding unit test cases.
+ 1. Make code coverage
  
-  ## 13th September to (Team)
+  ## 13th September to 24th September (Team)
+  1. Setup private git account in the system
+  1. Understand the Chat-bot functionality flow
+  1. Understand AWS Secret id and key
+  1. Practice with mocking lib.
+  1. Resolved git and aws connectivity issues.
+  1. 
 
