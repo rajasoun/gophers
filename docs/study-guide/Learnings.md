@@ -166,4 +166,14 @@
 1. Find database plugin lib to store data in database (i.e Gorm)
 1. Practice on Gorm Library.
 
+ ## 31th July to 3rd September(Team)
+ 1. Worked on tips cli Project while adding git ,docker , linux commands
+ 1. Solved data file issue
+ 1. Add config functionality to read data file path.
+ 1. Separate/Refcator the function's code 
+ 1. Refactor the debug flag in tips cli for debugging
+ 1. Add and Refactor the Input validation code
+ 1. Updated the Readme file.
  
+  ## 13th September to (Team)
+
